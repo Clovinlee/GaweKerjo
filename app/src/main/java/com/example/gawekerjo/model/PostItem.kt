@@ -12,5 +12,5 @@ data class PostItem (
     var body:String,
     var like_count:Int,
     val created_at: String,
-    var updated_at: Any
+    var updated_at: String?,
 )

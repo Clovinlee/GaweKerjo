@@ -1,40 +1,47 @@
 package com.example.gawekerjo.repository
 
 import android.util.Log
+import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.env
 import com.example.gawekerjo.model.UserItem
 import com.example.gawekerjo.api.UserApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import com.example.gawekerjo.database.AppDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
-class UserRepository {
-    val retrofitBuilder = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(env.API_URL)
-        .build()
-        .create(UserApi::class.java)
+class UserRepository(var db : AppDatabase) {
 
-    fun getUser(id : Int?, username : String?){
-        val retrofitData = retrofitBuilder.getUser(id, username)
+    private val coroutine = CoroutineScope(Dispatchers.IO)
 
-        retrofitData.enqueue(object : Callback<List<UserItem>?>{
-            override fun onResponse(call: Call<List<UserItem>?>, response: Response<List<UserItem>?>) {
+    fun loadUserData(){
+        var rc : Retrofit = RetrofitClient.getRetrofit()
+        var rc_user : Call<List<UserItem>> = rc.create(UserApi::class.java).getUser(null, null, null)
+
+        rc_user.enqueue(object: Callback<List<UserItem>?>{
+            override fun onResponse(
+                call: Call<List<UserItem>?>,
+                response: Response<List<UserItem>?>
+            ) {
                 val responseBody = response.body()!!
-                var listUserItem : ArrayList<UserItem>  = arrayListOf()
-                for (r in responseBody){
-                    var u = UserItem(r.id, r.name, r.email,
-                        r.description, r.gender, r.password,
-                        r.birthdate, r.notelp, r.created_at,
-                        r.updated_at)
-                    listUserItem.add(r)
+
+                coroutine.launch {
+                    db.userDao.clear()
+
+                    for (r in responseBody){
+                    var u : UserItem = UserItem(r.id, r.name, r.email, r.description,
+                    r.gender, r.password, r.birthdate, r.notelp, r.created_at, r.updated_at)
+
+                        db.userDao.insertUser(u)
+                    }
                 }
-                
             }
 
             override fun onFailure(call: Call<List<UserItem>?>, t: Throwable) {
                 Log.d("CCD", "Error getting user")
+                Log.d("CCD", t.message.toString())
             }
 
         })

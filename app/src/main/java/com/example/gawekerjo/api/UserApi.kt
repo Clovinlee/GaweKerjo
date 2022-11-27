@@ -10,6 +10,7 @@ interface UserApi {
     @GET("users")
     fun getUser(
         @Query("id") id : Int?,
-        @Query("username") username : String?,
+        @Query("email") email : String?,
+        @Query("password") password : String?,
         ): Call<List<UserItem>>
 }

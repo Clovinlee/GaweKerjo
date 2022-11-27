@@ -40,12 +40,12 @@
             android:background="@drawable/button_background_green2">
 
             <EditText
-                android:id="@+id/txtDisplay"
+                android:id="@+id/txtLoginEmail"
                 android:layout_width="215dp"
                 android:layout_height="41dp"
                 android:layout_marginLeft="10dp"
                 android:ems="10"
-                android:hint="Enter your username"
+                android:hint="Enter your Email"
                 android:inputType="textPersonName|text"
                 android:textColor="#05ACA3"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
             android:background="@drawable/button_background_green2">
 
             <EditText
-                android:id="@+id/txtUsername"
+                android:id="@+id/txtLoginPassword"
                 android:layout_width="212dp"
                 android:layout_height="46dp"
                 android:layout_marginLeft="10dp"
@@ -73,47 +73,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnRegister"
+        <Button
+            android:id="@+id/btnLoginLogin"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/button_background_green1">
+            android:layout_height="wrap_content"
+            android:text="Login" />
 
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnLoginPage"
+        <Button
+            android:id="@+id/btnLoginToRegister"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/button_background_green1">
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dont have an account?"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:text="Create an Account" />
 
     </LinearLayout>
 

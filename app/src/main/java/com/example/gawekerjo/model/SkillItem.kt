@@ -8,5 +8,5 @@ data class SkillItem(
     val id:Int,
     val name:String,
     var created_at:String,
-    var updated_at:Any
+    var updated_at:String?,
 )

@@ -9,5 +9,5 @@ data class UserSkillItem(
     val user_id:Int,
     val skill_id:Int,
     var created_at:String,
-    var updated_at:Any
+    var updated_at:String?,
 )

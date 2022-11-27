@@ -25,6 +25,7 @@ import com.example.gawekerjo.model.*
     UserChatItem::class,
     UserLanguageItem::class,
     UserSkillItem::class,
+    Rememberme::class,
 ], version = 1)
 abstract class AppDatabase:RoomDatabase() {
     abstract val achievementDao:AchievementDao
@@ -50,7 +51,7 @@ abstract class AppDatabase:RoomDatabase() {
         var DB:AppDatabase?=null
         fun Build(c: Context):AppDatabase{
             if (DB == null) {
-                DB= Room.databaseBuilder(c,AppDatabase::class.java,"gawekerjo").build()
+                DB= Room.databaseBuilder(c,AppDatabase::class.java,"gawekerjo2").build()
             }
             return DB!!
         }

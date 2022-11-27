@@ -9,5 +9,5 @@ data class CommentItem(
     val user_id:Int,
     var body:String,
     var created_at:String,
-    var updated_at:Any
+    var updated_at:String?,
 )

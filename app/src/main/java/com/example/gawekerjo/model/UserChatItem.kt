@@ -10,5 +10,5 @@ data class UserChatItem(
     val chat_id:Int,
     val message:String,
     var created_at:String,
-    var updated_at:Any
+    var updated_at:String?,
 )

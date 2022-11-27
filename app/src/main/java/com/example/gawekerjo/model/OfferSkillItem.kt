@@ -9,5 +9,5 @@ data class OfferSkillItem(
     val offer_id:Int,
     var skill_id:Int,
     var created_at:String,
-    var updated_at:Any
+    var updated_at:String?,
 )

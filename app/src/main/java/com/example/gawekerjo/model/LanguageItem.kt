@@ -9,5 +9,5 @@ data class LanguageItem(
     var name:String,
     var level:String,
     var created_at:String,
-    var updated_at:Any
+    var updated_at:String?,
 )

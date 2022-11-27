@@ -2,9 +2,8 @@ package com.example.gawekerjo.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-@Entity(tableName = "users")
-data class UserItem(
+@Entity(tableName = "remember_me")
+data class Rememberme(
     @PrimaryKey
     val id: Int,
     val name: String,

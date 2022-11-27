@@ -12,5 +12,5 @@ data class OrganizationItem(
     var date_start:String,
     var date_end:String,
     var created_at:String,
-    var updated_at:Any
+    var updated_at:String?,
 )

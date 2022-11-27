@@ -17,28 +17,28 @@
         android:theme="@style/Theme.GaweKerjo"
         tools:targetApi="31">
         <activity
-            android:name=".DetailpostActivity"
+            android:name=".view.DetailpostActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".view.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".ListchatActivity"
+            android:name=".view.ListchatActivity"
             android:exported="false" />
         <activity
-            android:name=".UserprofileActivity"
+            android:name=".view.UserprofileActivity"
             android:exported="false" />
         <activity
-            android:name=".NewPostActivity"
+            android:name=".view.NewPostActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".view.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".view.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
