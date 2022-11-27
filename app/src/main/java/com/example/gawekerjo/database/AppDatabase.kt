@@ -48,10 +48,12 @@ abstract class AppDatabase:RoomDatabase() {
 
     companion object{
         var DB:AppDatabase?=null
-        fun Build(c: Context){
+        fun Build(c: Context):AppDatabase{
             if (DB == null) {
                 DB= Room.databaseBuilder(c,AppDatabase::class.java,"gawekerjo").build()
             }
+            return DB!!
         }
+
     }
 }
