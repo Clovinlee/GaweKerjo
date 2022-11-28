@@ -40,120 +40,82 @@
             android:background="@drawable/button_background_green2">
 
             <EditText
-                android:id="@+id/txtLoginEmail"
-                android:layout_width="215dp"
-                android:layout_height="41dp"
-                android:layout_marginLeft="10dp"
-                android:ems="10"
-                android:hint="Enter your display name"
-                android:inputType="textPersonName|text"
-                android:textColor="#05ACA3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button_background_green2">
-
-            <EditText
-                android:id="@+id/txtLoginPassword"
-                android:layout_width="212dp"
-                android:layout_height="46dp"
-                android:layout_marginLeft="10dp"
-                android:ems="10"
-                android:hint="Enter your Email"
-                android:inputType="textPassword"
-                android:textColor="#05ACA3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button_background_green2">
-
-            <EditText
-                android:id="@+id/txtPassword"
-                android:layout_width="212dp"
-                android:layout_height="46dp"
-                android:layout_marginLeft="10dp"
-                android:ems="10"
-                android:hint="Enter your password"
-                android:inputType="textPassword"
-                android:textColor="#05ACA3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button_background_green2">
-
-            <EditText
-                android:id="@+id/txtConfirm"
-                android:layout_width="212dp"
-                android:layout_height="46dp"
-                android:layout_marginLeft="10dp"
-                android:ems="10"
-                android:hint="Confirm your password"
-                android:inputType="textPassword"
-                android:textColor="#05ACA3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/button_background_green1">
-
-            <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/etRegisterName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:ems="10"
+                android:hint="Display Name"
+                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnLoginPage"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/button_background_green1">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_background_green2">
 
-            <TextView
-                android:id="@+id/textView16"
+            <EditText
+                android:id="@+id/etRegisterEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Have an account?"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_background_green2">
+
+            <EditText
+                android:id="@+id/etRegisterPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_background_green2">
+
+            <EditText
+                android:id="@+id/etRegisterConfirmation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Confirmation Password"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btnRegisterRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register" />
+
+        <Button
+            android:id="@+id/btnRegisterToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Have an account?" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,4 +46,20 @@ class UserRepository(var db : AppDatabase) {
 
         })
     }
+    fun Register(email:String,pass:String,name:String){
+        var rc : Retrofit = RetrofitClient.getRetrofit()
+        var rc_user : Call<UserItem> = rc.create(UserApi::class.java).Register(email,pass,name)
+        rc_user.enqueue(object : Callback<UserItem?>{
+            override fun onResponse(call: Call<UserItem?>, response: Response<UserItem?>) {
+                val rbody=response.body()!!
+                coroutine.launch { db.userDao.insertUser(rbody) }
+            }
+
+            override fun onFailure(call: Call<UserItem?>, t: Throwable) {
+                Log.d("CCD","Error Register")
+                Log.d("CCD",t.message.toString())
+            }
+
+        })
+    }
 }

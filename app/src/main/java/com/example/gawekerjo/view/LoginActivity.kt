@@ -33,9 +33,9 @@ class LoginActivity : AppCompatActivity() {
         db = AppDatabase.Build(this)
 
         b.btnLoginLogin.setOnClickListener{
+
             val email : String = b.txtLoginEmail.text.toString()
             var password : String = b.txtLoginPassword.text.toString()
-
             coroutine.launch {
 
                 var listUser : List<UserItem> = db.userDao.getAllUser()
