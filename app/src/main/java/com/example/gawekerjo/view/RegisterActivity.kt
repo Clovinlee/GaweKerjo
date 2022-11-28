@@ -53,10 +53,10 @@ class RegisterActivity : AppCompatActivity() {
                             }
                         }
                     }else{
-                        Toast.makeText(this@RegisterActivity,"Password dan confirmation password tidak sama!",Toast.LENGTH_SHORT).show()
+                        runOnUiThread { Toast.makeText(this@RegisterActivity,"Password dan confirmation password tidak sama!",Toast.LENGTH_SHORT).show() }
                     }
                 }else{
-                    Toast.makeText(this@RegisterActivity,"Inputan ada yang kosong!",Toast.LENGTH_SHORT).show()
+                    runOnUiThread { Toast.makeText(this@RegisterActivity,"Inputan ada yang kosong!",Toast.LENGTH_SHORT).show() }
                 }
             }
             btnRegisterToLogin.setOnClickListener {

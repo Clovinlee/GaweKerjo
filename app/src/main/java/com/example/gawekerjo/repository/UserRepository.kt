@@ -17,11 +17,7 @@ class UserRepository(var db : AppDatabase) {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     var rc : Retrofit = RetrofitClient.getRetrofit()
 
-    suspend fun addUser(){
-        //KERJA DISINI KWAN
-    }
-
-    suspend fun loadUserData(){
+    fun loadUserData(){
         var rc_user : Call<List<UserItem>> = rc.create(UserApi::class.java).getUser(null, null, null)
 
         rc_user.enqueue(object: Callback<List<UserItem>?>{
