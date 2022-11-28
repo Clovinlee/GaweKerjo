@@ -30,7 +30,9 @@ class MainActivity : AppCompatActivity() {
         var userRepo : UserRepository = UserRepository(db)
         userRepo.loadUserData()
 
+
         val i : Intent = Intent(this, LoginActivity::class.java)
         startActivity(i)
+        this.finish()
     }
 }
