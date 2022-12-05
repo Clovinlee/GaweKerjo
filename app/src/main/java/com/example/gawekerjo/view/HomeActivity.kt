@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.gawekerjo.R
@@ -51,7 +52,7 @@ class HomeActivity : AppCompatActivity() {
 
             return@setOnItemSelectedListener true
         }
-
+        swapFragment(fHome)
     }
 
     fun swapFragment(f : Fragment){
