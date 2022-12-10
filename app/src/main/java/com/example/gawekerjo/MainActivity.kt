@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         db = AppDatabase.Build(this)
 
-        var userRepo : UserRepository = UserRepository(db)
-        userRepo.loadUserData()
+//        var userRepo : UserRepository = UserRepository(db)
+//        userRepo.loadUserData()
 
 
         val i : Intent = Intent(this, LoginActivity::class.java)

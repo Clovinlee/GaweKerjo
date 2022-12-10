@@ -1,11 +1,14 @@
 package com.example.gawekerjo.repository
 
 import android.util.Log
+import android.widget.Toast
+import com.example.gawekerjo.MainActivity
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.env
 import com.example.gawekerjo.model.UserItem
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
+import com.example.gawekerjo.view.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,6 +19,36 @@ class UserRepository(var db : AppDatabase) {
 
     private val coroutine = CoroutineScope(Dispatchers.IO)
     var rc : Retrofit = RetrofitClient.getRetrofit()
+
+    fun login(mc : LoginActivity,email: String, password: String){
+        var rc_user : Call<List<UserItem>> = rc.create(UserApi::class.java).getUser(null, email, password)
+
+        rc_user.enqueue(object: Callback<List<UserItem>?>{
+            override fun onResponse(
+                call: Call<List<UserItem>?>,
+                response: Response<List<UserItem>?>
+            ){
+                coroutine.launch {
+                    db.userDao.clear()
+                    val responseBody = response.body()!!
+                    var usr : UserItem? = null
+                    if(responseBody.count() != 0){
+                        var r = responseBody[0]
+                        var u : UserItem = UserItem(r.id, r.name, r.email, r.description, r.gender, r.password, r.birthdate, r.notelp, r.created_at, r.updated_at)
+                        usr = u
+                        db.userDao.insertUser(u)
+                    }
+                    mc.verifyLogin(mc, usr)
+                }
+            }
+
+            override fun onFailure(call: Call<List<UserItem>?>, t: Throwable) {
+                Log.d("CCD", "Error getting user : $email - $password")
+                Log.d("CCD", t.message.toString())
+            }
+
+        })
+    }
 
     fun loadUserData(){
         var rc_user : Call<List<UserItem>> = rc.create(UserApi::class.java).getUser(null, null, null)
@@ -40,7 +73,7 @@ class UserRepository(var db : AppDatabase) {
             }
 
             override fun onFailure(call: Call<List<UserItem>?>, t: Throwable) {
-                Log.d("CCD", "Error getting user")
+                Log.d("CCD", "Error getting All user")
                 Log.d("CCD", t.message.toString())
             }
 

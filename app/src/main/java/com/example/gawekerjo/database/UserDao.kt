@@ -22,5 +22,5 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE email=:email AND password=:password")
     suspend fun getUserByEmailPassword(email:String,password:String):UserItem?
     @Query("SELECT * FROM users WHERE id in (select max(id) from users group by id)")
-    suspend fun getLastUser():UserItem
+    suspend fun getLastUser():UserItem?
 }
