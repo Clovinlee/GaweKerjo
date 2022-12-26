@@ -7,6 +7,7 @@ import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityMainBinding
+import com.example.gawekerjo.repository.CountryRepository
 import com.example.gawekerjo.repository.UserRepository
 import com.example.gawekerjo.view.LoginActivity
 import retrofit2.Call
@@ -32,7 +33,11 @@ class MainActivity : AppCompatActivity() {
 
 
         val i : Intent = Intent(this, LoginActivity::class.java)
-        startActivity(i)
-        this.finish()
+
+//        var x : CountryRepository = CountryRepository(db)
+//        x.getAllCountries()
+
+//        startActivity(i)
+//        this.finish()
     }
 }
