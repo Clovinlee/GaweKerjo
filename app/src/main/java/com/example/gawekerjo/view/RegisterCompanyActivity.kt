@@ -84,12 +84,13 @@ class RegisterCompanyActivity : AppCompatActivity() {
 
     fun registerCallback(result : User){
         b.loadModal.visibility = View.INVISIBLE
-        Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
         if(result.status == 200){
             var i : Intent = Intent(this, HomeActivity::class.java)
             i.putExtra("userlogin",result.data[0])
             startActivity(i)
             this.finish()
+        }else{
+            Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
         }
     }
 }
