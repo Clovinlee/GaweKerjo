@@ -11,6 +11,7 @@ interface AchievementDao {
     suspend fun deleteAchievement(achievement: AchievementItem)
     @Update
     suspend fun updateAchievement(achievement: AchievementItem)
+
     @Query("SELECT * FROM achievements")
-    suspend fun getAllAchievement():List<AchievementItem>
+    suspend fun fetchAchievement():List<AchievementItem>
 }

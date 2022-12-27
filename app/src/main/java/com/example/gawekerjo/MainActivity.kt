@@ -3,16 +3,9 @@ package com.example.gawekerjo
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gawekerjo.api.RetrofitClient
-import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityMainBinding
-import com.example.gawekerjo.repository.CountryRepository
-import com.example.gawekerjo.repository.UserRepository
 import com.example.gawekerjo.view.LoginActivity
-import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.create
 
 
 class MainActivity : AppCompatActivity() {

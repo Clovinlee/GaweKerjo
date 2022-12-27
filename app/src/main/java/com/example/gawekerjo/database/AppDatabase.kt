@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gawekerjo.model.*
+import com.example.gawekerjo.model.company.CompanyItem
+import com.example.gawekerjo.model.user.UserItem
 
 @Database(entities = [
     AchievementItem::class,
@@ -25,7 +27,6 @@ import com.example.gawekerjo.model.*
     UserChatItem::class,
     UserLanguageItem::class,
     UserSkillItem::class,
-    Rememberme::class,
 ], version = 1)
 abstract class AppDatabase:RoomDatabase() {
     abstract val achievementDao:AchievementDao

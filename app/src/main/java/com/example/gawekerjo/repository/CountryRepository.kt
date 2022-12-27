@@ -5,7 +5,7 @@ import com.example.gawekerjo.api.CountryApi
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
-import com.example.gawekerjo.model.UserItem
+import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.model.country.Country
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

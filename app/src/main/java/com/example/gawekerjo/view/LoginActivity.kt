@@ -1,19 +1,16 @@
 package com.example.gawekerjo.view
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Debug
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
-import com.example.gawekerjo.databinding.ActivityHomeBinding
 import com.example.gawekerjo.databinding.ActivityLoginBinding
-import com.example.gawekerjo.model.UserItem
-import com.example.gawekerjo.repository.UserRepository
+import com.example.gawekerjo.model.company.Company
+import com.example.gawekerjo.model.user.User
+import com.example.gawekerjo.repository.AccountRepository
 import kotlinx.coroutines.*
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -23,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var b: ActivityLoginBinding
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var db: AppDatabase
-    private lateinit var userRepo : UserRepository
+    private lateinit var accRepo : AccountRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
 
         db = AppDatabase.Build(this)
 
-        userRepo = UserRepository(db)
+        accRepo = AccountRepository(db)
 
         b.btnLoginLogin.setOnClickListener{
             val email : String = b.txtLoginEmail.text.toString()
@@ -45,27 +42,43 @@ class LoginActivity : AppCompatActivity() {
             // LOAD SCREEN
              b.loadModal.visibility = View.VISIBLE
 
-            userRepo.login(this,email ,password)
+            accRepo.loginUser(this,email ,password)
         }
-
-        //TODO : REMEMBER ME
-        // OTHER API
 
         b.btnLoginToRegister.setOnClickListener {
             val i : Intent = Intent(this, RegisterActivity::class.java)
             startActivity(i)
+
+            this.finish()
+        }
+
+        //TODO : REMEMBER ME
+        // OTHER API
+    }
+
+    fun verifyLoginUser(result : User){
+        if(result.data.size > 0){
+            val usr = result.data[0]
+            b.loadModal.visibility = View.INVISIBLE
+            val i : Intent = Intent(this, HomeActivity::class.java)
+            i.putExtra("userlogin", usr)
+            startActivity(i)
+        }else{
+            accRepo.loginCompany(this,b.txtLoginEmail.text.toString(), b.txtLoginPassword.text.toString())
         }
     }
 
-    fun verifyLogin(context : Context, usr : UserItem?){
-        b.loadModal.visibility = View.INVISIBLE
-        if(usr != null){
-            val i : Intent = Intent(context, HomeActivity::class.java)
-            i.putExtra("userlogin",usr)
+    fun verifyLoginCompany(result : Company){
+        if(result.data.size > 0){
+            val cmp = result.data[0]
+            b.loadModal.visibility = View.INVISIBLE
+            val i : Intent = Intent(this, HomeActivity::class.java)
+            i.putExtra("userlogin", cmp)
             startActivity(i)
         }else{
-            this.runOnUiThread {
-                Toast.makeText(context, "Error, wrong email / password", Toast.LENGTH_SHORT).show()
+            b.loadModal.visibility = View.INVISIBLE
+            runOnUiThread {
+                Toast.makeText(this, "Account not found!", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.example.gawekerjo.api
 
-import com.example.gawekerjo.model.UserItem
+import com.example.gawekerjo.model.user.User
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -13,11 +13,11 @@ interface UserApi {
         @Query("id") id : Int?,
         @Query("email") email : String?,
         @Query("password") password : String?,
-        ): Call<List<UserItem>>
+        ): Call<User>
     @POST("register")
     fun Register(
         @Query("email")email: String,
         @Query("password")password:String,
         @Query("name")name:String
-    ):Call<UserItem>
+    ):Call<User>
 }
