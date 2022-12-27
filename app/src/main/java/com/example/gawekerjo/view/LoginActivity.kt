@@ -1,5 +1,6 @@
 package com.example.gawekerjo.view
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,7 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityLoginBinding
 import com.example.gawekerjo.model.company.Company
 import com.example.gawekerjo.model.user.User
+import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.AccountRepository
 import kotlinx.coroutines.*
 import java.math.BigInteger
@@ -56,9 +58,6 @@ class LoginActivity : AppCompatActivity() {
 
             this.finish()
         }
-
-        //TODO : REMEMBER ME
-        // OTHER API
     }
 
     fun verifyLogin(result : User){
@@ -68,6 +67,8 @@ class LoginActivity : AppCompatActivity() {
             val i : Intent = Intent(this, HomeActivity::class.java)
             i.putExtra("userlogin", usr)
             startActivity(i)
+            this.finish()
+
         }else{
             runOnUiThread {
                 Toast.makeText(this, "Account not found!", Toast.LENGTH_SHORT).show()
