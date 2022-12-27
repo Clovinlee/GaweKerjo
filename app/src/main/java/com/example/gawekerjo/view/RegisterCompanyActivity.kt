@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityRegisterCompanyBinding
 import com.example.gawekerjo.model.company.Company
+import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.repository.AccountRepository
 import com.example.gawekerjo.repository.CompanyRepository
 import kotlinx.coroutines.CoroutineScope
@@ -62,7 +63,7 @@ class RegisterCompanyActivity : AppCompatActivity() {
             }
             b.loadModal.visibility = View.VISIBLE
 
-            accountRepo.registerCompany(this,name, email, number, password)
+            accountRepo.register(this,0 ,email, password, name, number)
         }
 
         b.btnCRegisterToUserRegister.setOnClickListener {
@@ -81,7 +82,7 @@ class RegisterCompanyActivity : AppCompatActivity() {
 
     }
 
-    fun registerCallback(result : Company){
+    fun registerCallback(result : User){
         b.loadModal.visibility = View.INVISIBLE
         Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
         if(result.status == 200){

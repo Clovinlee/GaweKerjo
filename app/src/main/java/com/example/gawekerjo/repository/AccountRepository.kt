@@ -1,5 +1,6 @@
 package com.example.gawekerjo.repository
 
+import android.app.Activity
 import android.util.Log
 import com.example.gawekerjo.api.CompanyApi
 import com.example.gawekerjo.api.RetrofitClient
@@ -25,38 +26,7 @@ class AccountRepository (var db : AppDatabase) {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     var rc : Retrofit = RetrofitClient.getRetrofit()
 
-    fun loginCompany(mc : LoginActivity, email: String, password: String){
-        var rc_company : Call<Company> = rc.create(CompanyApi::class.java).getCompany(null, email, password)
-
-        rc_company.enqueue(object: Callback<Company>{
-            override fun onResponse(
-                call: Call<Company>,
-                response: Response<Company>
-            ){
-                coroutine.launch {
-                    db.companyDao.clear()
-                    val responseBody = response.body()
-                    var cmp : CompanyItem? = null
-
-                    if(responseBody != null){
-                        if(responseBody.status == 200 && responseBody.data.size > 0){
-                            cmp = responseBody.data[0]
-                            db.companyDao.insertCompany(cmp)
-                        }
-                        mc.verifyLoginCompany(responseBody)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<Company>, t: Throwable) {
-                Log.d("CCD", "Error getting user : $email - $password")
-                Log.d("CCD", t.message.toString())
-            }
-
-        })
-    }
-
-    fun loginUser(mc : LoginActivity, email: String, password: String){
+    fun login(mc : LoginActivity, email: String, password: String){
         var rc_user : Call<User> = rc.create(UserApi::class.java).getUser(null, email, password)
 
         rc_user.enqueue(object: Callback<User>{
@@ -74,7 +44,7 @@ class AccountRepository (var db : AppDatabase) {
                             usr = responseBody.data[0]
                             db.userDao.insertUser(usr)
                         }
-                        mc.verifyLoginUser(responseBody)
+                        mc.verifyLogin(responseBody)
                     }
                 }
             }
@@ -87,8 +57,8 @@ class AccountRepository (var db : AppDatabase) {
         })
     }
 
-    fun registerUser(mc: RegisterActivity, email:String,pass:String,name:String){
-        var rc_user : Call<User> = rc.create(UserApi::class.java).Register(email,pass,name)
+    fun register(mc: Activity, type: Int, email:String,pass:String,name:String, notelp : String = ""){
+        var rc_user : Call<User> = rc.create(UserApi::class.java).Register(type, email,pass,name,notelp)
 
         rc_user.enqueue(object : Callback<User>{
             override fun onResponse(call: Call<User>, response: Response<User>) {
@@ -105,44 +75,22 @@ class AccountRepository (var db : AppDatabase) {
                             db.userDao.insertUser(usr)
                         }
                     }
-                    mc.registerCallback(rbody)
+                    if(type == 1){
+                        Log.d("CCD","TYPE 1")
+                        var mc_register = mc as RegisterActivity
+                        mc_register.registerCallback(rbody)
+                    }else{
+                        var mc_register = mc as RegisterCompanyActivity
+                        mc_register.registerCallback(rbody)
+                    }
                 }
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.d("CCD","Error Register")
+                Log.d("CCD","Error Register Account Repository")
                 Log.d("CCD",t.message.toString())
             }
 
         })
     }
-
-    fun registerCompany(mc: RegisterCompanyActivity, name : String, email : String, notelp : String, password : String){
-        var rc_company : Call<Company> = rc.create(CompanyApi::class.java).register(name, email, notelp, password)
-
-        rc_company.enqueue(object : Callback<Company> {
-            override fun onResponse(call: Call<Company>, response: Response<Company>) {
-                val responseBody = response.body()
-
-                if(responseBody != null){
-                    if(responseBody.status == 200){
-                        coroutine.launch {
-                            db.companyDao.clear()
-
-                            val cmp : CompanyItem = responseBody.data[0]
-
-                            db.companyDao.insertCompany(cmp)
-                        }
-                    }
-                    mc.registerCallback(responseBody)
-                }
-
-            }
-
-            override fun onFailure(call: Call<Company>, t: Throwable) {
-                Log.d("CCD","Fail to get Company API")
-            }
-        })
-    }
-
 }

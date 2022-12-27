@@ -31,7 +31,8 @@ class RegisterActivity : AppCompatActivity() {
             if (nama.isNotEmpty()&&email.isNotEmpty()&&pass.isNotEmpty()&&conf.isNotEmpty()){
                 if (pass==conf){
                     val accountRepo=AccountRepository(db)
-                    accountRepo.registerUser(this, email,pass,nama)
+                    b.loadModal.visibility = View.VISIBLE
+                    accountRepo.register(this, 1, email,pass,nama)
                 }else{
                     runOnUiThread { Toast.makeText(this@RegisterActivity,"Password dan confirmation password tidak sama!",Toast.LENGTH_SHORT).show() }
                 }
@@ -57,12 +58,13 @@ class RegisterActivity : AppCompatActivity() {
 
     fun registerCallback(result : User){
         b.loadModal.visibility = View.INVISIBLE
-        Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
         if(result.status == 200){
             var i : Intent = Intent(this, HomeActivity::class.java)
             i.putExtra("userlogin",result.data[0])
             startActivity(i)
             this.finish()
+        }else{
+            Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
         }
     }
 }

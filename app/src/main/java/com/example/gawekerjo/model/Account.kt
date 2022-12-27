@@ -12,7 +12,7 @@ open class Account(
     val email: String,
     var description: String?,
     var password: String,
-    val notelp: String,
+    val notelp: String?,
     val created_at: String,
     var updated_at: String?,
 ) : Parcelable {

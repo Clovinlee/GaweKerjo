@@ -16,8 +16,10 @@ interface UserApi {
         ): Call<User>
     @POST("register")
     fun Register(
+        @Query("type")type: Int,
         @Query("email")email: String,
         @Query("password")password:String,
-        @Query("name")name:String
+        @Query("name")name:String,
+        @Query("notelp")notelp:String
     ):Call<User>
 }

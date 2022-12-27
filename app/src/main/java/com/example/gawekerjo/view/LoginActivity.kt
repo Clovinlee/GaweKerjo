@@ -39,10 +39,15 @@ class LoginActivity : AppCompatActivity() {
             val email : String = b.txtLoginEmail.text.toString()
             var password : String = b.txtLoginPassword.text.toString()
 
+            if(email == "" || password == ""){
+                Toast.makeText(this, "Error, Field cannot be empty!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             // LOAD SCREEN
              b.loadModal.visibility = View.VISIBLE
 
-            accRepo.loginUser(this,email ,password)
+            accRepo.login(this,email ,password)
         }
 
         b.btnLoginToRegister.setOnClickListener {
@@ -56,27 +61,14 @@ class LoginActivity : AppCompatActivity() {
         // OTHER API
     }
 
-    fun verifyLoginUser(result : User){
+    fun verifyLogin(result : User){
+        b.loadModal.visibility = View.INVISIBLE
         if(result.data.size > 0){
             val usr = result.data[0]
-            b.loadModal.visibility = View.INVISIBLE
             val i : Intent = Intent(this, HomeActivity::class.java)
             i.putExtra("userlogin", usr)
             startActivity(i)
         }else{
-            accRepo.loginCompany(this,b.txtLoginEmail.text.toString(), b.txtLoginPassword.text.toString())
-        }
-    }
-
-    fun verifyLoginCompany(result : Company){
-        if(result.data.size > 0){
-            val cmp = result.data[0]
-            b.loadModal.visibility = View.INVISIBLE
-            val i : Intent = Intent(this, HomeActivity::class.java)
-            i.putExtra("userlogin", cmp)
-            startActivity(i)
-        }else{
-            b.loadModal.visibility = View.INVISIBLE
             runOnUiThread {
                 Toast.makeText(this, "Account not found!", Toast.LENGTH_SHORT).show()
             }

@@ -9,10 +9,18 @@ class UserItem(
     name: String,
     email: String,
     description: String?,
-    var gender: String?,
     password: String,
+    notelp: String?,
+
+    // USER
+    var gender: String?,
     var birthdate: String?,
-    notelp: String,
+
+    // COMPANY
+    var lokasi:String?,
+    var founded:String?,
+    var industry:String?,
+
     created_at: String,
     updated_at: String?,
 ) : Account(id, name, email, description, password, notelp, created_at, updated_at){}

@@ -15,14 +15,6 @@ interface CompanyApi {
         @Query("password") password : String?,
     ): Call<Company>
 
-    @POST("companyRegister")
-    fun register(
-        @Query("name")name: String,
-        @Query("email")email:String,
-        @Query("notelp")notelp:String,
-        @Query("password")password:String
-    ): Call<Company>
-
     @GET("searchCompany")
     fun searchCompany():Call<CompanyItem>
 }
