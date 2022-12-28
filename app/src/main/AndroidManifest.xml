@@ -17,9 +17,6 @@
         android:theme="@style/Theme.GaweKerjo"
         tools:targetApi="31">
         <activity
-            android:name=".view.RegisterCompanyActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.DetailpostActivity"
             android:exported="false" />
         <activity
@@ -38,13 +35,20 @@
             android:name=".view.HomeActivity"
             android:exported="false" />
         <activity
+            android:name=".view.RegisterCompanyActivity"
+            android:theme="@style/Theme.GaweKerjo.NoActionBar"
+            android:exported="false" />
+        <activity
             android:name=".view.RegisterActivity"
+            android:theme="@style/Theme.GaweKerjo.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.LoginActivity"
+            android:theme="@style/Theme.GaweKerjo.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.GaweKerjo.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
 //        var x : CountryRepository = CountryRepository(db)
 //        x.getAllCountries()
+
         checkRemember(this)
     }
 

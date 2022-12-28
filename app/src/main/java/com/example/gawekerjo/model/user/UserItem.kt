@@ -1,16 +1,18 @@
 package com.example.gawekerjo.model.user
 
+import android.os.Parcelable
 import androidx.room.Entity
-import com.example.gawekerjo.model.Account
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "users")
+@Parcelize
 class UserItem(
-    id: Int,
-    name: String,
-    email: String,
-    description: String?,
-    password: String,
-    notelp: String?,
+    var id: Int,
+    var name: String,
+    var email: String,
+    var description: String?,
+    var password: String,
+    var notelp: String?,
 
     // USER
     var gender: String?,
@@ -21,6 +23,6 @@ class UserItem(
     var founded:String?,
     var industry:String?,
 
-    created_at: String,
-    updated_at: String?,
-) : Account(id, name, email, description, password, notelp, created_at, updated_at){}
+    var created_at: String,
+    var updated_at: String?,
+) : Parcelable
