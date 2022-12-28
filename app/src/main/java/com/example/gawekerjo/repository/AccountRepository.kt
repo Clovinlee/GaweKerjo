@@ -2,12 +2,9 @@ package com.example.gawekerjo.repository
 
 import android.app.Activity
 import android.util.Log
-import com.example.gawekerjo.api.CompanyApi
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
-import com.example.gawekerjo.model.company.Company
-import com.example.gawekerjo.model.company.CompanyItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.view.LoginActivity

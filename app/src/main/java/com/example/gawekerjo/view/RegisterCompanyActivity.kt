@@ -7,10 +7,8 @@ import android.view.View
 import android.widget.Toast
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityRegisterCompanyBinding
-import com.example.gawekerjo.model.company.Company
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.repository.AccountRepository
-import com.example.gawekerjo.repository.CompanyRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 

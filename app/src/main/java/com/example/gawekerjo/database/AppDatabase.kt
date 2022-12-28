@@ -5,14 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gawekerjo.model.*
-import com.example.gawekerjo.model.company.CompanyItem
 import com.example.gawekerjo.model.user.UserItem
 
 @Database(entities = [
     AchievementItem::class,
     ChatItem::class,
     CommentItem::class,
-    CompanyItem::class,
     EducationItem::class,
     ExperienceItem::class,
     LanguageItem::class,
@@ -32,7 +30,6 @@ abstract class AppDatabase:RoomDatabase() {
     abstract val achievementDao:AchievementDao
     abstract val chatDao:ChatDao
     abstract val commentDao:CommentDao
-    abstract val companyDao:CompanyDao
     abstract val educationDao:EducationDao
     abstract val experienceDao:ExperienceDao
     abstract val languageDao:LanguageDao

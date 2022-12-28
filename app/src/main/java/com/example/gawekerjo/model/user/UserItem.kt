@@ -2,11 +2,13 @@ package com.example.gawekerjo.model.user
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "users")
 @Parcelize
 class UserItem(
+    @PrimaryKey
     var id: Int,
     var name: String,
     var email: String,
