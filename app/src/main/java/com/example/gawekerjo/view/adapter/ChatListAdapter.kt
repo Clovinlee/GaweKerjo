@@ -28,10 +28,10 @@ class ChatListAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val c=listchat[position]
         val f= if (c.user_id==id) friends.find { u->u.id==c.recipient_id } else friends.find { u->u.id==c.user_id }
-        val dc=listdchat.filter { u->u.chat_id==c.id }.last()
+        val dc=listdchat.filter { u->u.chat_id==c.id }
         with(holder){
             tvnama.text=f!!.name
-            tvbody.text=dc.message
+            tvbody.text=if(dc.isEmpty()) "" else dc.last().message
         }
     }
 
