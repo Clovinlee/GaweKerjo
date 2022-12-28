@@ -1,7 +1,7 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.ChatItem
+import com.example.gawekerjo.model.chat.ChatItem
 
 @Dao
 interface ChatDao {
@@ -11,6 +11,8 @@ interface ChatDao {
     suspend fun deleteChat(chat: ChatItem)
     @Update
     suspend fun updateChat(chat: ChatItem)
-    @Query("SELECT * FROM chats")
-    suspend fun getAllChat():List<ChatItem>
+    @Query("SELECT * FROM chats WHERE user_id=:id OR recipient_id=:id")
+    suspend fun getAllChat(id:Int):List<ChatItem>
+    @Query("DELETE FROM chats WHERE user_id=:id OR recipient_id=:id")
+    suspend fun clear(id:Int)
 }

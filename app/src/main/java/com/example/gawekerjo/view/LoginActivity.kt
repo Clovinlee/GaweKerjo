@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
         b.loadModal.visibility = View.INVISIBLE
         if(result.data.size > 0){
             val usr = result.data[0]
-            val i : Intent = Intent(this, HomeActivity::class.java)
+            val i : Intent = Intent(this, ChatActivity::class.java)
             i.putExtra("userlogin", usr)
             startActivity(i)
             this.finish()

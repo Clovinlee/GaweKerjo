@@ -1,13 +1,14 @@
-package com.example.gawekerjo.model
+package com.example.gawekerjo.model.userchat
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-@Entity(tableName = "chats")
-data class ChatItem(
+@Entity(tableName = "user_chats")
+data class UserChatItem(
     @PrimaryKey
     val id:Int,
     val user_id:Int,
-    val recipient_id:Int,
+    val chat_id:Int,
+    val message:String,
     var created_at:String,
     var updated_at:String?,
-    )
+)

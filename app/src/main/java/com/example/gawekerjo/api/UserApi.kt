@@ -14,6 +14,10 @@ interface UserApi {
         @Query("email") email : String?,
         @Query("password") password : String?,
         ): Call<User>
+    @GET("friend")
+    fun getFriend(
+        @Query("id") id : Int?
+    ): Call<User>
     @POST("register")
     fun Register(
         @Query("type")type: Int,

@@ -5,8 +5,11 @@ import android.util.Log
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
+import com.example.gawekerjo.model.chat.ChatItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userchat.UserChatItem
+import com.example.gawekerjo.view.ChatActivity
 import com.example.gawekerjo.view.LoginActivity
 import com.example.gawekerjo.view.RegisterActivity
 import com.example.gawekerjo.view.RegisterCompanyActivity
@@ -51,6 +54,35 @@ class AccountRepository (var db : AppDatabase) {
                 Log.d("CCD", t.message.toString())
             }
 
+        })
+    }
+
+    fun getFriend(
+        id: Int,
+        ca: ChatActivity,
+        listchat: ArrayList<ChatItem>,
+        listdchat: ArrayList<UserChatItem>
+    ){
+        var rc_friend=rc.create(UserApi::class.java).getFriend(id)
+        rc_friend.enqueue(object : Callback<User>{
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                coroutine.launch {
+                    //db.chatDao.clear(id)
+                    val responseBody = response.body()
+                    val listfriend= arrayListOf<UserItem>()
+                    if(responseBody != null){
+                        if(responseBody.status == 200 && responseBody.data.isNotEmpty()){
+                            listfriend.addAll(responseBody.data)
+                        }
+                        ca.Start(listchat,listdchat,listfriend)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Log.d("CCD", "Error getting chat : $id")
+                Log.d("CCD", t.message.toString())
+            }
         })
     }
 

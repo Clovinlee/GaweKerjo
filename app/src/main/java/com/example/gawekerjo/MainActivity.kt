@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityMainBinding
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.view.ChatActivity
 import com.example.gawekerjo.view.HomeActivity
 import com.example.gawekerjo.view.LoginActivity
 import kotlinx.coroutines.CoroutineScope
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             val usr : UserItem? = db.userDao.getLastUser()
             runOnUiThread {
                 if(usr != null){
-                    val i : Intent = Intent(ctx, HomeActivity::class.java)
+                    val i : Intent = Intent(ctx, ChatActivity::class.java)
                     i.putExtra("userlogin", usr)
                     startActivity(i)
                 }else{

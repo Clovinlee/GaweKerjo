@@ -1,7 +1,7 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.UserChatItem
+import com.example.gawekerjo.model.userchat.UserChatItem
 
 @Dao
 interface UserChatDao {
@@ -13,4 +13,6 @@ interface UserChatDao {
     suspend fun updateUserChat(userchat: UserChatItem)
     @Query("SELECT * FROM user_chats")
     suspend fun getAllUserChat():List<UserChatItem>
+    @Query("DELETE FROM user_chats")
+    suspend fun clear()
 }
