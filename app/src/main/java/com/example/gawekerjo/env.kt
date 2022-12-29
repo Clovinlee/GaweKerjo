@@ -6,7 +6,7 @@ object env {
 
 //    const val API_URL ="http://127.0.0.1:8000/api/"
 //    const val API_URL = "http://192.168.1.6/api/"
-    const val API_URL = "https://fe35-2001-448a-5130-d120-bc29-c5c3-ff88-359f.ap.ngrok.io/api/"
+    const val API_URL = "https://58cd-2001-448a-5020-7e5b-919b-6ff2-77c3-d725.ap.ngrok.io/api/"
     //const val API_URL = "https://f86d-2001-448a-5020-7e5b-569-3b84-2fb6-ec4d.ap.ngrok.io/api/"
     const val USER_ENDPOINT = "users"
 
