@@ -2,4 +2,18 @@
     <string name="app_name">GaweKerjo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="kemahiran">
+        <item>Choose</item>
+        <item>Tingkat dasar</item>
+        <item>Tingkat menengah</item>
+        <item>Tingkat Profesional</item>
+        <item>Tingkat Profesional mahir</item>
+        <item>Tingkat fasih atau bahasa asli</item>
+    </string-array>
+
+    <string-array name="kelamin">
+        <item>Pria</item>
+        <item>Wanita</item>
+    </string-array>
 </resources>

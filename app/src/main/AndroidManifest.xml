@@ -17,6 +17,18 @@
         android:theme="@style/Theme.GaweKerjo"
         tools:targetApi="31">
         <activity
+            android:name=".view.EditProfileUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.AddBahasaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.AddPendidikanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.AddKeahlianActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.DetailpostActivity"
             android:exported="false" />
         <activity
@@ -36,20 +48,20 @@
             android:exported="false" />
         <activity
             android:name=".view.RegisterCompanyActivity"
-            android:theme="@style/Theme.GaweKerjo.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.GaweKerjo.NoActionBar" />
         <activity
             android:name=".view.RegisterActivity"
-            android:theme="@style/Theme.GaweKerjo.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.GaweKerjo.NoActionBar" />
         <activity
             android:name=".view.LoginActivity"
-            android:theme="@style/Theme.GaweKerjo.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.GaweKerjo.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.GaweKerjo.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.GaweKerjo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

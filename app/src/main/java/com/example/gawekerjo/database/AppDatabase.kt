@@ -5,7 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gawekerjo.model.*
+import com.example.gawekerjo.model.chat.ChatItem
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userchat.UserChatItem
 
 @Database(entities = [
     AchievementItem::class,
