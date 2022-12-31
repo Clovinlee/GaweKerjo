@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/llchat"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvchatnama"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nama User"
-        android:textStyle="bold" />
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/llrecipient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvchatisi"
-            android:layout_width="match_parent"
+            android:id="@+id/tvchatisirecipient"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="Isi" />
+
+        <TextView
+            android:id="@+id/tvchatjamrecipient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="18:00" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lluser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/tvchatjam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="18:00" />
+
+        <TextView
+            android:id="@+id/tvchatisi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Isi" />
+
     </LinearLayout>
 
 </LinearLayout>

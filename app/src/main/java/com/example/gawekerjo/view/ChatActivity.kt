@@ -1,6 +1,7 @@
 package com.example.gawekerjo.view
 
 import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,13 +9,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
-import com.example.gawekerjo.database.ChatDao
 import com.example.gawekerjo.databinding.ActivityChatBinding
+import com.example.gawekerjo.model.chat.Chat
 import com.example.gawekerjo.model.chat.ChatItem
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.model.userchat.UserChatItem
@@ -39,6 +42,7 @@ class ChatActivity : AppCompatActivity() {
     lateinit var new_friend_dataset:ArrayList<UserItem>
     lateinit var adaptersearch:ChatAddSearchAdapter
     lateinit var d:Dialog
+    lateinit var launcher: ActivityResultLauncher<Intent>
     var loaded=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +52,25 @@ class ChatActivity : AppCompatActivity() {
         user=intent.getParcelableExtra("userlogin")!!
         db=AppDatabase.Build(this)
         cr= ChatRepository(db)
+        launcher=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            val res=it.data
+            if (res!=null){
+                val newchat=res.getParcelableArrayListExtra<UserChatItem>("newchat")!!
+                if (chatlist.addAll(newchat)){
+                    OrderList()
+                }
+            }
+        }
         c.launch {
             cr.getChat(user.id,this@ChatActivity)
         }
     }
+
+    private fun OrderList() {
+        listchat.sortByDescending { c->if(chatlist.any { uc -> uc.chat_id == c.id })chatlist.filter { uc->uc.chat_id==c.id }.maxOf { uc->uc.id }else c.id+chatlist.maxOf { uc->uc.id } }
+        adapter.notifyDataSetChanged()
+    }
+
     fun Start(
         lc: ArrayList<ChatItem>,
         listdchat: ArrayList<UserChatItem>,
@@ -63,7 +82,10 @@ class ChatActivity : AppCompatActivity() {
         this.listfriend=listfriend
         this.chatlist=listdchat
         runOnUiThread {
-            adapter= ChatListAdapter(this.listfriend,listchat,chatlist,user.id)
+            adapter= ChatListAdapter(this.listfriend,listchat,chatlist,user.id){f, c ->
+                detailChat(f,c)
+            }
+            OrderList()
             new_friend_dataset= arrayListOf()
             new_friend_dataset.addAll(new_friend)
             adaptersearch= ChatAddSearchAdapter(new_friend_dataset){
@@ -86,10 +108,12 @@ class ChatActivity : AppCompatActivity() {
             if (f != null) {
                 listfriend.add(f)
                 listchat.add(c)
-                adapter.notifyDataSetChanged()
+                //adapter.notifyDataSetChanged()
+                OrderList()
             }
             new_friend.remove(f)
             adaptersearch.notifyDataSetChanged()
+            detailChat(f!!,c)
         }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -111,6 +135,15 @@ class ChatActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+    fun detailChat(recipient:UserItem,hchat:ChatItem){
+        val chat=chatlist.filter { c->c.chat_id==hchat.id } as ArrayList
+        val i=Intent(this,DetailChatActivity::class.java)
+        i.putExtra("user",user)
+        i.putExtra("rec",recipient)
+        i.putExtra("hchat",hchat)
+        i.putParcelableArrayListExtra("chat",chat)
+        launcher.launch(i)
     }
     private fun Dialog() {
         val binding=layoutInflater.inflate(R.layout.chat_dialog_layout,null)

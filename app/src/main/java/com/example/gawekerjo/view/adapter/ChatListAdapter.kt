@@ -14,7 +14,8 @@ class ChatListAdapter(
     val friends:ArrayList<UserItem>,
     val listchat:ArrayList<ChatItem>,
     val listdchat:ArrayList<UserChatItem>,
-    val id:Int
+    val id:Int,
+    val detail: (f:UserItem,c:ChatItem) -> Unit
 ):RecyclerView.Adapter<ChatListAdapter.VH>() {
     inner class VH(val v:View):RecyclerView.ViewHolder(v) {
         val tvnama:TextView=v.findViewById(R.id.tvChatListNama)
@@ -32,6 +33,7 @@ class ChatListAdapter(
         with(holder){
             tvnama.text=f!!.name
             tvbody.text=if(dc.isEmpty()) "" else dc.last().message
+            v.setOnClickListener { detail.invoke(f,c) }
         }
     }
 
