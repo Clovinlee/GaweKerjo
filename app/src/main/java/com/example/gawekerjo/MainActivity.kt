@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             val usr : UserItem? = db.userDao.getLastUser()
             runOnUiThread {
                 if(usr != null){
-                    val i : Intent = Intent(ctx, ChatActivity::class.java)
+                    val i : Intent = Intent(ctx, HomeActivity::class.java)
                     i.putExtra("userlogin", usr)
                     startActivity(i)
                 }else{
