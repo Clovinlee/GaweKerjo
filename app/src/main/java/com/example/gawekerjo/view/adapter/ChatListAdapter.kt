@@ -11,10 +11,11 @@ import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.model.userchat.UserChatItem
 
 class ChatListAdapter(
-    val listchat:ArrayList<ChatItem>,
     val friends:ArrayList<UserItem>,
+    val listchat:ArrayList<ChatItem>,
     val listdchat:ArrayList<UserChatItem>,
-    val id:Int
+    val id:Int,
+    val detail: (f:UserItem,c:ChatItem) -> Unit
 ):RecyclerView.Adapter<ChatListAdapter.VH>() {
     inner class VH(val v:View):RecyclerView.ViewHolder(v) {
         val tvnama:TextView=v.findViewById(R.id.tvChatListNama)
@@ -28,10 +29,11 @@ class ChatListAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val c=listchat[position]
         val f= if (c.user_id==id) friends.find { u->u.id==c.recipient_id } else friends.find { u->u.id==c.user_id }
-        val dc=listdchat.filter { u->u.chat_id==c.id }.last()
+        val dc=listdchat.filter { u->u.chat_id==c.id }
         with(holder){
             tvnama.text=f!!.name
-            tvbody.text=dc.message
+            tvbody.text=if(dc.isEmpty()) "" else dc.last().message
+            v.setOnClickListener { detail.invoke(f,c) }
         }
     }
 

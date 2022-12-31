@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.AddKeahlianActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgTambahKeahlianBack"
+            android:layout_width="41dp"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:text="Tambah keahlian"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="34dp"
+            android:text="Keahlian" />
+
+        <EditText
+            android:id="@+id/etTambahKeahlianKeahlian"
+            android:layout_width="355dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/btnTambahKeahlianSimpan"
+            android:layout_width="302dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="430dp"
+            android:text="Simpan"
+            app:cornerRadius="25dp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
