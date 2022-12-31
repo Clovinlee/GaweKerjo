@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/txtUserDrawerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,7 +28,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/txtUserDrawerEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
