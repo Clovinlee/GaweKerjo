@@ -18,6 +18,10 @@ interface UserApi {
     fun getFriend(
         @Query("id") id : Int?
     ): Call<User>
+    @GET("newfriend")
+    fun getNewFriend(
+        @Query("id") id : Int?
+    ): Call<User>
     @POST("register")
     fun Register(
         @Query("type")type: Int,

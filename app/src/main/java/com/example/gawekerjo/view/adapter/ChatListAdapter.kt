@@ -11,8 +11,8 @@ import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.model.userchat.UserChatItem
 
 class ChatListAdapter(
-    val listchat:ArrayList<ChatItem>,
     val friends:ArrayList<UserItem>,
+    val listchat:ArrayList<ChatItem>,
     val listdchat:ArrayList<UserChatItem>,
     val id:Int
 ):RecyclerView.Adapter<ChatListAdapter.VH>() {

@@ -74,7 +74,36 @@ class AccountRepository (var db : AppDatabase) {
                         if(responseBody.status == 200 && responseBody.data.isNotEmpty()){
                             listfriend.addAll(responseBody.data)
                         }
-                        ca.Start(listchat,listdchat,listfriend)
+                        getNewFriend(id,ca,listchat,listdchat,listfriend)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Log.d("CCD", "Error getting chat : $id")
+                Log.d("CCD", t.message.toString())
+            }
+        })
+    }
+    fun getNewFriend(
+        id: Int,
+        ca: ChatActivity,
+        listchat: ArrayList<ChatItem>,
+        listdchat: ArrayList<UserChatItem>,
+        listfriend: ArrayList<UserItem>
+    ){
+        var rc_friend=rc.create(UserApi::class.java).getNewFriend(id)
+        rc_friend.enqueue(object : Callback<User>{
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                coroutine.launch {
+                    //db.chatDao.clear(id)
+                    val responseBody = response.body()
+                    val newfriends= arrayListOf<UserItem>()
+                    if(responseBody != null){
+                        if(responseBody.status == 200 && responseBody.data.isNotEmpty()){
+                            newfriends.addAll(responseBody.data)
+                        }
+                        ca.Start(listchat,listdchat,listfriend,newfriends)
                     }
                 }
             }

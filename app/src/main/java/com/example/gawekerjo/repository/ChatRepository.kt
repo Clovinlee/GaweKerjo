@@ -68,4 +68,25 @@ class ChatRepository(var db:AppDatabase) {
             }
         })
     }
+    fun newChat(sender:Int,Recipient:Int,ca: ChatActivity){
+        var rc_chat=rc.create(ChatApi::class.java).newChat(sender,Recipient)
+        rc_chat.enqueue(object :Callback<Chat>{
+            override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
+                c.launch {
+                    val responseBody = response.body()
+                    if(responseBody != null){
+                        if(responseBody.status == 200 && responseBody.data.isNotEmpty()){
+                            ca.newChat(responseBody.data[0])
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Chat>, t: Throwable) {
+                Log.d("CCD", "Error getting chat ")
+                Log.d("CCD", t.message.toString())
+            }
+
+        })
+    }
 }
