@@ -8,6 +8,7 @@ import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityMainBinding
 import com.example.gawekerjo.databinding.ActivityUserprofileBinding
+import com.example.gawekerjo.model.user.UserItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +18,7 @@ class UserprofileActivity : AppCompatActivity() {
     private lateinit var b: ActivityUserprofileBinding
     private lateinit var db : AppDatabase
     private val coroutine = CoroutineScope(Dispatchers.IO)
+    lateinit var user : UserItem
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,11 +29,22 @@ class UserprofileActivity : AppCompatActivity() {
         setContentView(view)
 
         db = AppDatabase.Build(this)
+        try {
+
+            user = intent.getParcelableExtra<UserItem>("userLogin")!!
+        }catch (e:Exception){
+            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+        }
+
+        loadprofile(user)
+
+//        Toast.makeText(this, "${user.name}", Toast.LENGTH_SHORT).show()
 
         //masuk edit profile
 
         b.imgUserProfileEditProfile.setOnClickListener {
             val i : Intent = Intent(this, EditProfileUserActivity::class.java)
+            i.putExtra("userLogin",user)
             startActivity(i)
         }
 
@@ -58,6 +71,28 @@ class UserprofileActivity : AppCompatActivity() {
         }
 
 
+
+    }
+
+    fun loadprofile(usr:UserItem){
+
+        b.tvUserProfileNama.text = "${usr.name}"
+        if (usr.gender == null){
+            b.tvUserProfileGender.text = "Belum diatur"
+        }else{
+            if (usr.gender == "P"){
+                b.tvUserProfileGender.text = "Wanita"
+            }
+            else{
+                b.tvUserProfileGender.text = "Pria"
+            }
+        }
+        if (usr.description == null){
+            b.tvUserProfileDeskripsi.text = "Kosong"
+        }
+        else{
+            b.tvUserProfileDeskripsi.text = "${usr.description}"
+        }
 
     }
 

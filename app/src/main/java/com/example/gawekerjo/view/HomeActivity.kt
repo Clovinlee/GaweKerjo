@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -86,6 +87,12 @@ class HomeActivity : AppCompatActivity() {
                 // ACTIVITY TO PROFILE
                 // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
                 // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
+//                Toast.makeText(this, "${user.id}", Toast.LENGTH_SHORT).show()
+                runOnUiThread {
+                    val i : Intent = Intent(this, UserprofileActivity::class.java)
+                    i.putExtra("userLogin", user)
+                    startActivity(i)
+                }
             }else if(it.itemId == R.id.navmenu_messages){
                 // ACTIVITY TO PROFILE
                 // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
