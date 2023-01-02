@@ -44,6 +44,7 @@ class DetailChatActivity : AppCompatActivity() {
         with(b){
             rvdetailchat.adapter=adapter
             rvdetailchat.layoutManager=LinearLayoutManager(this@DetailChatActivity,LinearLayoutManager.VERTICAL,false)
+            //rvdetailchat.layoutManager?.scrollToPosition(chatlist.lastIndex)
             btnsendchat.setOnClickListener {
                 val txt=etchat.text.toString()
                 c.launch {
@@ -56,7 +57,10 @@ class DetailChatActivity : AppCompatActivity() {
     fun Chat(c: UserChatItem) {
         newchatlist.add(c)
         chatlist.add(c)
-        runOnUiThread { adapter.notifyItemInserted(chatlist.lastIndex) }
+        runOnUiThread {
+            adapter.notifyDataSetChanged()
+            b.rvdetailchat.layoutManager?.scrollToPosition(chatlist.lastIndex)
+        }
     }
 
     override fun onBackPressed() {

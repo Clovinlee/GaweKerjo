@@ -19,7 +19,11 @@ class UserprofileActivity : AppCompatActivity() {
     private lateinit var db : AppDatabase
     private val coroutine = CoroutineScope(Dispatchers.IO)
     lateinit var user : UserItem
+    lateinit var us : UserItem
 
+    override fun onResume() {
+        super.onResume()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +35,16 @@ class UserprofileActivity : AppCompatActivity() {
         db = AppDatabase.Build(this)
         try {
 
-            user = intent.getParcelableExtra<UserItem>("userLogin")!!
+            us = intent.getParcelableExtra<UserItem>("userLogin")!!
         }catch (e:Exception){
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
         }
 
-        loadprofile(user)
+        coroutine.launch {
+            user = db.userDao.getUserByEmail(us.email)!!
+            loadprofile(user)
+        }
+
 
 //        Toast.makeText(this, "${user.name}", Toast.LENGTH_SHORT).show()
 
