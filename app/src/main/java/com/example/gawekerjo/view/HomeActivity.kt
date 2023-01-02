@@ -97,6 +97,9 @@ class HomeActivity : AppCompatActivity() {
                 // ACTIVITY TO PROFILE
                 // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
                 // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
+                val i=Intent(this,ChatActivity::class.java)
+                i.putExtra("userlogin",user)
+                startActivity(i)
             }else if(it.itemId == R.id.navmenu_logout){
                 coroutine.launch {
                     db.userDao.clear()
