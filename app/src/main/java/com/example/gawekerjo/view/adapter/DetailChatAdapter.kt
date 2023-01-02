@@ -37,7 +37,7 @@ class DetailChatAdapter(
         yesterday.date--
         val tgl=if (formatter.format(Date())==tanggal) "Today" else if(formatter.format(yesterday)==tanggal) "Yesterday" else tanggal
         with(holder){
-            if(position==0){
+            if(c==chat.first()||tanggal!=formatter.format(parser.parse(chat[position-1].created_at.substring(0,c.created_at.indexOf("T"))))){
                 tv.visibility=View.VISIBLE
                 tv.text=tgl
             }
@@ -48,13 +48,17 @@ class DetailChatAdapter(
                 val tvmessage=v.findViewById<TextView>(R.id.tvchatisi)
                 val tvjam=v.findViewById<TextView>(R.id.tvchatjam)
                 tvmessage.text=c.message
-                tvjam.text=formatter.format(parser.parse(c.created_at.substring(c.created_at.indexOf("T")+1,c.created_at.indexOf("T")+6)))
+                val jam=parser.parse(c.created_at.substring(c.created_at.indexOf("T")+1,c.created_at.indexOf("T")+6))
+                jam.hours+=7
+                tvjam.text=formatter.format(jam)
             }else{
                 lluser.visibility=View.GONE
                 val tvmessage=v.findViewById<TextView>(R.id.tvchatisirecipient)
                 val tvjam=v.findViewById<TextView>(R.id.tvchatjamrecipient)
                 tvmessage.text=c.message
-                tvjam.text=formatter.format(parser.parse(c.created_at.substring(c.created_at.indexOf("T")+1,c.created_at.indexOf("T")+6)))
+                val jam=parser.parse(c.created_at.substring(c.created_at.indexOf("T")+1,c.created_at.indexOf("T")+6))
+                jam.hours+=7
+                tvjam.text=formatter.format(jam)
             }
         }
     }

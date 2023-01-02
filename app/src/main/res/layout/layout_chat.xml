@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical">
 
     <TextView
@@ -26,13 +27,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingLeft="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvchatisirecipient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_gray"
+                android:padding="10dp"
                 android:gravity="right"
                 android:text="Isi" />
 
@@ -40,7 +43,6 @@
                 android:id="@+id/tvchatjamrecipient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="18:00" />
 
         </LinearLayout>
@@ -50,20 +52,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:gravity="right"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:paddingRight="10dp"
             android:visibility="visible">
 
             <TextView
                 android:id="@+id/tvchatjam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:text="18:00" />
 
             <TextView
                 android:id="@+id/tvchatisi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_blue"
+                android:padding="10dp"
                 android:text="Isi" />
 
         </LinearLayout>
