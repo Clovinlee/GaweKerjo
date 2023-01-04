@@ -23,6 +23,7 @@ import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityHomeBinding
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.repository.SkillRepository
 import com.google.android.material.navigation.NavigationView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
@@ -45,6 +46,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var toggle : ActionBarDrawerToggle
 
     lateinit var user : UserItem
+    private lateinit var skillrepo : SkillRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,11 @@ class HomeActivity : AppCompatActivity() {
             Log.d("CCD",th.message.toString())
             finish()
         }
+
+        //untuk profil
+        skillrepo = SkillRepository(db)
+        skillrepo.getAllSkill(this)
+        skillrepo.getUserSkill(this, user.id, null)
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)

@@ -1,12 +1,13 @@
-package com.example.gawekerjo.model
+package com.example.gawekerjo.model.userskill
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-@Entity(tableName = "skills")
-data class SkillItem(
+@Entity(tableName = "user_skills")
+data class UserSkillItem(
     @PrimaryKey
     val id:Int,
-    val name:String,
+    val user_id:Int,
+    val skill_id:Int,
     var created_at:String,
     var updated_at:String?,
 )

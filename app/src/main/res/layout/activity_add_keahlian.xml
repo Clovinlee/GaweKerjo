@@ -35,21 +35,31 @@
             android:layout_marginTop="34dp"
             android:text="Keahlian" />
 
-        <EditText
-            android:id="@+id/etTambahKeahlianKeahlian"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dropdownAddKeahlianKeahlian"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="355dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="25dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="Choose" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnTambahKeahlianSimpan"
             android:layout_width="302dp"
             android:layout_height="47dp"
             android:layout_gravity="center"
-            android:layout_marginTop="430dp"
+            android:layout_marginTop="370dp"
             android:text="Simpan"
             app:cornerRadius="25dp" />
     </LinearLayout>
