@@ -60,6 +60,7 @@ class DetailChatActivity : AppCompatActivity() {
         runOnUiThread {
             adapter.notifyDataSetChanged()
             b.rvdetailchat.layoutManager?.scrollToPosition(chatlist.lastIndex)
+            b.etchat.text.clear()
         }
     }
 
