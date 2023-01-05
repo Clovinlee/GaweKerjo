@@ -17,6 +17,7 @@
         android:theme="@style/Theme.GaweKerjo"
         tools:targetApi="31">
         <activity
+<<<<<<< Updated upstream
             android:name=".OfferListActivity"
             android:exported="false" />
         <activity
@@ -44,6 +45,11 @@
             android:name=".view.AddKeahlianActivity"
             android:exported="false" />
         <activity
+=======
+            android:name=".FriendListActivity"
+            android:exported="false" />
+        <activity
+>>>>>>> Stashed changes
             android:name=".view.DetailpostActivity"
             android:exported="false" />
         <activity
