@@ -3,9 +3,11 @@ package com.example.gawekerjo.repository
 import android.app.Activity
 import android.util.Log
 import com.example.gawekerjo.api.RetrofitClient
+import com.example.gawekerjo.api.SkillApi
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.model.chat.ChatItem
+import com.example.gawekerjo.model.skill.Skill
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.model.userchat.UserChatItem
@@ -191,4 +193,6 @@ class AccountRepository (var db : AppDatabase) {
 
         })
     }
+
+
 }

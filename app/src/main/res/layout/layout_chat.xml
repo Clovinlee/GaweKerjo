@@ -14,7 +14,8 @@
         android:layout_weight="1"
         android:text="tanggal"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,6 +38,7 @@
                 android:background="@drawable/rounded_corner_gray"
                 android:padding="10dp"
                 android:gravity="right"
+                android:layout_marginRight="10dp"
                 android:text="Isi" />
 
             <TextView
@@ -69,6 +71,7 @@
                 android:id="@+id/tvchatisi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/rounded_corner_blue"
                 android:padding="10dp"
                 android:text="Isi" />

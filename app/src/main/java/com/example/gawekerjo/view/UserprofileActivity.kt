@@ -4,11 +4,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
-import com.example.gawekerjo.databinding.ActivityMainBinding
 import com.example.gawekerjo.databinding.ActivityUserprofileBinding
+import com.example.gawekerjo.model.skill.SkillItem
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userskill.UserSkillItem
+import com.example.gawekerjo.repository.SkillRepository
+import com.example.gawekerjo.view.adapter.KeahlianListAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,10 +27,27 @@ class UserprofileActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     lateinit var user : UserItem
     lateinit var us : UserItem
+    private lateinit var skillrepo : SkillRepository
+    private lateinit var keahlianAdapter: KeahlianListAdapter
+    private lateinit var listskill : MutableList<UserSkillItem>
+    private lateinit var listnama: MutableList<SkillItem>
 
-    override fun onResume() {
-        super.onResume()
+    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        result: ActivityResult ->
+        if (result.resultCode == 1){
+//            skillrepo.getUserSkill(this, us.id, null)
+
+            listskill.clear()
+            coroutine.launch {
+
+                listskill.addAll(db.userskillDao.getAllUserSkill().toList())
+            }
+            keahlianAdapter.notifyDataSetChanged()
+
+        }
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +57,14 @@ class UserprofileActivity : AppCompatActivity() {
         setContentView(view)
 
         db = AppDatabase.Build(this)
+        skillrepo = SkillRepository(db)
+
+
+        listskill = mutableListOf()
+        listnama = mutableListOf()
+
+
+
         try {
 
             us = intent.getParcelableExtra<UserItem>("userLogin")!!
@@ -40,10 +72,29 @@ class UserprofileActivity : AppCompatActivity() {
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
         }
 
+//        skillrepo.getUserSkill(this, us.id, null)
+//        skillrepo.getAllSkill(this)
+
+
         coroutine.launch {
             user = db.userDao.getUserByEmail(us.email)!!
             loadprofile(user)
+            listskill.clear()
+            listskill.addAll(db.userskillDao.getAllUserSkill().toList())
+            listnama.addAll(db.skillDao.getAllSkill().toList())
+            keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity){
+
+            }
+
+            setLayoutManager()
+
+            keahlianAdapter.notifyDataSetChanged()
+
         }
+
+
+
+
 
 
 //        Toast.makeText(this, "${user.name}", Toast.LENGTH_SHORT).show()
@@ -69,7 +120,8 @@ class UserprofileActivity : AppCompatActivity() {
         // masuk tambah keahliam
         b.imgUserProfileTambahKeahlian.setOnClickListener {
             val i : Intent = Intent(this, AddKeahlianActivity::class.java)
-            startActivity(i)
+            i.putExtra("userLogin",user)
+            launcher.launch(i)
         }
 
         // masuk tambah bahasa
@@ -80,6 +132,12 @@ class UserprofileActivity : AppCompatActivity() {
 
 
 
+    }
+
+    fun setLayoutManager(){
+        val linearLayoutManager = LinearLayoutManager(this)
+        b.rvuserProfileKeahlian.adapter = keahlianAdapter
+        b.rvuserProfileKeahlian.layoutManager = linearLayoutManager
     }
 
     fun loadprofile(usr:UserItem){
