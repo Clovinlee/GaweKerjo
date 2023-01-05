@@ -92,8 +92,6 @@ class HomeActivity : AppCompatActivity() {
                 drawerLayout.closeDrawer(Gravity.LEFT)
             }else if(it.itemId == R.id.navmenu_profile){
                 // ACTIVITY TO PROFILE
-                // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
-                // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
 //                Toast.makeText(this, "${user.id}", Toast.LENGTH_SHORT).show()
                 runOnUiThread {
                     val i : Intent = Intent(this, UserprofileActivity::class.java)
@@ -101,12 +99,16 @@ class HomeActivity : AppCompatActivity() {
                     startActivity(i)
                 }
             }else if(it.itemId == R.id.navmenu_messages){
-                // ACTIVITY TO PROFILE
-                // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
-                // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
+                // ACTIVITY TO MESSAGES
                 val i=Intent(this,ChatActivity::class.java)
                 i.putExtra("userlogin",user)
                 startActivity(i)
+            }else if(it.itemId == R.id.navmenu_friend){
+                // ACTIVITY TO FRIEND
+                // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
+                // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
+                // SLOT PUNYA ( ESTHER GABRIEL TRIVENA )
+
             }else if(it.itemId == R.id.navmenu_logout){
                 coroutine.launch {
                     db.userDao.clear()

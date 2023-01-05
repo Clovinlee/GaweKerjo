@@ -18,10 +18,7 @@ class FriendListActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-<<<<<<< Updated upstream
-=======
     // method yang digunakan bila ada option menu yang terklik
->>>>>>> Stashed changes
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.menuaddfriend->{
@@ -32,10 +29,7 @@ class FriendListActivity : AppCompatActivity() {
                 true
             }
             else->{
-<<<<<<< Updated upstream
                 false
-=======
->>>>>>> Stashed changes
             }
         }
 

@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-<<<<<<< Updated upstream
     tools:context=".view.FriendListActivity">
 
     <TextView
         android:id="@+id/textView34"
-=======
-    tools:context=".view.FriendListActivity" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".view.FriendListActivity" />
 
     <TextView
         android:id="@+id/textView8"
->>>>>>> Stashed changes
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Friend List"
@@ -24,11 +23,7 @@
         android:textStyle="bold" />
 
     <ListView
-<<<<<<< Updated upstream
-        android:id="@+id/lvSearch"
-=======
         android:id="@+id/lv"
->>>>>>> Stashed changes
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

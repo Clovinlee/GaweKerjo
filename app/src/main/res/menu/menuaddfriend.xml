@@ -5,10 +5,6 @@
     <item
         android:id="@+id/menuaddfriend"
         android:icon="@drawable/ic_baseline_person_add_24"
-<<<<<<< Updated upstream
         android:title="Add friend"
-=======
-        android:title="Add Friend"
->>>>>>> Stashed changes
         app:showAsAction="always" />
 </menu>
