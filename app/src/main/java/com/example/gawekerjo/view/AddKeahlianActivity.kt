@@ -43,7 +43,6 @@ class AddKeahlianActivity : AppCompatActivity() {
 
 
         try {
-
             us = intent.getParcelableExtra<UserItem>("userLogin")!!
         }catch (e:Exception){
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()

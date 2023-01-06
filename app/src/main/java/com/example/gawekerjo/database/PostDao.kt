@@ -13,4 +13,6 @@ interface PostDao {
     suspend fun updatePost(post: PostItem)
     @Query("SELECT * FROM posts")
     suspend fun getAllPost():List<PostItem>
+    @Query("DELETE FROM posts")
+    suspend fun clear()
 }
