@@ -6,8 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gawekerjo.model.*
 import com.example.gawekerjo.model.chat.ChatItem
+import com.example.gawekerjo.model.follow.FollowItem
+import com.example.gawekerjo.model.skill.SkillItem
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.model.userchat.UserChatItem
+import com.example.gawekerjo.model.userskill.UserSkillItem
 
 @Database(entities = [
     AchievementItem::class,
@@ -27,6 +30,7 @@ import com.example.gawekerjo.model.userchat.UserChatItem
     UserChatItem::class,
     UserLanguageItem::class,
     UserSkillItem::class,
+    FollowItem::class,
 ], version = 1)
 abstract class AppDatabase:RoomDatabase() {
     abstract val achievementDao:AchievementDao
@@ -46,12 +50,13 @@ abstract class AppDatabase:RoomDatabase() {
     abstract val userDao:UserDao
     abstract val userlanguageDao:UserLanguageDao
     abstract val userskillDao:UserSkillDao
+    abstract val followDao: FollowDao
 
     companion object{
         var DB:AppDatabase?=null
         fun Build(c: Context):AppDatabase{
             if (DB == null) {
-                DB= Room.databaseBuilder(c,AppDatabase::class.java,"gawekerjo2").build()
+                DB= Room.databaseBuilder(c,AppDatabase::class.java,"gawekerjo").build()
             }
             return DB!!
         }

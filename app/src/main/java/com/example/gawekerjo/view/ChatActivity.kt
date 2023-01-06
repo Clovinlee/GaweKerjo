@@ -49,6 +49,7 @@ class ChatActivity : AppCompatActivity() {
         b=ActivityChatBinding.inflate(layoutInflater)
         val v=b.root
         setContentView(v)
+        title="Messages"
         user=intent.getParcelableExtra("userlogin")!!
         db=AppDatabase.Build(this)
         cr= ChatRepository(db)

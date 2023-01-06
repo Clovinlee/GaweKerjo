@@ -30,4 +30,13 @@ interface UserApi {
         @Query("name")name:String,
         @Query("notelp")notelp:String
     ):Call<User>
+    @POST("editprofile")
+    fun editProfile(
+        @Query("id") id: Int,
+        @Query("name")name:String,
+        @Query("description")description: String,
+        @Query("notelp") notelp: String,
+
+
+    ):Call<User>
 }
