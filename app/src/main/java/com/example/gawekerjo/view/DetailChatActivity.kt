@@ -44,7 +44,7 @@ class DetailChatActivity : AppCompatActivity() {
         with(b){
             rvdetailchat.adapter=adapter
             rvdetailchat.layoutManager=LinearLayoutManager(this@DetailChatActivity,LinearLayoutManager.VERTICAL,false)
-            //rvdetailchat.layoutManager?.scrollToPosition(chatlist.lastIndex)
+            rvdetailchat.layoutManager?.scrollToPosition(chatlist.lastIndex)
             btnsendchat.setOnClickListener {
                 val txt=etchat.text.toString()
                 c.launch {
@@ -58,7 +58,7 @@ class DetailChatActivity : AppCompatActivity() {
         newchatlist.add(c)
         chatlist.add(c)
         runOnUiThread {
-            adapter.notifyDataSetChanged()
+            //adapter.notifyDataSetChanged()
             b.rvdetailchat.layoutManager?.scrollToPosition(chatlist.lastIndex)
             b.etchat.text.clear()
         }
