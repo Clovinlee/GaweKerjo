@@ -1,7 +1,7 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.PostItem
+import com.example.gawekerjo.model.post.PostItem
 
 @Dao
 interface PostDao {

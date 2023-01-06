@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.gawekerjo.model.*
 import com.example.gawekerjo.model.chat.ChatItem
 import com.example.gawekerjo.model.follow.FollowItem
+import com.example.gawekerjo.model.post.PostItem
 import com.example.gawekerjo.model.skill.SkillItem
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.model.userchat.UserChatItem

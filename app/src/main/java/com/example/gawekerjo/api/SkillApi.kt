@@ -8,7 +8,6 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface SkillApi {
-
     @GET("skills")
     fun getSkills(
         @Query("id")id: Int?,
