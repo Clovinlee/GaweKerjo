@@ -6,8 +6,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.example.gawekerjo.R
+import com.example.gawekerjo.model.follow.Follow
+import com.example.gawekerjo.repository.FollowRepository
 
 class FriendListActivity : AppCompatActivity() {
+
+    private lateinit var followRepo : FollowRepository;
+    private lateinit var followList : Follow
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend_list)
