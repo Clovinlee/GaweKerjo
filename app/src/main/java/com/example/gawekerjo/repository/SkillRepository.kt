@@ -72,6 +72,7 @@ class SkillRepository(var db : AppDatabase){
                         }
                     }
                     mc.addKeahlianCallBack(responseBody)
+
                 }
             }
 
