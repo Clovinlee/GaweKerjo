@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +42,7 @@ class KeahlianListAdapter (
 
             for (k in 0 until listnama.size){
                 if (listkeahlian[position].skill_id == listnama[k].id){
-                    holder.keahlian.text = listnama[position].name.toString()
+                    holder.keahlian.text = listnama[k].name.toString()
                 }
             }
 
@@ -50,6 +51,10 @@ class KeahlianListAdapter (
 
     override fun getItemCount(): Int {
         return  listkeahlian.size
+    }
+
+    fun setOnItemClickListener(onItemClickListener: OnRecyclerViewItemClickListener){
+        this.onItemCLickListener = onItemClickListener
     }
 
 

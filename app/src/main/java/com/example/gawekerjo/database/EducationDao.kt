@@ -1,7 +1,7 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.EducationItem
+import com.example.gawekerjo.model.education.EducationItem
 
 @Dao
 interface EducationDao {
@@ -13,4 +13,6 @@ interface EducationDao {
     suspend fun updateEducation(education: EducationItem)
     @Query("SELECT * FROM educations")
     suspend fun getAllEducation():List<EducationItem>
+    @Query("DELETE FROM educations")
+    suspend fun clear()
 }

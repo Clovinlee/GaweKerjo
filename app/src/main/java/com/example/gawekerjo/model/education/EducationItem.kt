@@ -1,4 +1,4 @@
-package com.example.gawekerjo.model
+package com.example.gawekerjo.model.education
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

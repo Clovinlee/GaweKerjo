@@ -1,8 +1,12 @@
 package com.example.gawekerjo.view
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,9 +17,11 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityUserprofileBinding
 import com.example.gawekerjo.model.skill.SkillItem
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userskill.UserSkill
 import com.example.gawekerjo.model.userskill.UserSkillItem
 import com.example.gawekerjo.repository.SkillRepository
 import com.example.gawekerjo.view.adapter.KeahlianListAdapter
+import com.example.gawekerjo.view.adapter.OnRecyclerViewItemClickListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,6 +49,9 @@ class UserprofileActivity : AppCompatActivity() {
                 listskill.addAll(db.userskillDao.getAllUserSkill().toList())
             }
             keahlianAdapter.notifyDataSetChanged()
+
+        }
+        else if(result.resultCode == 2){
 
         }
     }
@@ -90,7 +99,25 @@ class UserprofileActivity : AppCompatActivity() {
 
             keahlianAdapter.notifyDataSetChanged()
 
+            keahlianAdapter.setOnItemClickListener(object :OnRecyclerViewItemClickListener{
+                override fun OnClick(view: View, position: Int) {
+                    try {
+
+//                        Toast.makeText(this@UserprofileActivity, "${listskill[position].id}", Toast.LENGTH_SHORT).show()
+
+//                        skillrepo.deleteuserskill(this@UserprofileActivity, listskill[position].id)
+                        showDeleteDialog(position)
+
+                    }catch (e:Exception){
+                        Toast.makeText(this@UserprofileActivity, "${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            })
+
         }
+
+
 
 
 
@@ -112,6 +139,7 @@ class UserprofileActivity : AppCompatActivity() {
         b.imgUserProfileTambahPendidikan.setOnClickListener {
 
             val i : Intent = Intent(this, AddPendidikanActivity::class.java)
+            i.putExtra("userLogin",user)
             startActivity(i)
 
 
@@ -132,6 +160,47 @@ class UserprofileActivity : AppCompatActivity() {
 
 
 
+    }
+
+    fun showDeleteDialog(position: Int){
+        var dialog : Dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.delete_dialog)
+
+        var btnyes: Button = dialog.findViewById(R.id.btnDeleteDialogYes)
+        var btnno: Button = dialog.findViewById(R.id.btnDeleteDialogNo)
+        btnyes.setOnClickListener {
+            skillrepo.deleteuserskill(this@UserprofileActivity, listskill[position].id)
+            dialog.dismiss()
+        }
+
+        btnno.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+
+
+    }
+
+    fun deletecallback(result: UserSkill){
+        if (result.status == 200){
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+
+            load()
+        }
+        else{
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun load(){
+        listskill.clear()
+        coroutine.launch {
+
+            listskill.addAll(db.userskillDao.getAllUserSkill().toList())
+        }
+        keahlianAdapter.notifyDataSetChanged()
     }
 
     fun setLayoutManager(){

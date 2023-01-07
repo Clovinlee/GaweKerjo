@@ -37,6 +37,10 @@ class LoginActivity : AppCompatActivity() {
         accRepo = AccountRepository(db)
 
         b.btnLoginLogin.setOnClickListener{
+            if(b.loadModal.visibility == View.VISIBLE){
+                return@setOnClickListener
+            }
+
             val email : String = b.txtLoginEmail.text.toString()
             var password : String = b.txtLoginPassword.text.toString()
 
@@ -52,6 +56,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         b.btnLoginToRegister.setOnClickListener {
+            if(b.loadModal.visibility == View.VISIBLE){
+                return@setOnClickListener
+            }
+
             val i : Intent = Intent(this, RegisterActivity::class.java)
             startActivity(i)
 
