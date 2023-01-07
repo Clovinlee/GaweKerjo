@@ -153,12 +153,6 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
-                    <ImageView
-                        android:id="@+id/imgUserProfileEditKeahlian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@android:drawable/ic_menu_edit" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -197,12 +191,6 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
-                    <ImageView
-                        android:id="@+id/imgUserProfileEditBahasa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@android:drawable/ic_menu_edit" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
