@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GaweKerjo/app/src/main/res/layout/activity_add_friend.xml" value="0.14130434782608695" />
+        <entry key="..\:/GaweKerjo/app/src/main/res/layout/activity_friend_list.xml" value="0.14130434782608695" />
+        <entry key="..\:/GaweKerjo/app/src/main/res/layout/activity_offer_list.xml" value="0.14130434782608695" />
+        <entry key="..\:/GaweKerjo/app/src/main/res/layout/activity_post_job.xml" value="0.22" />
+        <entry key="..\:/GaweKerjo/app/src/main/res/layout/activity_register_company.xml" value="0.14130434782608695" />
+        <entry key="..\:/GaweKerjo/app/src/main/res/layout/layout_friend_list.xml" value="0.10655737704918032" />
+        <entry key="..\:/GaweKerjo/app/src/main/res/menu/menuaddfriend.xml" value="0.17447916666666666" />
         <entry key="..\:/Results/Android/GaweKerjo/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Results/Android/GaweKerjo/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Results/Android/GaweKerjo/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
