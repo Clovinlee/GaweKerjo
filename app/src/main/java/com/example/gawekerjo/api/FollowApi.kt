@@ -9,13 +9,19 @@ import retrofit2.http.Query
 interface FollowApi {
     @GET("follows")
     fun getFollows(
-        @Query("id")id:Int,
-        @Query("follow_id")follow_id:Int,
-        @Query("user_id")user_id:Int,
+        @Query("id")id:Int?,
+        @Query("follow_id")follow_id:Int?,
+        @Query("user_id")user_id:Int?,
+    ): Call<Follow>
+    @GET("searchfollows")
+    fun searchfollows(
+        @Query("id")id:Int?,
+        @Query("follow_id")follow_id:Int?,
+        @Query("user_id")user_id:Int?,
     ): Call<Follow>
     @POST("addfollows")
     fun newFollow(
-        @Query("follow_id")follow_id:Int,
-        @Query("user_id")user_id:Int,
+        @Query("follow_id")follow_id:Int?,
+        @Query("user_id")user_id:Int?,
     ): Call<Follow>
 }
