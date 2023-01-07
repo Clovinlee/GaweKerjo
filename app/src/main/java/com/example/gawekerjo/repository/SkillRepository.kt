@@ -115,4 +115,31 @@ class SkillRepository(var db : AppDatabase){
     }
 
 
+    fun deleteuserskill(mc:UserprofileActivity, id:Int){
+        var rc_skill : Call<UserSkill> = rc.create(SkillApi::class.java).deleteUserSkill(id)
+
+        rc_skill.enqueue(object: Callback<UserSkill>{
+            override fun onResponse(call: Call<UserSkill>, response: Response<UserSkill>) {
+                val responseBody = response.body()
+                if (responseBody != null){
+                    if (responseBody.status == 200){
+                        val skil = responseBody.data[0]
+                        coroutine.launch {
+                            db.userskillDao.deleteUserSkill(skil)
+                        }
+                    }
+
+                    mc.deletecallback(responseBody)
+                }
+            }
+
+            override fun onFailure(call: Call<UserSkill>, t: Throwable) {
+                Log.d("CCD", "Error delete skill")
+                Log.d("CCD", t.message.toString())
+            }
+
+        })
+    }
+
+
 }

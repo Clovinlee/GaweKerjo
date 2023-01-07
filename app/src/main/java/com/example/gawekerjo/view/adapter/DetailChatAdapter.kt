@@ -42,7 +42,7 @@ class DetailChatAdapter(
                 tv.text=tgl
             }
             parser=SimpleDateFormat("HH:mm")
-            formatter=SimpleDateFormat("KK:mm aaa")
+            formatter=SimpleDateFormat("hh:mm aaa")
             if (c.user_id==user_id){
                 llrec.visibility=View.GONE
                 val tvmessage=v.findViewById<TextView>(R.id.tvchatisi)
@@ -65,5 +65,9 @@ class DetailChatAdapter(
 
     override fun getItemCount(): Int {
         return chat.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 }

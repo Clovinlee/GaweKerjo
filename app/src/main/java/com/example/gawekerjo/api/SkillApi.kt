@@ -24,4 +24,8 @@ interface SkillApi {
         @Query("user_id")user_id: Int?,
         @Query("skill_id")skill_id:Int?
     ):Call<UserSkill>
+    @POST("deleteuserskill")
+    fun deleteUserSkill(
+        @Query("id") id: Int?
+    ):Call<UserSkill>
 }
