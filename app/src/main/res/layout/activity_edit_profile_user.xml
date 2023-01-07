@@ -7,156 +7,194 @@
     android:orientation="vertical"
     tools:context=".view.EditProfileUserActivity">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loadModal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:background="#9F988888"
+            android:visibility="invisible"
+            tools:layout_editor_absoluteY="731dp">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="213dp"
+                android:layout_height="121dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please Wait..."
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                app:layout_constraintStart_toStartOf="@+id/progressBar"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteY="731dp">
 
             <LinearLayout
+                android:id="@+id/linearLayoutEditProfile"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imgEditProfileUserBack"
-                    android:layout_width="41dp"
-                    android:layout_height="35dp"
-                    app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
-
-                <TextView
-                    android:id="@+id/textView25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="41dp"
-                    android:text="Edit Profile"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView26"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="23dp"
-                    android:text="Nama" />
-
-                <EditText
-                    android:id="@+id/etEditProfileUserNama"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="1dp"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
-
-                <TextView
-                    android:id="@+id/textView27"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="23dp"
-                    android:text="Deskripsi" />
-
-                <EditText
-                    android:id="@+id/etEditProfileUserDeskripsi"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="1dp"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
-
-                <TextView
-                    android:id="@+id/textView28"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="25dp"
-                    android:text="Jenis Kelamin" />
-
-                <Spinner
-                    android:id="@+id/spinnerEditProfileUserKelamin"
-                    android:layout_width="300dp"
-                    android:layout_height="41dp"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="1dp"
-                    android:entries="@array/kelamin" />
-
-                <TextView
-                    android:id="@+id/textView29"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Nomor Telp" />
-
-                <EditText
-                    android:id="@+id/etEditProfileUserNoTelp"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="1dp"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
-
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="28dp"
-                    android:text="Tanggal lahir" />
-
-                <EditText
-                    android:id="@+id/etdEditProfileUserTanggalLahir"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="1dp"
-                    android:ems="10"
-                    android:inputType="date" />
-
-                <TextView
-                    android:id="@+id/textView32"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="28dp"
-                    android:text="Negara" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/dropdownEditProfileUserCountry"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="312dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="1dp">
+                    <ImageView
+                        android:id="@+id/imgEditProfileUserBack"
+                        android:layout_width="41dp"
+                        android:layout_height="35dp"
+                        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteTextView"
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="41dp"
+                        android:text="Edit Profile"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="23dp"
+                        android:text="Nama" />
+
+                    <EditText
+                        android:id="@+id/etEditProfileUserNama"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="1dp"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="23dp"
+                        android:text="Deskripsi" />
+
+                    <EditText
+                        android:id="@+id/etEditProfileUserDeskripsi"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="1dp"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+
+                    <TextView
+                        android:id="@+id/textView28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="25dp"
+                        android:text="Jenis Kelamin" />
+
+                    <Spinner
+                        android:id="@+id/spinnerEditProfileUserKelamin"
+                        android:layout_width="300dp"
+                        android:layout_height="41dp"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="1dp"
+                        android:entries="@array/kelamin" />
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Nomor Telp" />
+
+                    <EditText
+                        android:id="@+id/etEditProfileUserNoTelp"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="1dp"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="28dp"
+                        android:text="Tanggal lahir" />
+
+                    <EditText
+                        android:id="@+id/etdEditProfileUserTanggalLahir"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="1dp"
+                        android:ems="10"
+                        android:inputType="date" />
+
+                    <TextView
+                        android:id="@+id/textView32"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:inputType="none"
-                        android:text="Choose" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="28dp"
+                        android:text="Negara" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/dropdownEditProfileUserCountry"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="312dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="1dp">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/autoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:inputType="none"
+                            android:text="Choose" />
 
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/btnEditProfileuserSimpan"
-                    android:layout_width="302dp"
-                    android:layout_height="42dp"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="36dp"
-                    android:text="Simpan" />
+                    <Button
+                        android:id="@+id/btnEditProfileuserSimpan"
+                        android:layout_width="302dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="52dp"
+                        android:layout_marginTop="36dp"
+                        android:text="Simpan" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

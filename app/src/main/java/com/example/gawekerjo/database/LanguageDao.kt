@@ -11,6 +11,10 @@ interface LanguageDao {
     suspend fun deleteLanguage(language: LanguageItem)
     @Update
     suspend fun updateLanguage(language: LanguageItem)
+
     @Query("SELECT * FROM languages")
-    suspend fun getAllLanguage():List<LanguageItem>
+    suspend fun fetchLanguage():List<LanguageItem>
+
+    @Query("DELETE FROM languages")
+    suspend fun clear()
 }
