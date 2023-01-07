@@ -7,7 +7,6 @@ data class LanguageItem(
     @PrimaryKey
     val id:Int,
     var name:String,
-    var level:String,
     var created_at:String,
     var updated_at:String?,
 )

@@ -47,9 +47,11 @@
             android:exported="false" />
         <activity
             android:name=".view.EditProfileUserActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:exported="false" />
         <activity
             android:name=".view.AddBahasaActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:exported="false" />
         <activity
             android:name=".view.AddPendidikanActivity"
@@ -74,14 +76,17 @@
             android:exported="false" />
         <activity
             android:name=".view.HomeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:exported="false" />
         <activity
             android:name=".view.RegisterCompanyActivity"
             android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/Theme.GaweKerjo.NoActionBar" />
         <activity
             android:name=".view.RegisterActivity"
             android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/Theme.GaweKerjo.NoActionBar" />
         <activity
             android:name=".view.LoginActivity"

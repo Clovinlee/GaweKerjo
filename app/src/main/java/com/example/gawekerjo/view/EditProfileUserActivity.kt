@@ -3,7 +3,9 @@ package com.example.gawekerjo.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.gawekerjo.R
@@ -11,9 +13,12 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityAddBahasaBinding
 import com.example.gawekerjo.databinding.ActivityEditProfileUserBinding
 import com.example.gawekerjo.databinding.ActivityUserprofileBinding
+import com.example.gawekerjo.model.LanguageItem
+import com.example.gawekerjo.model.country.CountryItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.AccountRepository
+import com.example.gawekerjo.repository.CountryRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +30,9 @@ class EditProfileUserActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var us : UserItem
     private lateinit var user : UserItem
+
+    private lateinit var countryRepo : CountryRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityEditProfileUserBinding.inflate(layoutInflater)
@@ -58,9 +66,52 @@ class EditProfileUserActivity : AppCompatActivity() {
         }
 
 
+
         //kembali
         b.imgEditProfileUserBack.setOnClickListener {
             finish()
+        }
+
+        b.loadModal.visibility = View.VISIBLE
+        disableEnableControls(false,b.linearLayoutEditProfile)
+        countryRepo = CountryRepository(db)
+        loadCountry(this)
+    }
+
+    fun loadCountry(mc : EditProfileUserActivity){
+        coroutine.launch {
+            var listCountry : List<CountryItem> = db.countryDao.fetchCountry()
+            if(listCountry.size <= 0){
+                countryRepo.getAllCountry(mc, db)
+                listCountry = db.countryDao.fetchCountry()
+            }else{
+                runOnUiThread {
+                    b.loadModal.visibility = View.GONE
+                    disableEnableControls(true,b.linearLayoutEditProfile)
+
+                    var stringCountry : ArrayList<String> = arrayListOf()
+
+                    for (c : CountryItem in listCountry){
+                        stringCountry.add(c.name)
+                    }
+
+                    val arrAdapter = ArrayAdapter(this@EditProfileUserActivity,
+                        com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+                        stringCountry)
+
+                    b.autoCompleteTextView.setAdapter(arrAdapter)
+                }
+            }
+        }
+    }
+
+    private fun disableEnableControls(enable: Boolean, vg: ViewGroup) {
+        for (i in 0 until vg.childCount) {
+            val child = vg.getChildAt(i)
+            child.isEnabled = enable
+            if (child is ViewGroup) {
+                disableEnableControls(enable, child)
+            }
         }
     }
 
