@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.gawekerjo">
+    package="com.example.gawekerjo" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,17 +15,17 @@
         android:roundIcon="@mipmap/ic_gawekerjo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GaweKerjo"
-        tools:targetApi="31">
+        tools:targetApi="31" >
         <activity
-            android:name=".EditProfileCompanyActivity"
-            android:exported="false">
+            android:name=".view.EditProfileCompanyActivity"
+            android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CompanyProfileActivity"
-            android:exported="false">
+            android:name=".view.CompanyProfileActivity"
+            android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -47,12 +47,12 @@
             android:exported="false" />
         <activity
             android:name=".view.EditProfileUserActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".view.AddBahasaActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".view.AddPendidikanActivity"
             android:exported="false" />
@@ -76,18 +76,18 @@
             android:exported="false" />
         <activity
             android:name=".view.HomeActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".view.RegisterCompanyActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/Theme.GaweKerjo.NoActionBar" />
+            android:theme="@style/Theme.GaweKerjo.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".view.RegisterActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/Theme.GaweKerjo.NoActionBar" />
+            android:theme="@style/Theme.GaweKerjo.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".view.LoginActivity"
             android:exported="false"
@@ -95,7 +95,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.GaweKerjo.NoActionBar">
+            android:theme="@style/Theme.GaweKerjo.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
