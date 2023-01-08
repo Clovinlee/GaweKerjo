@@ -3,23 +3,39 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navmenu_profile"
-        android:icon="@drawable/ic_baseline_person_24_darklight"
-        android:title="Profile" />
-    <item
         android:id="@+id/navmenu_home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home" />
-    <item
-        android:id="@+id/navmenu_messages"
-        android:icon="@drawable/ic_baseline_message_24"
-        android:title="Messages" />
-    <item
-        android:id="@+id/navmenu_friend"
-        android:icon="@drawable/ic_baseline_people_24"
-        android:title="Friends" />
-    <item
-        android:id="@+id/navmenu_logout"
-        android:icon="@drawable/signout"
-        android:title="Logout" />
+        android:title="Home"/>
+    <item android:title="Jobs">
+        <menu>
+            <item
+                android:id="@+id/menuaddjob"
+                android:icon="@drawable/ic_baseline_post_add_24"
+                android:title="Post up a job offer" />
+            <item
+                android:id="@+id/menufindjob"
+                android:icon="@drawable/ic_baseline_work_24"
+                android:title="Find a job" />
+        </menu>
+    </item>
+    <item android:title="Profile" >
+        <menu >
+            <item
+                android:id="@+id/navmenu_profile"
+                android:icon="@drawable/ic_baseline_person_24_darklight"
+                android:title="My Profile"></item>
+            <item
+                android:id="@+id/navmenu_friend"
+                android:icon="@drawable/ic_baseline_people_24"
+                android:title="Friends" />
+            <item
+                android:id="@+id/navmenu_messages"
+                android:icon="@drawable/ic_baseline_message_24"
+                android:title="Messages" />
+            <item
+                android:id="@+id/navmenu_logout"
+                android:icon="@drawable/signout"
+                android:title="Logout" />
+        </menu>
+    </item>
 </menu>

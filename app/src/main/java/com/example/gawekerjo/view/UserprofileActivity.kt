@@ -1,5 +1,6 @@
 package com.example.gawekerjo.view
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,7 @@ import com.example.gawekerjo.repository.EducationRepository
 import com.example.gawekerjo.repository.LanguageRepository
 import com.example.gawekerjo.repository.SkillRepository
 import com.example.gawekerjo.view.adapter.BahasaAdapter
+import com.example.gawekerjo.utility.UploadUtility
 import com.example.gawekerjo.view.adapter.KeahlianListAdapter
 import com.example.gawekerjo.view.adapter.OnRecyclerViewItemClickListener
 import com.example.gawekerjo.view.adapter.PendidikanAdapter
@@ -52,6 +54,7 @@ class UserprofileActivity : AppCompatActivity() {
     private lateinit var listpendidikan: MutableList<EducationItem>
     private lateinit var listlang: MutableList<UserLanguageItem>
 
+    val REQUEST_CODE = 100
 
     val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result: ActivityResult ->
@@ -93,6 +96,7 @@ class UserprofileActivity : AppCompatActivity() {
         edurepo = EducationRepository(db)
         langrepo = LanguageRepository(db)
 
+        b.imageView16.setOnClickListener { openGalleryForImage() }
 
         listskill = mutableListOf()
         listnama = mutableListOf()
@@ -101,7 +105,6 @@ class UserprofileActivity : AppCompatActivity() {
 
 //        b.loadModal.visibility = View.VISIBLE
 //        disableEnableControls(false, b.linearlayout)
-
 
 
 
@@ -173,6 +176,20 @@ class UserprofileActivity : AppCompatActivity() {
             val i : Intent = Intent(this, AddBahasaActivity::class.java)
             i.putExtra("userLogin",user)
             launcher.launch(i)
+        }
+    }
+
+    private fun openGalleryForImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+            //b.imageView16.setImageURI(data?.data) // handle chosen image
+            UploadUtility(this).uploadFile(data?.data!!,user.id.toString())
         }
     }
 
