@@ -15,19 +15,18 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.model.Offer.OfferItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.view.MyOfferActivity
 import com.example.gawekerjo.view.OffersFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RVAdapterJob(private val mc : OffersFragment,
-                   private val layout : Int,
-                   private val listOffer : List<OfferItem>,
-                   private val db : AppDatabase) : RecyclerView.Adapter<RVAdapterJob.CustomViewHolder>(){
-
-    private var loadDone : Boolean = false
-    private lateinit var user : UserItem
+class RVAdapterMyJob(private val mc : MyOfferActivity,
+                     private val layout : Int,
+                     private val listOffer : List<OfferItem>,
+                     private val user : UserItem,
+                     private val db : AppDatabase) : RecyclerView.Adapter<RVAdapterMyJob.CustomViewHolder>(){
 
     class CustomViewHolder(var view: View) : RecyclerView.ViewHolder(view)
     {
@@ -57,34 +56,14 @@ class RVAdapterJob(private val mc : OffersFragment,
         holder.txtTitle.text = item.title
         holder.txtDescription.text = item.body
         holder.txtSkill.text = item.skills
+        holder.txtPostUser.text = user.name
+
         //holder.imgOffer
 
         var rc : Retrofit = RetrofitClient.getRetrofit()
-        var rc_user : Call<User> = rc.create(UserApi::class.java).getUser(item.user_id, null, null)
-
-        rc_user.enqueue(object: Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                var rbody = response.body()!!
-                if(rbody.status == 200){
-                    holder.txtPostUser.text = rbody.data[0].name
-                    user = rbody.data[0]
-                    loadDone = true
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.d("CCD", "Error getting user getUser UserRepo")
-                Log.d("CCD", t.message.toString())
-                Log.d("CCD", "===============================")
-            }
-
-        })
 
         holder.lin.setOnClickListener {
-            if(!loadDone){
-                return@setOnClickListener
-            }
-            mc.dialog(item,user)
+            mc.dialog(item, user)
         }
     }
 

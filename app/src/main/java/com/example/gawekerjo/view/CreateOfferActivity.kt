@@ -2,6 +2,7 @@ package com.example.gawekerjo.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
@@ -30,7 +31,8 @@ class CreateOfferActivity : AppCompatActivity() {
         setContentView(view)
 
         db = AppDatabase.Build(this)
-        var user : UserItem? = intent.getParcelableExtra<UserItem>("userlogin")
+        var user : UserItem? = intent.getParcelableExtra("userlogin")
+        var offer : OfferItem? = intent.getParcelableExtra("offeredit")
 
         if(user == null){
             Toast.makeText(this, "Error, invalid user!", Toast.LENGTH_SHORT).show()
@@ -38,6 +40,37 @@ class CreateOfferActivity : AppCompatActivity() {
         }
 
         offerRepo = OfferRepository(db)
+        b.btnEditOffer.visibility = View.GONE
+
+        if(offer != null){
+            b.btnCreateOffer.visibility = View.GONE
+            b.btnEditOffer.visibility = View.VISIBLE
+
+            b.txtCreateOfferTitle.setText(offer.title)
+            b.txtCreateOfferSkills.setText(offer.skills)
+            b.txtCreateOfferDescription.setText(offer.body)
+        }
+
+        b.btnEditOffer.setOnClickListener {
+            val title = b.txtCreateOfferTitle.text.toString()
+            val skills = b.txtCreateOfferSkills.text.toString()
+            val body = b.txtCreateOfferDescription.text.toString()
+
+            if(title == ""){
+                Toast.makeText(this, "Error, title cannot be empty!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if(skills == ""){
+                Toast.makeText(this, "Error, skills cannot be empty!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            offer!!.title = title
+            offer!!.skills = skills
+            offer!!.body = body
+
+            offerRepo.editOffer(this, offer)
+        }
 
         b.btnCreateOffer.setOnClickListener {
             val title = b.txtCreateOfferTitle.text.toString()
@@ -56,6 +89,20 @@ class CreateOfferActivity : AppCompatActivity() {
             val offer = OfferItem(99, user!!.id, title, body, skills, null, null)
             offerRepo.addOffer(this, offer)
         }
+
+        b.btnCreateOfferBack.setOnClickListener {
+            finish()
+        }
+
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    fun editCallback(){
+        runOnUiThread {
+            Toast.makeText(this, "Sukses edit job offer!", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
     fun repoCallback(offer : Offer){
@@ -66,6 +113,11 @@ class CreateOfferActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }

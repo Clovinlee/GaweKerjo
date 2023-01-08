@@ -7,6 +7,7 @@ import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import com.example.gawekerjo.env
+import com.example.gawekerjo.view.EditProfileUserActivity
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -19,18 +20,20 @@ class UploadUtility(activity:Activity) {
     //var serverUploadDirectoryPath: String = "https://handyopinion.com/tutorials/uploads/"
     val client = OkHttpClient()
 
-    fun uploadFile(sourceFilePath: String, uploadedFileName: String? = null) {
-        uploadFile(File(sourceFilePath), uploadedFileName)
+    fun uploadFile(sourceFilePath: String,a:EditProfileUserActivity, uploadedFileName: String? = null) {
+        uploadFile(File(sourceFilePath),a, uploadedFileName)
     }
 
-    fun uploadFile(sourceFileUri: Uri, uploadedFileName: String? = null) {
+    fun uploadFile(sourceFileUri: Uri, a: EditProfileUserActivity, uploadedFileName: String? = null):String {
         val pathFromUri = URIPathHelper().getPath(activity,sourceFileUri)
         val file=File(pathFromUri)
         val mimeType = getMimeType(file)
-        uploadFile(file, uploadedFileName+mimeType!!.replace("/",".").substringAfter("image"))
+        val filename=uploadedFileName+mimeType!!.replace("/",".").substringAfter("image")
+        uploadFile(file,a,filename)
+        return filename
     }
 
-    fun uploadFile(sourceFile: File, uploadedFileName: String? = null) {
+    fun uploadFile(sourceFile: File,a: EditProfileUserActivity, uploadedFileName: String? = null) {
         Thread {
             val mimeType = getMimeType(sourceFile);
             if (mimeType == null) {
@@ -53,6 +56,7 @@ class UploadUtility(activity:Activity) {
                 if (response.isSuccessful) {
                     Log.d("File upload","success")
                     showToast("File uploaded successfully")
+                    a.EditDataUser()
                 } else {
                     Log.e("File upload", "failed")
                     showToast("File uploading failed")

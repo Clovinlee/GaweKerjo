@@ -73,5 +73,17 @@
         android:id="@+id/btnCreateOffer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Post Up" />
+        android:text="Post Offer" />
+
+    <Button
+        android:id="@+id/btnEditOffer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Offer" />
+
+    <Button
+        android:id="@+id/btnCreateOfferBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back" />
 </LinearLayout>

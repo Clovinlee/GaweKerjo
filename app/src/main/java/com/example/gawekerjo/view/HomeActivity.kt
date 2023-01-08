@@ -150,6 +150,10 @@ class HomeActivity : AppCompatActivity() {
                 val mhome = b.btmNav.findViewById<View>(R.id.menuoffer)
                 mhome.performClick()
                 drawerLayout.closeDrawer(Gravity.LEFT)
+            }else if(it.itemId == R.id.menumyjob){
+                val i : Intent = Intent(this, MyOfferActivity::class.java)
+                i.putExtra("userlogin",user)
+                startActivity(i)
             }
 
             return@setNavigationItemSelectedListener true
