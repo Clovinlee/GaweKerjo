@@ -119,6 +119,15 @@ class HomeActivity : AppCompatActivity() {
                         finish()
                     }
                 }
+            }else if(it.itemId == R.id.menuaddjob){
+                val i : Intent = Intent(this, CreateOfferActivity::class.java)
+                i.putExtra("userlogin", user)
+                startActivity(i)
+
+            }else if(it.itemId == R.id.menufindjob){
+                val mhome = b.btmNav.findViewById<View>(R.id.menuoffer)
+                mhome.performClick()
+                drawerLayout.closeDrawer(Gravity.LEFT)
             }
 
             return@setNavigationItemSelectedListener true
@@ -139,13 +148,18 @@ class HomeActivity : AppCompatActivity() {
             // ACTIVITY TO PROFILE
             // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
             // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
+            runOnUiThread {
+                val i : Intent = Intent(this, UserprofileActivity::class.java)
+                i.putExtra("userLogin", user)
+                startActivity(i)
+            }
         }
 
         // END OF DYNAMIC DRAWER HEADER
 
         fHome = HomeFragment()
         fFollow = FollowFragment()
-        fOffer = OffersFragment()
+        fOffer = OffersFragment(this, db, user)
 
         launcherNewPost = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             val data = it.data
