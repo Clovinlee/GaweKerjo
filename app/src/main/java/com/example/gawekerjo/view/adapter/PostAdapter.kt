@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
 import com.example.gawekerjo.api.RetrofitClient
+import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.model.post.PostItem
 import com.example.gawekerjo.view.HomeActivity
 import com.example.gawekerjo.view.HomeFragment
@@ -18,7 +19,7 @@ import retrofit2.Retrofit
 class PostAdapter(
     var mc : HomeFragment,
     var data: ArrayList<PostItem>,
-    var idx : Int,
+    var db : AppDatabase
 ) : RecyclerView.Adapter<PostAdapter.MyHolder>(){
 
     class MyHolder(it: View) : RecyclerView.ViewHolder(it){

@@ -7,6 +7,7 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.model.post.Post
 import com.example.gawekerjo.model.post.PostItem
 import com.example.gawekerjo.view.HomeActivity
+import com.example.gawekerjo.view.HomeFragment
 import com.example.gawekerjo.view.NewPostActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,7 +72,7 @@ class PostRepository (var db : AppDatabase) {
         })
     }
 
-    fun getAllPostRelated(mc: HomeActivity, user_id: Int){
+    fun getAllPostRelated(mc: HomeFragment, user_id: Int){
         var rc_post :Call<Post> = rc.create(PostApi::class.java).getAllPostRelated(user_id)
 
         rc_post.enqueue(object : Callback<Post>{
@@ -87,6 +88,7 @@ class PostRepository (var db : AppDatabase) {
                                 db.postDao.insertPost(pst)
                             }
                         }
+                        mc.loadDataPost(true)
                     }
                 }
             }
