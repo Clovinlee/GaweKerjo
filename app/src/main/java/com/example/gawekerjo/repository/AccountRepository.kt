@@ -132,6 +132,7 @@ class AccountRepository (var db : AppDatabase) {
                             db.userDao.insertUser(usr)
                         }
                     }
+
                     if(type == 1){
                         Log.d("CCD","TYPE 1")
                         var mc_register = mc as RegisterActivity
