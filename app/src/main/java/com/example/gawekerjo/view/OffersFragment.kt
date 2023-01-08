@@ -3,6 +3,7 @@ package com.example.gawekerjo.view
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -36,6 +37,8 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
 
     private lateinit var offerRepo : OfferRepository
 
+    private var firstFetch = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -62,7 +65,7 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
         loadData()
     }
 
-    fun dialog(offer : OfferItem, user : UserItem) {
+    fun dialog(offer : OfferItem, useroffer : UserItem) {
         val b=layoutInflater.inflate(R.layout.dialog_layout_detailoffer,null)
         val d=Dialog(mc)
         with(d) {
@@ -79,6 +82,11 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             val txtDivider = b.findViewById<TextView>(R.id.txtDivider)
 
             val btnApply = b.findViewById<Button>(R.id.btnOfferDetailApply)
+            val btnEdit = b.findViewById<Button>(R.id.btnofferDetailEdit)
+            val btnDelete = b.findViewById<Button>(R.id.btnOfferDetailDelete)
+
+            btnEdit.visibility = View.GONE
+            btnDelete.visibility = View.GONE
 
             txtDivider.visibility = View.INVISIBLE
 
@@ -86,7 +94,11 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             txtSkill.text = offer.skills
             txtBody.text = offer.body
             txtUser.text = user.name
-            txtLocation.text = user.lokasi
+            txtLocation.text = useroffer.lokasi
+
+            if(useroffer.id == user.id){
+                btnApply.visibility = View.GONE
+            }
 
             btnClose.setOnClickListener {
                 this.dismiss()
@@ -103,7 +115,8 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
     fun loadData(fetched : Boolean = false, title : String? = null){
         coroutine.launch {
             listOffer = db.offerDao.fetch()
-            if((listOffer.size == 0 && fetched == false) || title != null){
+            if((listOffer.size == 0 && fetched == false) || title != null || firstFetch == true){
+                firstFetch = false
                 offerRepo.searchOffer(this@OffersFragment,title)
             }else{
                 mc.runOnUiThread {

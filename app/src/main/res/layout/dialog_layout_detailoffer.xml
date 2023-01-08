@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="PHP, Laravel, Skill"
-        android:textColor="#2B2828"
+        android:textColor="#615A5A"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -91,5 +91,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Apply" />
+
+    <Button
+        android:id="@+id/btnofferDetailEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#DD9926"
+        android:text="Edit" />
+
+    <Button
+        android:id="@+id/btnOfferDetailDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#DC3D3D"
+        android:text="Delete" />
 
 </LinearLayout>

@@ -17,4 +17,7 @@ interface OfferDao {
 
     @Query("SELECT * FROM offers")
     suspend fun fetch():List<OfferItem>
+
+    @Query("SELECT * FROM offers WHERE user_id = :user_id")
+    suspend fun getMyOffers(user_id : Int):List<OfferItem>
 }
