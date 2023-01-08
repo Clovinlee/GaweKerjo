@@ -15,7 +15,7 @@ class UserItem(
     var description: String?,
     var password: String,
     var notelp: String?,
-
+    var image: String?,
     // USER
     var gender: String?,
     var birthdate: String?,

@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gawekerjo.model.*
+import com.example.gawekerjo.model.Offer.OfferItem
 import com.example.gawekerjo.model.chat.ChatItem
 import com.example.gawekerjo.model.country.CountryItem
 import com.example.gawekerjo.model.education.EducationItem
@@ -60,7 +61,7 @@ abstract class AppDatabase:RoomDatabase() {
         var DB:AppDatabase?=null
         fun Build(c: Context):AppDatabase{
             if (DB == null) {
-                DB= Room.databaseBuilder(c,AppDatabase::class.java,"gawekerjo").build()
+                DB= Room.databaseBuilder(c,AppDatabase::class.java,"gawekerjo02").build()
             }
             return DB!!
         }
