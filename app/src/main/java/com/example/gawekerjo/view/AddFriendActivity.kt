@@ -26,35 +26,39 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AddFriendActivity : AppCompatActivity() {
-//    private lateinit var b: ActivityAddFriendBinding
+    private lateinit var b: ActivityAddFriendBinding
+
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var db: AppDatabase
+
     private lateinit var accFollow : FollowRepository
     private lateinit var followList :List<FollowItem>
+
     lateinit var user: UserItem
+
+    private var userUnfriend : List<UserItem> = listOf()
+
     private lateinit var rv : RecyclerView
     private lateinit var AddFriendAdapter : AddFriendAdapter
-    lateinit var allUser : ArrayList<UserItem>
+
     lateinit var btnSearch : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_friend)
-//        b = ActivityAddFriendBinding.inflate(layoutInflater)
-//        val view = b.root
-//        setContentView(view)
+        b = ActivityAddFriendBinding.inflate(layoutInflater)
+        val view = b.root
+        setContentView(view)
+
         db = AppDatabase.Build(this)
 
         followList = listOf()
-        allUser = ArrayList()
 
         accFollow = FollowRepository(db)
         btnSearch = findViewById(R.id.btnSearch)
+
         user=intent.getParcelableExtra("userlogin")!!
-        allUser=intent.getParcelableArrayListExtra<UserItem>("allUser")!!
         followList=intent.getParcelableArrayListExtra<FollowItem>("followList")!!
 
-        accFollow.getUser2(this,null,null,null)
         rv = findViewById(R.id.rvSearch)
 
         btnSearch.setOnClickListener()
@@ -65,53 +69,36 @@ class AddFriendActivity : AppCompatActivity() {
 //            Toast.makeText(this, "ini kok gamau kepencet hadeh", Toast.LENGTH_SHORT).show()
             initRV()
         }
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
+
+        accFollow.getUnfriendUser(this, user)
     }
 
-    fun getAll(result : User){
-        if(result.data.size > 0){
-            val usr = result.data
-            allUser = usr as ArrayList<UserItem>
-            var ketemu = -1
-            for (i in 0 until allUser.size)
-            {
-                if (allUser[i].id == user.id)
-                {
-                    ketemu = i
-                }
-            }
-            if (ketemu!=-1)
-            {
-                allUser.removeAt(ketemu)
-            }
 
-            var ketemu2 = -1
-            for (i in 0 until allUser.size)
-            {
-                for (j in 0 until followList.size)
-                {
-                    if (allUser[i].id == followList[j].follow_id)
-                    {
-                        ketemu2 = i
-                    }
-                }
-            }
-            if (ketemu2!=-1)
-            {
-                allUser.removeAt(ketemu2)
-            }
 
-            initRV()
-        }else{
-            runOnUiThread {
-                Toast.makeText(this, "Gagal dapatkan followers", Toast.LENGTH_SHORT).show()
-            }
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        finish()
+        return true
     }
 
+    fun callbackUnfriend(usr : User){
+        userUnfriend = usr.data
+        initRV()
+    }
+
+    fun addUser(itemid:Int?){
+        accFollow.addFriends(this,user.id,itemid)
+    }
+
+    fun addFriendCallback(flw : Follow){
+        accFollow.getUnfriendUser(this, user)
+    }
 
     fun initRV()
     {
-        AddFriendAdapter = AddFriendAdapter(followList,allUser,accFollow,this,user)
+        AddFriendAdapter = AddFriendAdapter(this,userUnfriend)
         rv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
         rv.adapter = AddFriendAdapter
         AddFriendAdapter.notifyDataSetChanged()

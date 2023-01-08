@@ -19,12 +19,18 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityHomeBinding
+import com.example.gawekerjo.model.follow.Follow
+import com.example.gawekerjo.model.follow.FollowItem
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.CountryRepository
+import com.example.gawekerjo.repository.FollowRepository
 import com.example.gawekerjo.repository.SkillRepository
+import com.example.gawekerjo.view.adapter.FollowAdapter
+import com.example.gawekerjo.view.adapter.FollowAdapter2
 import com.google.android.material.navigation.NavigationView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
@@ -49,12 +55,22 @@ class HomeActivity : AppCompatActivity() {
     lateinit var user : UserItem
     private lateinit var skillrepo : SkillRepository
 
+//    INI PUNYA ESTHER YG MASIH BLM BISA JALAN
+    private lateinit var FollowAdapter2 : FollowAdapter2
+    private lateinit var accFollow : FollowRepository
+
+    private lateinit var followList :ArrayList<FollowItem>
+// SAMPE SINI PNY ESTHER
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityHomeBinding.inflate(layoutInflater)
         val view = b.root
         setContentView(view)
         db = AppDatabase.Build(this)
+        //        INI JUGA ESTHER
+        followList = ArrayList()
+        accFollow = FollowRepository(db)
+
 
         // GET USER FROM PARCELABLE, if null exit
         try {
@@ -65,6 +81,9 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
+        //        INI JUGA ESTHER
+        accFollow.getFriends2(this,null,user.id,null)
+        Log.d("CCD", "Ini nyoba di homeactivity size e : " + followList.size.toString())
         //untuk profil
         skillrepo = SkillRepository(db)
         skillrepo.getAllSkill(this)
@@ -160,8 +179,12 @@ class HomeActivity : AppCompatActivity() {
 
         // END OF DYNAMIC DRAWER HEADER
 
+//        INI JUGA PNY ESTHER
+        FollowAdapter2 = FollowAdapter2(followList,this,user)
+        FollowAdapter2.notifyDataSetChanged()
+
         fHome = HomeFragment()
-        fFollow = FollowFragment()
+        fFollow = FollowFragment(FollowAdapter2)
         fOffer = OffersFragment(this, db, user)
 
         launcherNewPost = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -186,6 +209,14 @@ class HomeActivity : AppCompatActivity() {
             return@setOnItemSelectedListener true
         }
         swapFragment(fHome)
+    }
+
+//  INI JUGA ESTHER PUNYA
+    fun refresh(result : Follow){
+        followList = result.data as ArrayList<FollowItem>
+        Log.d("CCD", "Ini nyoba di refresh size e : " + followList.size.toString())
+        FollowAdapter2 = FollowAdapter2(followList,this,user)
+        FollowAdapter2.notifyDataSetChanged()
     }
 
     private fun resize(image: Drawable, w : Int ,h : Int): Drawable? {

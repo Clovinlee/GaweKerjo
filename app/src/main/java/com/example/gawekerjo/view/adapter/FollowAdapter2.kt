@@ -16,16 +16,17 @@ import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.FollowRepository
 import com.example.gawekerjo.view.AddFriendActivity
 import com.example.gawekerjo.view.FriendListActivity
+import com.example.gawekerjo.view.HomeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class FollowAdapter (
+class FollowAdapter2 (
     val followList :List<FollowItem>,
-    var AddFriendActivity : FriendListActivity,
+    var HomeActivity : HomeActivity,
     var user: UserItem,
-): RecyclerView.Adapter<FollowAdapter.CustomViewHolder>() {
+): RecyclerView.Adapter<FollowAdapter2.CustomViewHolder>() {
 
     private val rc : Retrofit = RetrofitClient.getRetrofit()
 
@@ -63,6 +64,7 @@ class FollowAdapter (
             }
         })
 
+//        Log.d("CCD", "Ini nyoba di adapter size e : " + followList.size.toString())
         holder.btnAddFriend.setOnClickListener()
         {
             // 1. MC.hapusFriend(idFollow)
@@ -73,7 +75,7 @@ class FollowAdapter (
             // ===
             // 1. LIST E SAMA MBE SENG DI PASS DI RV
             // 2. teliti
-            AddFriendActivity.removeFollow(item.id)
+//            HomeActivity.removeFollow(item.id)
         }
 
         holder.btnMessageFriendList.setOnClickListener()
