@@ -10,9 +10,11 @@
         <menu>
             <item
                 android:id="@+id/menuaddjob"
+                android:icon="@drawable/ic_baseline_post_add_24"
                 android:title="Post up a job offer" />
             <item
                 android:id="@+id/menufindjob"
+                android:icon="@drawable/ic_baseline_work_24"
                 android:title="Find a job" />
         </menu>
     </item>

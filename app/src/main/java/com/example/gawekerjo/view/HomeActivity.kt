@@ -120,6 +120,9 @@ class HomeActivity : AppCompatActivity() {
                     }
                 }
             }else if(it.itemId == R.id.menuaddjob){
+                val i : Intent = Intent(this, CreateOfferActivity::class.java)
+                i.putExtra("userlogin", user)
+                startActivity(i)
 
             }else if(it.itemId == R.id.menufindjob){
                 val mhome = b.btmNav.findViewById<View>(R.id.menuoffer)

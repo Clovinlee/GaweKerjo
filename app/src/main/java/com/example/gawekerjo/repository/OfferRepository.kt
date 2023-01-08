@@ -7,6 +7,8 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.model.Offer.Offer
 import com.example.gawekerjo.model.Offer.OfferItem
 import com.example.gawekerjo.model.country.Country
+import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.view.CreateOfferActivity
 import com.example.gawekerjo.view.OffersFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +19,25 @@ class OfferRepository(var db : AppDatabase) {
 
     private val coroutine = CoroutineScope(Dispatchers.IO)
     var rc : Retrofit = RetrofitClient.getRetrofit()
+
+    fun addOffer(mc : CreateOfferActivity, offer : OfferItem){
+        var rc_offer : Call<Offer> = rc.create(OfferApi::class.java).addOffer(offer.user_id,
+            offer.title, offer.body, offer.skills)
+
+        rc_offer.enqueue(object: Callback<Offer>{
+            override fun onResponse(call: Call<Offer>, response: Response<Offer>) {
+                var rbody = response.body()!!
+
+                if(rbody.status == 200){
+                    mc.repoCallback(rbody)
+                }
+            }
+
+            override fun onFailure(call: Call<Offer>, t: Throwable) {
+                Log.d("CCD","Fail to insert offer")
+            }
+        })
+    }
 
     fun searchOffer(mc : OffersFragment, title : String?){
         var rc_offer : Call<Offer> = rc.create(OfferApi::class.java).searchOffer(title)

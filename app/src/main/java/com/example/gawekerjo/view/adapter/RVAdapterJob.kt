@@ -14,6 +14,7 @@ import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.model.Offer.OfferItem
 import com.example.gawekerjo.model.user.User
+import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.view.OffersFragment
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,6 +26,9 @@ class RVAdapterJob(private val mc : OffersFragment,
                    private val listOffer : List<OfferItem>,
                    private val db : AppDatabase) : RecyclerView.Adapter<RVAdapterJob.CustomViewHolder>(){
 
+    private var loadDone : Boolean = false
+    private lateinit var user : UserItem
+
     class CustomViewHolder(var view: View) : RecyclerView.ViewHolder(view)
     {
         //DECLARE VARIABLE
@@ -35,6 +39,7 @@ class RVAdapterJob(private val mc : OffersFragment,
         var txtDescription : TextView = view.findViewById(R.id.txtRvJobDescription)
 
         var lin : LinearLayout = view.findViewById(R.id.linearLayoutJob)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -62,6 +67,8 @@ class RVAdapterJob(private val mc : OffersFragment,
                 var rbody = response.body()!!
                 if(rbody.status == 200){
                     holder.txtPostUser.text = rbody.data[0].name
+                    user = rbody.data[0]
+                    loadDone = true
                 }
             }
 
@@ -72,6 +79,15 @@ class RVAdapterJob(private val mc : OffersFragment,
             }
 
         })
+
+        holder.lin.setOnClickListener {
+            Log.d("CCD","PRESSED")
+            Log.d("CCD",loadDone.toString())
+            if(!loadDone){
+                return@setOnClickListener
+            }
+            mc.dialog(item,user)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -21,7 +21,6 @@ interface OfferApi {
 
     @POST("addoffer")
     fun addOffer(
-        @Query("id")id: Int?,
         @Query("user_id")user_id:Int?,
         @Query("title")title:String?,
         @Query("body")body:String?,

@@ -1,12 +1,19 @@
 package com.example.gawekerjo.view
 
+import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
@@ -53,6 +60,44 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
 
         b.loadModal.visibility = View.VISIBLE
         loadData()
+    }
+
+    fun dialog(offer : OfferItem, user : UserItem) {
+        val b=layoutInflater.inflate(R.layout.dialog_layout_detailoffer,null)
+        val d=Dialog(mc)
+        with(d) {
+            setContentView(b)
+            setCancelable(true)
+            val btnClose = b.findViewById<ImageButton>(R.id.btnOfferDetailClose)
+
+            val txtTitle = b.findViewById<TextView>(R.id.txtOfferDetailTitle)
+            val txtSkill = b.findViewById<TextView>(R.id.txtOfferDetailSkill)
+            val txtBody = b.findViewById<TextView>(R.id.txtOfferDetailBody)
+            val txtUser = b.findViewById<TextView>(R.id.txtOfferDetailUser)
+            val txtLocation = b.findViewById<TextView>(R.id.txtOfferDetailUserLocation)
+
+            val txtDivider = b.findViewById<TextView>(R.id.txtDivider)
+
+            val btnApply = b.findViewById<Button>(R.id.btnOfferDetailApply)
+
+            txtDivider.visibility = View.INVISIBLE
+
+            txtTitle.text = offer.title
+            txtSkill.text = offer.skills
+            txtBody.text = offer.body
+            txtUser.text = user.name
+            txtLocation.text = user.lokasi
+
+            btnClose.setOnClickListener {
+                this.dismiss()
+            }
+
+            btnApply.setOnClickListener {
+                // CHAT KE ORANG E
+            }
+
+            show()
+        }
     }
 
     fun loadData(fetched : Boolean = false, title : String? = null){
