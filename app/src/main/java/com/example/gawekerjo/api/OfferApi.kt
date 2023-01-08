@@ -19,6 +19,19 @@ interface OfferApi {
         @Query("title")title : String?
     ): Call<Offer>
 
+    @POST("deleteoffer")
+    fun deleteOffer(
+        @Query("id") id:Int,
+    ): Call<Offer>
+
+    @POST("editoffer")
+    fun editOffer(
+        @Query("id")id:Int?,
+        @Query("title")title:String?,
+        @Query("body")body:String?,
+        @Query("skills")skills:String?,
+    ) : Call<Offer>
+
     @POST("addoffer")
     fun addOffer(
         @Query("user_id")user_id:Int?,

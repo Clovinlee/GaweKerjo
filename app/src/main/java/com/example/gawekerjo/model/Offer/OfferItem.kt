@@ -1,8 +1,12 @@
 package com.example.gawekerjo.model.Offer
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
+
 @Entity(tableName = "offers")
+@Parcelize
 data class OfferItem(
     @PrimaryKey
     val id:Int,
@@ -12,4 +16,4 @@ data class OfferItem(
     var skills:String,
     var created_at:String?,
     var updated_at:String?,
-)
+) : Parcelable
