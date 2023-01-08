@@ -235,7 +235,7 @@ class UserprofileActivity : AppCompatActivity() {
             b.tvUserProfileDeskripsi.text = "${usr.description}"
         }
         if(usr.image!=null){
-            runOnUiThread { Toast.makeText(this, "ambil gambar", Toast.LENGTH_SHORT).show() }
+            //runOnUiThread { Toast.makeText(this, "ambil gambar", Toast.LENGTH_SHORT).show() }
             val i=URL(env.API_URL.substringBefore("/api/")+usr.image).openStream()
             val image=BitmapFactory.decodeStream(i)
             runOnUiThread { b.imageView16.setImageBitmap(image) }

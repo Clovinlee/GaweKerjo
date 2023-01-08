@@ -2,6 +2,7 @@ package com.example.gawekerjo.view
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityAddBahasaBinding
 import com.example.gawekerjo.databinding.ActivityEditProfileUserBinding
 import com.example.gawekerjo.databinding.ActivityUserprofileBinding
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.LanguageItem
 import com.example.gawekerjo.model.country.CountryItem
 import com.example.gawekerjo.model.user.User
@@ -26,6 +28,7 @@ import com.example.gawekerjo.utility.UploadUtility
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URL
 
 class EditProfileUserActivity : AppCompatActivity() {
 
@@ -162,7 +165,9 @@ class EditProfileUserActivity : AppCompatActivity() {
             b.etdEditProfileUserTanggalLahir.setText("${usr.birthdate}")
         }
         if (usr.image!=null){
-            //b.ivEditProfilePicture.setImageURI(usr.image.toUri())
+            val i= URL(env.API_URL.substringBefore("/api/")+usr.image).openStream()
+            val image= BitmapFactory.decodeStream(i)
+            runOnUiThread { b.ivEditProfilePicture.setImageBitmap(image) }
         }
 
     }
