@@ -9,98 +9,104 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="28dp">
 
-        <ImageView
-            android:id="@+id/imgTambahPendidikanBack"
-            android:layout_width="41dp"
-            android:layout_height="35dp"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imgTambahPendidikanBack"
+                android:layout_width="41dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="49dp"
+                android:text="Tambah Pendidikan"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Nama" />
+
+            <EditText
+                android:id="@+id/etTambahPendiidkanNama"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="Tanggal mulai" />
+
+            <EditText
+                android:id="@+id/etdTambahPendidikanTanggalMulai"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="date" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Tanggal berakhir" />
+
+            <EditText
+                android:id="@+id/etdTambahPendidikanTanggalBerakhir"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="date" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="Nilai" />
+
+            <EditText
+                android:id="@+id/etTambahPendidikanNilai"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="37dp"
-            android:layout_marginTop="49dp"
-            android:text="Tambah Pendidikan"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_weight="0"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="32dp"
-            android:text="Nama" />
-
-        <EditText
-            android:id="@+id/etTambahPendiidkanNama"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="26dp"
-            android:text="Tanggal mulai" />
-
-        <EditText
-            android:id="@+id/etdTambahPendidikanTanggalMulai"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="1dp"
-            android:ems="10"
-            android:inputType="date" />
-
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="20dp"
-            android:text="Tanggal berakhir" />
-
-        <EditText
-            android:id="@+id/etdTambahPendidikanTanggalBerakhir"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:ems="10"
-            android:inputType="date" />
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="26dp"
-            android:text="Nilai" />
-
-        <EditText
-            android:id="@+id/etTambahPendidikanNilai"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="1dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/btnTambahPendidikanSimpan"
-            android:layout_width="302dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="54dp"
-            android:layout_marginTop="180dp"
-            android:text="SImpan"
-            app:cornerRadius="25dp" />
+            <Button
+                android:id="@+id/btnTambahPendidikanSimpan"
+                android:layout_width="302dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:text="SImpan"
+                app:cornerRadius="25dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

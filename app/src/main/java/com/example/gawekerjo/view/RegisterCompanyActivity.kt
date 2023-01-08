@@ -65,6 +65,10 @@ class RegisterCompanyActivity : AppCompatActivity() {
         }
 
         b.btnCRegisterToUserRegister.setOnClickListener {
+            if(b.loadModal.visibility == View.VISIBLE){
+                return@setOnClickListener
+            }
+
             val i : Intent = Intent(this, RegisterActivity::class.java)
             startActivity(i)
 
@@ -72,6 +76,10 @@ class RegisterCompanyActivity : AppCompatActivity() {
         }
 
         b.btnCRegisterToLogin.setOnClickListener {
+            if(b.loadModal.visibility == View.VISIBLE){
+                return@setOnClickListener
+            }
+
             val i : Intent = Intent(this, LoginActivity::class.java)
             startActivity(i)
 
