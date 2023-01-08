@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:maxLines="5"
             android:text="TextView"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -28,6 +29,7 @@
         android:id="@+id/txtContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="5"
         android:text="TextView"
         android:textSize="20sp" />
 

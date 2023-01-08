@@ -85,6 +85,7 @@ class PostRepository (var db : AppDatabase) {
                             db.postDao.clear()
                             for(i in 0 until responseBody.data.size){
                                 pst = responseBody.data[i]
+                                Log.d("Cek user",responseBody.data[i].user_id.toString())
                                 db.postDao.insertPost(pst)
                             }
                         }

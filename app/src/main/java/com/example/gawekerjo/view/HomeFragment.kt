@@ -1,6 +1,7 @@
 package com.example.gawekerjo.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,7 @@ class HomeFragment(var mc: HomeActivity, var db : AppDatabase, var user : UserIt
     fun loadDataPost(fetched : Boolean = false){
         coroutine.launch {
             arrPost = db.postDao.getAllPost() as ArrayList<PostItem>
+            Log.d("CCD", arrPost.size.toString())
             if((arrPost.size == 0 && fetched == false) || firstFetch == true){
                 firstFetch = false
                 postRepo.getAllPostRelated(this@HomeFragment, mc.user.id)
