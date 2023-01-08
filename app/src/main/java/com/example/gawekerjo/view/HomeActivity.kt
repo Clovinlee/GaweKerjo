@@ -114,6 +114,9 @@ class HomeActivity : AppCompatActivity() {
                 // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
                 // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
                 // SLOT PUNYA ( ESTHER GABRIEL TRIVENA )
+                val i=Intent(this,FriendListActivity::class.java)
+                i.putExtra("userlogin",user)
+                startActivity(i)
 
             }else if(it.itemId == R.id.navmenu_logout){
                 coroutine.launch {
@@ -133,6 +136,10 @@ class HomeActivity : AppCompatActivity() {
                 val mhome = b.btmNav.findViewById<View>(R.id.menuoffer)
                 mhome.performClick()
                 drawerLayout.closeDrawer(Gravity.LEFT)
+            }else if(it.itemId == R.id.menumyjob){
+                val i : Intent = Intent(this, MyOfferActivity::class.java)
+                i.putExtra("userlogin",user)
+                startActivity(i)
             }
 
             return@setNavigationItemSelectedListener true

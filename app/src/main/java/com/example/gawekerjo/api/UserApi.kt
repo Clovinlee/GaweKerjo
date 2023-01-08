@@ -22,6 +22,11 @@ interface UserApi {
     fun getNewFriend(
         @Query("id") id : Int?
     ): Call<User>
+    @GET("searchuser")
+    fun searchuser(
+        @Query("name") name: String?,
+        @Query("email") email: String?
+    ): Call<User>
     @POST("register")
     fun Register(
         @Query("type")type: Int,
