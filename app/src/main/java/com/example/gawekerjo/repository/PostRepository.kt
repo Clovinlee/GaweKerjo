@@ -70,4 +70,32 @@ class PostRepository (var db : AppDatabase) {
 
         })
     }
+
+    fun getAllPostRelated(mc: HomeActivity, user_id: Int){
+        var rc_post :Call<Post> = rc.create(PostApi::class.java).getAllPostRelated(user_id)
+
+        rc_post.enqueue(object : Callback<Post>{
+            override fun onResponse(call: Call<Post>, response: Response<Post>) {
+                coroutine.launch {
+                    val responseBody = response.body()
+                    var pst : PostItem? = null
+                    if(responseBody != null){
+                        if(responseBody.status == 200 && responseBody.data.size > 0){
+                            db.postDao.clear()
+                            for(i in 0 until responseBody.data.size){
+                                pst = responseBody.data[i]
+                                db.postDao.insertPost(pst)
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Post>, t: Throwable) {
+                Log.d("CCD","Error get post")
+                Log.d("CCD",t.message.toString())
+            }
+
+        })
+    }
 }

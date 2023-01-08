@@ -157,7 +157,7 @@ class HomeActivity : AppCompatActivity() {
 
         // END OF DYNAMIC DRAWER HEADER
 
-        fHome = HomeFragment()
+        fHome = HomeFragment(this, db, user)
         fFollow = FollowFragment()
         fOffer = OffersFragment(this, db, user)
 

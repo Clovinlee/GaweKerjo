@@ -18,5 +18,8 @@ interface PostApi {
         @Query("title")title: String?,
         @Query("body")body: String?,
     ): Call<Post>
-
+    @GET("allPostRelated")
+    fun getAllPostRelated(
+        @Query("user_id") user_id: Int?
+    ): Call<Post>
 }
