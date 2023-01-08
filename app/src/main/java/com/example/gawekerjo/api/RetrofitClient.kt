@@ -30,6 +30,8 @@ abstract class RetrofitClient {
                 instance = Retrofit.Builder().baseUrl(API_URL)
                     .addConverterFactory(GsonConverterFactory.create()).client(client)
                     .build()
+
+                this.urlNow = API_URL!!
             }
 
             return instance!!
