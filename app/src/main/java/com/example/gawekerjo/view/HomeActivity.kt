@@ -24,6 +24,7 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityHomeBinding
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.CountryRepository
+import com.example.gawekerjo.repository.EducationRepository
 import com.example.gawekerjo.repository.SkillRepository
 import com.google.android.material.navigation.NavigationView
 import de.hdodenhof.circleimageview.CircleImageView
@@ -48,6 +49,7 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var user : UserItem
     private lateinit var skillrepo : SkillRepository
+    private lateinit var edurepo: EducationRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +69,11 @@ class HomeActivity : AppCompatActivity() {
 
         //untuk profil
         skillrepo = SkillRepository(db)
+        edurepo = EducationRepository(db)
         skillrepo.getAllSkill(this)
-        skillrepo.getUserSkill(this, user.id, null)
+//        skillrepo.getUserSkill(this, user.id, null)
+//        edurepo.getUserEdu(this, null, user.id)
+
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)

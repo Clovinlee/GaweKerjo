@@ -3,10 +3,8 @@ package com.example.gawekerjo.repository
 import android.util.Log
 import com.example.gawekerjo.api.CountryApi
 import com.example.gawekerjo.api.RetrofitClient
-import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
-import com.example.gawekerjo.model.LanguageItem
-import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.language.LanguageItem
 import com.example.gawekerjo.model.country.Country
 import com.example.gawekerjo.model.country.CountryItem
 import com.example.gawekerjo.view.AddBahasaActivity

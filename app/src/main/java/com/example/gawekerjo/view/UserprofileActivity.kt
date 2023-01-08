@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.Toast
@@ -15,13 +16,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityUserprofileBinding
+import com.example.gawekerjo.model.education.EducationItem
+import com.example.gawekerjo.model.language.LanguageItem
 import com.example.gawekerjo.model.skill.SkillItem
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userlanguage.UserLanguageItem
 import com.example.gawekerjo.model.userskill.UserSkill
 import com.example.gawekerjo.model.userskill.UserSkillItem
+import com.example.gawekerjo.repository.EducationRepository
+import com.example.gawekerjo.repository.LanguageRepository
 import com.example.gawekerjo.repository.SkillRepository
+import com.example.gawekerjo.view.adapter.BahasaAdapter
 import com.example.gawekerjo.view.adapter.KeahlianListAdapter
 import com.example.gawekerjo.view.adapter.OnRecyclerViewItemClickListener
+import com.example.gawekerjo.view.adapter.PendidikanAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,9 +42,16 @@ class UserprofileActivity : AppCompatActivity() {
     lateinit var user : UserItem
     lateinit var us : UserItem
     private lateinit var skillrepo : SkillRepository
+    private lateinit var edurepo : EducationRepository
+    private lateinit var langrepo: LanguageRepository
     private lateinit var keahlianAdapter: KeahlianListAdapter
+    private lateinit var pendidikanAdapter: PendidikanAdapter
+    private lateinit var languageAdapter: BahasaAdapter
     private lateinit var listskill : MutableList<UserSkillItem>
     private lateinit var listnama: MutableList<SkillItem>
+    private lateinit var listpendidikan: MutableList<EducationItem>
+    private lateinit var listlang: MutableList<UserLanguageItem>
+
 
     val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result: ActivityResult ->
@@ -53,6 +68,14 @@ class UserprofileActivity : AppCompatActivity() {
         }
         else if(result.resultCode == 2){
 
+//            loadedu()
+            reloadpendidikan()
+            pendidikanAdapter.notifyDataSetChanged()
+        }
+        else if (result.resultCode == 3){
+            reloadlang()
+            languageAdapter.notifyDataSetChanged()
+
         }
     }
 
@@ -67,10 +90,18 @@ class UserprofileActivity : AppCompatActivity() {
 
         db = AppDatabase.Build(this)
         skillrepo = SkillRepository(db)
+        edurepo = EducationRepository(db)
+        langrepo = LanguageRepository(db)
 
 
         listskill = mutableListOf()
         listnama = mutableListOf()
+        listpendidikan = mutableListOf()
+        listlang = mutableListOf()
+
+//        b.loadModal.visibility = View.VISIBLE
+//        disableEnableControls(false, b.linearlayout)
+
 
 
 
@@ -81,51 +112,39 @@ class UserprofileActivity : AppCompatActivity() {
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
         }
 
-//        skillrepo.getUserSkill(this, us.id, null)
-//        skillrepo.getAllSkill(this)
+
+        keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity){
+
+        }
+        setLayoutManagerkeahlian()
+        keahlianAdapter.setOnItemClickListener(object :OnRecyclerViewItemClickListener{
+            override fun OnClick(view: View, position: Int) {
+                showDeleteDialog(position)
+            }
+        })
+        pendidikanAdapter = PendidikanAdapter(listpendidikan, R.layout.layout_listpendidikan, this@UserprofileActivity){
+
+        }
+        setLayoutManagerpendidikan()
+
+        languageAdapter = BahasaAdapter(listlang, R.layout.layout_list_bahasa, this@UserprofileActivity){
+
+        }
+        setLayoutManagerLanguage()
+
+        loadskill(this)
+        loadpendidikan(this)
+        loadlang(this)
+
 
 
         coroutine.launch {
             user = db.userDao.getUserByEmail(us.email)!!
             loadprofile(user)
             listskill.clear()
-            listskill.addAll(db.userskillDao.getAllUserSkill().toList())
-            listnama.addAll(db.skillDao.getAllSkill().toList())
-            keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity){
-
-            }
-
-            setLayoutManager()
-
-            keahlianAdapter.notifyDataSetChanged()
-
-            keahlianAdapter.setOnItemClickListener(object :OnRecyclerViewItemClickListener{
-                override fun OnClick(view: View, position: Int) {
-                    try {
-
-//                        Toast.makeText(this@UserprofileActivity, "${listskill[position].id}", Toast.LENGTH_SHORT).show()
-
-//                        skillrepo.deleteuserskill(this@UserprofileActivity, listskill[position].id)
-                        showDeleteDialog(position)
-
-                    }catch (e:Exception){
-                        Toast.makeText(this@UserprofileActivity, "${e.message}", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-            })
+//            listskill.addAll(db.userskillDao.getAllUserSkill().toList())
 
         }
-
-
-
-
-
-
-
-
-//        Toast.makeText(this, "${user.name}", Toast.LENGTH_SHORT).show()
-
         //masuk edit profile
 
         b.imgUserProfileEditProfile.setOnClickListener {
@@ -134,15 +153,12 @@ class UserprofileActivity : AppCompatActivity() {
             startActivity(i)
         }
 
-
         // masuk tambah pendidikan
         b.imgUserProfileTambahPendidikan.setOnClickListener {
 
             val i : Intent = Intent(this, AddPendidikanActivity::class.java)
             i.putExtra("userLogin",user)
-            startActivity(i)
-
-
+            launcher.launch(i)
 
         }
         // masuk tambah keahliam
@@ -155,11 +171,9 @@ class UserprofileActivity : AppCompatActivity() {
         // masuk tambah bahasa
         b.imgUserProfileTambahBahasa.setOnClickListener {
             val i : Intent = Intent(this, AddBahasaActivity::class.java)
-            startActivity(i)
+            i.putExtra("userLogin",user)
+            launcher.launch(i)
         }
-
-
-
     }
 
     fun showDeleteDialog(position: Int){
@@ -180,7 +194,59 @@ class UserprofileActivity : AppCompatActivity() {
         }
         dialog.show()
 
+    }
 
+    fun loadskill(mc: UserprofileActivity){
+        coroutine.launch {
+
+            listskill.addAll(db.userskillDao.getAllUserSkill().toList())
+            listnama.addAll(db.skillDao.getAllSkill().toList())
+            if (listskill.size <= 0){
+                skillrepo.getUserSkill(mc, us.id, null)
+                load()
+            }
+            else{
+                runOnUiThread {
+                    load()
+                    keahlianAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+    fun loadpendidikan(mc: UserprofileActivity){
+
+        coroutine.launch {
+            listpendidikan.addAll(db.educationDao.getAllEducation().toList())
+            if (listpendidikan.size <= 0){
+                edurepo.getUserEdu(mc, null, us.id)
+                reloadpendidikan()
+            }
+            else{
+                runOnUiThread {
+                    reloadpendidikan()
+//                    b.loadModal.visibility = View.GONE
+//                    disableEnableControls(true, b.linearlayout)
+                    pendidikanAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+    fun loadlang(mc: UserprofileActivity){
+        coroutine.launch {
+            listlang.addAll(db.userlanguageDao.getAllUserLanguage().toList())
+            if (listlang.size <= 0){
+                langrepo.getuserLang(mc, us.id)
+                reloadlang()
+            }else{
+                runOnUiThread {
+                    reloadlang()
+
+                    languageAdapter.notifyDataSetChanged()
+                }
+            }
+        }
     }
 
     fun deletecallback(result: UserSkill){
@@ -188,6 +254,8 @@ class UserprofileActivity : AppCompatActivity() {
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
 
             load()
+
+            keahlianAdapter.notifyDataSetChanged()
         }
         else{
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
@@ -200,13 +268,47 @@ class UserprofileActivity : AppCompatActivity() {
 
             listskill.addAll(db.userskillDao.getAllUserSkill().toList())
         }
-        keahlianAdapter.notifyDataSetChanged()
+
+//        keahlianAdapter.notifyDataSetChanged()
+
     }
 
-    fun setLayoutManager(){
-        val linearLayoutManager = LinearLayoutManager(this)
+    fun reloadpendidikan(){
+        listpendidikan.clear()
+        coroutine.launch {
+            listpendidikan.addAll(db.educationDao.getAllEducation().toList())
+        }
+
+//        pendidikanAdapter.notifyDataSetChanged()
+
+    }
+
+    fun reloadlang(){
+        listlang.clear()
+        coroutine.launch {
+            listlang.addAll(db.userlanguageDao.getAllUserLanguage().toList())
+        }
+
+    }
+
+    fun setLayoutManagerkeahlian(){
+        val linearLayoutManagerkeahlian = LinearLayoutManager(this)
         b.rvuserProfileKeahlian.adapter = keahlianAdapter
-        b.rvuserProfileKeahlian.layoutManager = linearLayoutManager
+        b.rvuserProfileKeahlian.layoutManager = linearLayoutManagerkeahlian
+
+
+    }
+
+    fun setLayoutManagerpendidikan(){
+        val linearLayoutManagerpendidikan = LinearLayoutManager(this)
+        b.rvUserProfilePendidikan.adapter = pendidikanAdapter
+        b.rvUserProfilePendidikan.layoutManager = linearLayoutManagerpendidikan
+    }
+
+    fun setLayoutManagerLanguage(){
+        val linearLayoutManagerLanguage = LinearLayoutManager(this)
+        b.rvUserProfileBahasa.adapter = languageAdapter
+        b.rvUserProfileBahasa.layoutManager = linearLayoutManagerLanguage
     }
 
     fun loadprofile(usr:UserItem){
@@ -231,6 +333,15 @@ class UserprofileActivity : AppCompatActivity() {
 
     }
 
+    private fun disableEnableControls(enable: Boolean, vg: ViewGroup) {
+        for (i in 0 until vg.childCount) {
+            val child = vg.getChildAt(i)
+            child.isEnabled = enable
+            if (child is ViewGroup) {
+                disableEnableControls(enable, child)
+            }
+        }
+    }
 
 
 }

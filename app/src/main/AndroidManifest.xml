@@ -17,14 +17,14 @@
         android:theme="@style/Theme.GaweKerjo"
         tools:targetApi="31">
         <activity
-            android:name=".EditProfileCompanyActivity"
+            android:name=".view.EditProfileCompanyActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CompanyProfileActivity"
+            android:name=".view.CompanyProfileActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -42,6 +42,7 @@ class SkillRepository(var db : AppDatabase){
                             }
 
                         }
+
                     }
                 }
             }
@@ -84,27 +85,32 @@ class SkillRepository(var db : AppDatabase){
         })
     }
 
-    fun getUserSkill(mc: HomeActivity, iduser: Int, idskil: Int?){
+    fun getUserSkill(mc: UserprofileActivity, iduser: Int, idskil: Int?){
         var rc_skil : Call<UserSkill> = rc.create(SkillApi::class.java).getUserSkill(null, iduser, idskil)
 
         rc_skil.enqueue(object :Callback<UserSkill>{
             override fun onResponse(call: Call<UserSkill>, response: Response<UserSkill>) {
-                coroutine.launch {
+
                     val responseBody = response.body()
-                    var skl : UserSkillItem? = null
+
                     if (responseBody != null){
                         if (responseBody.status == 200 && responseBody.data.size > 0){
-                            db.userskillDao.clear()
-                            for (i in 0 until responseBody.data.size){
+                            coroutine.launch {
+                                var skl : UserSkillItem? = null
 
-                                skl = responseBody.data[i]
-                                db.userskillDao.insertUserSkill(skl)
+                                db.userskillDao.clear()
+                                for (i in 0 until responseBody.data.size){
 
+                                    skl = responseBody.data[i]
+                                    db.userskillDao.insertUserSkill(skl)
+
+                                }
                             }
 
+
                         }
+                        mc.loadskill(mc)
                     }
-                }
             }
 
             override fun onFailure(call: Call<UserSkill>, t: Throwable) {

@@ -47,7 +47,14 @@ class AddPendidikanActivity : AppCompatActivity() {
             var tgl_akhir = b.etdTambahPendidikanTanggalBerakhir.text.toString()
             val nilai = b.etTambahPendidikanNilai.text.toString()
 
-            edurepo.addEducation(this, user_id, nama, tgl_mulai, tgl_akhir, nilai)
+            if(nama!= "" && tgl_mulai != "" && tgl_akhir !="" && nilai != ""){
+
+                edurepo.addEducation(this, user_id, nama, tgl_mulai, tgl_akhir, nilai)
+
+            }else {
+                Toast.makeText(this, "Semua field harus di isi", Toast.LENGTH_SHORT).show()
+            }
+
 
 //            Toast.makeText(this, "${tgl_mulai}", Toast.LENGTH_SHORT).show()
         }
@@ -65,8 +72,10 @@ class AddPendidikanActivity : AppCompatActivity() {
         if (result.status == 200){
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
             val i = Intent()
-            setResult(2, intent)
+            setResult(2, i)
             finish()
+
+            this.finish()
         }
         else{
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()

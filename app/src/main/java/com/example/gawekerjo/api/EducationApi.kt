@@ -19,7 +19,7 @@ interface EducationApi {
     ): Call<Education>
     @GET("educations")
     fun geteducation(
-        @Query("id")id: Int,
-        @Query("user_id")user_id:Int
+        @Query("id")id: Int?,
+        @Query("user_id")user_id:Int?
     ):Call<Education>
 }

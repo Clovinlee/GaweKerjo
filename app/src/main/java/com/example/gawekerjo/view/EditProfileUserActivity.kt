@@ -3,17 +3,12 @@ package com.example.gawekerjo.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
-import com.example.gawekerjo.databinding.ActivityAddBahasaBinding
 import com.example.gawekerjo.databinding.ActivityEditProfileUserBinding
-import com.example.gawekerjo.databinding.ActivityUserprofileBinding
-import com.example.gawekerjo.model.LanguageItem
 import com.example.gawekerjo.model.country.CountryItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
