@@ -37,7 +37,14 @@ class MainActivity : AppCompatActivity() {
 //        var x : CountryRepository = CountryRepository(db)
 //        x.getAllCountries()
 
+        clearCache()
         checkRemember(this)
+    }
+
+    fun clearCache(){
+        coroutine.launch {
+            db.offerDao.clear()
+        }
     }
 
     fun checkRemember(ctx : MainActivity){
