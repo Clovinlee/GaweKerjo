@@ -38,10 +38,12 @@
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:text="Search" />
+
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/lvSearch"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>
