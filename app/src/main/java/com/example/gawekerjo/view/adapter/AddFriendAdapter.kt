@@ -45,13 +45,21 @@ class AddFriendAdapter(
         {
 //            holder.btnAddFriend.isEnabled = false
             holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_done_24)
+            holder.btnAddFriend.setTag(R.drawable.ic_baseline_done_24)
             Log.d("CCD","masuk sih ini")
         }
         holder.btnAddFriend.setOnClickListener()
         {
-            accFollow.addFriends(AddFriendActivity,item.id,user.id)
-//            holder.btnAddFriend.isEnabled = false
-            holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_done_24)
+            if (holder.btnAddFriend.getTag() == R.drawable.ic_baseline_done_24)
+            {
+                accFollow.removefollows(AddFriendActivity,item.id)
+                holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_add_24)
+                holder.btnAddFriend.setTag(R.drawable.ic_baseline_add_24)
+            }else{
+                accFollow.addFriends(AddFriendActivity,item.id,user.id)
+                holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_done_24)
+                holder.btnAddFriend.setTag(R.drawable.ic_baseline_done_24)
+            }
         }
     }
 

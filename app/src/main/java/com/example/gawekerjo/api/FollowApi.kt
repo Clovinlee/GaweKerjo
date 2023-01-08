@@ -24,4 +24,8 @@ interface FollowApi {
         @Query("follow_id")follow_id:Int?,
         @Query("user_id")user_id:Int?,
     ): Call<Follow>
+    @POST("removefollows")
+    fun removefollows(
+        @Query("id")id:Int?
+    ): Call<Follow>
 }

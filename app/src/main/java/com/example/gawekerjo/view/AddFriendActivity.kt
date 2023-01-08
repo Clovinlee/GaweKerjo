@@ -91,6 +91,10 @@ class AddFriendActivity : AppCompatActivity() {
                         allUser.removeAt(i)
                     }
                 }
+                AddFriendAdapter = AddFriendAdapter(followList,allUser,accFollow,this,user)
+                rv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+                rv.adapter = AddFriendAdapter
+                AddFriendAdapter.notifyDataSetChanged()
             }
             AddFriendAdapter = AddFriendAdapter(followList,allUser,accFollow,this,user)
             rv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)

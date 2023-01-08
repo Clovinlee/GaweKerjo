@@ -39,10 +39,7 @@ class FollowAdapter (
         holder.txtDescFriendList.text = desk
         holder.btnMessageFriendList.setOnClickListener()
         {
-//            val intent = Intent(holder.itemView.context,DetailActivityBaru::class.java)
-//            intent.putParcelableArrayListExtra("arr", arrBoy)
-//            intent.putExtra("pos", position)
-//            addLauncher.launch(intent)
+//            BAGIAN KWAN
         }
     }
 
