@@ -1,6 +1,8 @@
 package com.example.gawekerjo.view
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityAddBahasaBinding
@@ -19,6 +22,7 @@ import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.AccountRepository
 import com.example.gawekerjo.repository.CountryRepository
+import com.example.gawekerjo.utility.UploadUtility
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +34,9 @@ class EditProfileUserActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var us : UserItem
     private lateinit var user : UserItem
+    private var urlgambar:Uri?=null
+
+    val REQUEST_CODE = 100
 
     private lateinit var countryRepo : CountryRepository
 
@@ -52,18 +59,15 @@ class EditProfileUserActivity : AppCompatActivity() {
             user = db.userDao.getUserByEmail(us.email)!!
             loadprofile(user)
         }
-
+        b.btneditprofilegambar.setOnClickListener { openGalleryForImage() }
         b.btnEditProfileuserSimpan.setOnClickListener {
-            val accountRepo= AccountRepository(db)
-            val name = b.etEditProfileUserNama.text.toString()
-            val des = b.etEditProfileUserDeskripsi.text.toString()
-            val notelp = b.etEditProfileUserNoTelp.text.toString()
-            val id = user.id
-            accountRepo.editprofile(this,id, name, des, notelp )
-
+            if (urlgambar!=null){
+                user.image="/storage/user/${UploadUtility(this).uploadFile(urlgambar!!,this,user.id.toString())}"
+            }
             Toast.makeText(this, "simpan", Toast.LENGTH_SHORT).show()
 //            finish()
         }
+
 
 
 
@@ -76,6 +80,28 @@ class EditProfileUserActivity : AppCompatActivity() {
         disableEnableControls(false,b.linearLayoutEditProfile)
         countryRepo = CountryRepository(db)
         loadCountry(this)
+    }
+
+    fun EditDataUser(){
+        val accountRepo= AccountRepository(db)
+        val name = b.etEditProfileUserNama.text.toString()
+        val des = b.etEditProfileUserDeskripsi.text.toString()
+        val notelp = b.etEditProfileUserNoTelp.text.toString()
+        val id = user.id
+        accountRepo.editprofile(this,id, name, des, notelp )
+    }
+    private fun openGalleryForImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+            urlgambar=data?.data
+            b.ivEditProfilePicture.setImageURI(urlgambar!!) // handle chosen image
+        }
     }
 
     fun loadCountry(mc : EditProfileUserActivity){
@@ -135,7 +161,9 @@ class EditProfileUserActivity : AppCompatActivity() {
         if (usr.birthdate != null){
             b.etdEditProfileUserTanggalLahir.setText("${usr.birthdate}")
         }
-
+        if (usr.image!=null){
+            //b.ivEditProfilePicture.setImageURI(usr.image.toUri())
+        }
 
     }
 
