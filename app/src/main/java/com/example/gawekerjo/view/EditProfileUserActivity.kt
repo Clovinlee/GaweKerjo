@@ -16,7 +16,6 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityEditProfileUserBinding
 import com.example.gawekerjo.databinding.ActivityUserprofileBinding
 import com.example.gawekerjo.env
-import com.example.gawekerjo.model.LanguageItem
 import com.example.gawekerjo.model.country.CountryItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
@@ -174,7 +173,7 @@ class EditProfileUserActivity : AppCompatActivity() {
 
         if(result.status == 200){
             var i : Intent = Intent(this, UserprofileActivity::class.java)
-            i.putExtra("userlogin",result.data[0])
+            i.putExtra("userLogin",result.data[0])
             startActivity(i)
             this.finish()
         }else{

@@ -143,7 +143,7 @@ class UserprofileActivity : AppCompatActivity() {
         setLayoutManagerLanguage()
         languageAdapter.setOnItemClickListener(object : OnRecyclerViewItemClickListener3 {
             override fun OnClick(view: View, position: Int) {
-
+                showDeleteDialog(position, "bahasa")
             }
         })
 
@@ -383,7 +383,6 @@ class UserprofileActivity : AppCompatActivity() {
             val image=BitmapFactory.decodeStream(i)
             runOnUiThread { b.imageView16.setImageBitmap(image) }
         }
-
     }
 
     private fun disableEnableControls(enable: Boolean, vg: ViewGroup) {
