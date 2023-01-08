@@ -1,5 +1,6 @@
 package com.example.gawekerjo.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +8,9 @@ import android.widget.Toast
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityNewPostBinding
+import com.example.gawekerjo.model.post.Post
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userskill.UserSkill
 import com.example.gawekerjo.repository.PostRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,8 +43,32 @@ class NewPostActivity : AppCompatActivity() {
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
         }
 
-        
+        b.btnPost.setOnClickListener {
+            val user_id = user.id
+            var body = b.txtBody.text.toString()
+            var title = b.txtTitle.text.toString()
+
+            if(body == "" || title == ""){
+                Toast.makeText(this, "Input field tidak boleh ada yang kosong", Toast.LENGTH_SHORT).show()
+            }else{
+                postrepo.tambahPost(this, user_id, title, body)
+
+            }
+        }
 
 
+    }
+
+    fun addPostCallback(result: Post){
+        if (result.status == 200){
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+            val i = Intent()
+            setResult(1, intent)
+            finish()
+            this.finish()
+        }
+        else{
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

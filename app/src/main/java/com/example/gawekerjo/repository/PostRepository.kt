@@ -59,7 +59,7 @@ class PostRepository (var db : AppDatabase) {
                             db.postDao.insertPost(postBaru)
                         }
                     }
-
+                    mc.addPostCallback(responseBody)
                 }
             }
 

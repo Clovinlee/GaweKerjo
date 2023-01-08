@@ -149,7 +149,7 @@ class HomeActivity : AppCompatActivity() {
         launcherNewPost = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             val data = it.data
             if(data != null){
-                //NEW POST
+
             }
         }
 
@@ -160,6 +160,8 @@ class HomeActivity : AppCompatActivity() {
                 swapFragment(fFollow)
             }else if(it.itemId == R.id.menupost){
                 val i : Intent = Intent(this, NewPostActivity::class.java)
+                i.putExtra("userlogin", user)
+//                startActivity(i)
                 launcherNewPost.launch(i)
             }else if(it.itemId == R.id.menuoffer){
                 swapFragment(fOffer)
