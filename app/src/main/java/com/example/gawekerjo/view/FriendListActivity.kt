@@ -90,16 +90,11 @@ class FriendListActivity : AppCompatActivity() {
     }
 
     fun refresh(result : Follow){
-//        b.loadModal.visibility = View.INVISIBLE
         if(result.data.size > 0){
             val flw = result.data
             followList = flw as ArrayList<FollowItem>
-//            val i : Intent = Intent(this, HomeActivity::class.java)
-//            i.putExtra("userlogin", usr)
-//            startActivity(i)
-//            this.finish()
-//            Toast.makeText(this, followList.size.toString(), Toast.LENGTH_SHORT).show()
-            FollowAdapter = FollowAdapter(followList,allUser)
+            FollowAdapter = FollowAdapter(followList,allUser,accFollow,this,user)
+//            AddFriendAdapter = AddFriendAdapter(followList,allUser,accFollow,this,user)
             rv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
             rv.adapter = FollowAdapter
             FollowAdapter.notifyDataSetChanged()

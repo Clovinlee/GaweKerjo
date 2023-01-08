@@ -9,10 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
 import com.example.gawekerjo.model.follow.FollowItem
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.repository.FollowRepository
+import com.example.gawekerjo.view.AddFriendActivity
+import com.example.gawekerjo.view.FriendListActivity
 
 class FollowAdapter (
     val followList :List<FollowItem>,
-    val allUser : List<UserItem>
+    val allUser : List<UserItem>,
+    var accFollow : FollowRepository,
+    var AddFriendActivity : FriendListActivity,
+    var user: UserItem
         ): RecyclerView.Adapter<FollowAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -41,6 +47,27 @@ class FollowAdapter (
         {
 //            BAGIAN KWAN
         }
+        holder.btnAddFriend.setOnClickListener()
+        {
+            accFollow.removefollows(AddFriendActivity,item.id)
+            holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_add_24)
+            holder.btnAddFriend.setTag(R.drawable.ic_baseline_add_24)
+            accFollow.getFriends(AddFriendActivity,null,user.id,null)
+            notifyDataSetChanged()
+            if (holder.btnAddFriend.getTag() == R.drawable.ic_baseline_done_24)
+            {
+                accFollow.removefollows(AddFriendActivity,item.id)
+                holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_add_24)
+                holder.btnAddFriend.setTag(R.drawable.ic_baseline_add_24)
+                accFollow.getFriends(AddFriendActivity,null,user.id,null)
+                notifyDataSetChanged()
+            }
+//            else{
+//                accFollow.addFriends2(AddFriendActivity,item.id,user.id)
+//                holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_done_24)
+//                holder.btnAddFriend.setTag(R.drawable.ic_baseline_done_24)
+//            }
+        }
     }
 
     // digunakan untuk mengetahui ukuran dari list view yang akan di iterasikan
@@ -51,6 +78,7 @@ class FollowAdapter (
     class CustomViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val txtNameFriendList: TextView = itemView.findViewById(R.id.txtNameAddFriend)
         val txtDescFriendList: TextView = itemView.findViewById(R.id.txtDescAddFriend)
-        val btnMessageFriendList: ImageView = itemView.findViewById(R.id.btnAddFriend)
+        val btnMessageFriendList: ImageView = itemView.findViewById(R.id.btnMessage)
+        val btnAddFriend: ImageView = itemView.findViewById(R.id.btnAddFriend)
     }
 }

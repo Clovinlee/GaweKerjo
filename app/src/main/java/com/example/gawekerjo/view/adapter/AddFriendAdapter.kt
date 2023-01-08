@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
 import com.example.gawekerjo.model.follow.FollowItem
@@ -50,17 +49,11 @@ class AddFriendAdapter(
         }
         holder.btnAddFriend.setOnClickListener()
         {
-            if (holder.btnAddFriend.getTag() == R.drawable.ic_baseline_done_24)
-            {
-                accFollow.removefollows(AddFriendActivity,item.id)
-                holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_add_24)
-                holder.btnAddFriend.setTag(R.drawable.ic_baseline_add_24)
-            }else{
-                accFollow.addFriends(AddFriendActivity,item.id,user.id)
-                holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_done_24)
-                holder.btnAddFriend.setTag(R.drawable.ic_baseline_done_24)
-            }
+            accFollow.addFriends(AddFriendActivity,item.id,user.id)
+            holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_done_24)
+            holder.btnAddFriend.setTag(R.drawable.ic_baseline_done_24)
         }
+
     }
 
     // digunakan untuk mengetahui ukuran dari list view yang akan di iterasikan
@@ -71,6 +64,6 @@ class AddFriendAdapter(
     class CustomViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val txtNameAddFriend: TextView = itemView.findViewById(R.id.txtNameAddFriend)
         val txtDescAddFriend: TextView = itemView.findViewById(R.id.txtDescAddFriend)
-        val btnAddFriend: ImageView = itemView.findViewById(R.id.btnAddFriend)
+        val btnAddFriend: ImageView = itemView.findViewById(R.id.btnMessage)
     }
 }

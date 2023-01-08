@@ -23,9 +23,10 @@ import com.example.gawekerjo.view.adapter.AddFriendAdapter
 import com.example.gawekerjo.view.adapter.FollowAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AddFriendActivity : AppCompatActivity() {
-    private lateinit var b: ActivityAddFriendBinding
+//    private lateinit var b: ActivityAddFriendBinding
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var db: AppDatabase
     private lateinit var accFollow : FollowRepository
@@ -39,9 +40,9 @@ class AddFriendActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_friend)
-        b = ActivityAddFriendBinding.inflate(layoutInflater)
-        val view = b.root
-        setContentView(view)
+//        b = ActivityAddFriendBinding.inflate(layoutInflater)
+//        val view = b.root
+//        setContentView(view)
         db = AppDatabase.Build(this)
 
         followList = listOf()
@@ -52,23 +53,24 @@ class AddFriendActivity : AppCompatActivity() {
         user=intent.getParcelableExtra("userlogin")!!
         allUser=intent.getParcelableArrayListExtra<UserItem>("allUser")!!
         followList=intent.getParcelableArrayListExtra<FollowItem>("followList")!!
-        Log.d("CCD","jumlah temen : "+ followList.size.toString())
+
         accFollow.getUser2(this,null,null,null)
         rv = findViewById(R.id.rvSearch)
+
+        btnSearch.setOnClickListener()
+        {
+            initRV()
+            var txtSearch = findViewById<EditText>(R.id.searchfriend)
+            accFollow.searchuser(this,txtSearch.text.toString(),txtSearch.text.toString())
+//            Toast.makeText(this, "ini kok gamau kepencet hadeh", Toast.LENGTH_SHORT).show()
+            initRV()
+        }
     }
 
     fun getAll(result : User){
-//        b.loadModal.visibility = View.INVISIBLE
         if(result.data.size > 0){
             val usr = result.data
             allUser = usr as ArrayList<UserItem>
-//            val i : Intent = Intent(this, HomeActivity::class.java)
-//            i.putExtra("userlogin", usr)
-//            startActivity(i)
-//            this.finish()
-//            Toast.makeText(this, followList.size.toString(), Toast.LENGTH_SHORT).show()
-//            FollowAdapter = FollowAdapter(followList)
-//            rv.adapter = FollowAdapter
             var ketemu = -1
             for (i in 0 until allUser.size)
             {
@@ -81,30 +83,38 @@ class AddFriendActivity : AppCompatActivity() {
             {
                 allUser.removeAt(ketemu)
             }
-            btnSearch.setOnClickListener()
+
+            var ketemu2 = -1
+            for (i in 0 until allUser.size)
             {
-                var txtSearch = findViewById<EditText>(R.id.searchfriend)
-                for (i in 0 until allUser.size)
+                for (j in 0 until followList.size)
                 {
-                    if (!allUser[i].name.toString().lowercase().contains(txtSearch.text.toString().lowercase()))
+                    if (allUser[i].id == followList[j].follow_id)
                     {
-                        allUser.removeAt(i)
+                        ketemu2 = i
                     }
                 }
-                AddFriendAdapter = AddFriendAdapter(followList,allUser,accFollow,this,user)
-                rv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-                rv.adapter = AddFriendAdapter
-                AddFriendAdapter.notifyDataSetChanged()
             }
-            AddFriendAdapter = AddFriendAdapter(followList,allUser,accFollow,this,user)
-            rv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-            rv.adapter = AddFriendAdapter
-            AddFriendAdapter.notifyDataSetChanged()
+            if (ketemu2!=-1)
+            {
+                allUser.removeAt(ketemu2)
+            }
+
+            initRV()
         }else{
             runOnUiThread {
                 Toast.makeText(this, "Gagal dapatkan followers", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+
+    fun initRV()
+    {
+        AddFriendAdapter = AddFriendAdapter(followList,allUser,accFollow,this,user)
+        rv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        rv.adapter = AddFriendAdapter
+        AddFriendAdapter.notifyDataSetChanged()
     }
 
     fun addFriend(result : Follow){
