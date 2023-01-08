@@ -22,4 +22,8 @@ interface EducationApi {
         @Query("id")id: Int?,
         @Query("user_id")user_id:Int?
     ):Call<Education>
+    @POST("deleteedu")
+    fun deleteedu(
+        @Query("id")id:Int
+    ):Call<Education>
 }

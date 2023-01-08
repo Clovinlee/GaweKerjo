@@ -39,7 +39,7 @@ class LanguageRepository(var db: AppDatabase) {
 
                         }
                     }
-                    mc.loadlang(mc)
+                    mc.loadlang(mc, true)
                 }
             }
 
@@ -72,6 +72,31 @@ class LanguageRepository(var db: AppDatabase) {
             override fun onFailure(call: Call<UserLanguage>, t: Throwable) {
                 Log.d("CCD","Error tambah bahasa")
                 Log.d("CCD",t.message.toString())
+            }
+
+        })
+    }
+
+    fun deleteuserlang(mc: UserprofileActivity, id:Int){
+        var rc_lang : Call<UserLanguage> = rc.create(LanguageApi::class.java).deleteUserLanguages(id)
+
+        rc_lang.enqueue(object: Callback<UserLanguage>{
+            override fun onResponse(call: Call<UserLanguage>, response: Response<UserLanguage>) {
+                val responseBody = response.body()
+                if (responseBody != null){
+                    if (responseBody.status == 200){
+                        val lang = responseBody.data[0]
+                        coroutine.launch {
+                            db.userlanguageDao.deleteUserLanguage(lang)
+                        }
+                    }
+                    mc.deletelangcallback(responseBody)
+                }
+            }
+
+            override fun onFailure(call: Call<UserLanguage>, t: Throwable) {
+                Log.d("CCD", "Error delete language user")
+                Log.d("CCD", t.message.toString())
             }
 
         })

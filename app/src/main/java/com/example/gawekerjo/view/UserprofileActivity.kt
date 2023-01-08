@@ -17,21 +17,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityUserprofileBinding
+import com.example.gawekerjo.model.education.Education
 import com.example.gawekerjo.model.education.EducationItem
 import com.example.gawekerjo.model.language.LanguageItem
 import com.example.gawekerjo.model.skill.SkillItem
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userlanguage.UserLanguage
 import com.example.gawekerjo.model.userlanguage.UserLanguageItem
 import com.example.gawekerjo.model.userskill.UserSkill
 import com.example.gawekerjo.model.userskill.UserSkillItem
 import com.example.gawekerjo.repository.EducationRepository
 import com.example.gawekerjo.repository.LanguageRepository
 import com.example.gawekerjo.repository.SkillRepository
-import com.example.gawekerjo.view.adapter.BahasaAdapter
 import com.example.gawekerjo.utility.UploadUtility
-import com.example.gawekerjo.view.adapter.KeahlianListAdapter
-import com.example.gawekerjo.view.adapter.OnRecyclerViewItemClickListener
-import com.example.gawekerjo.view.adapter.PendidikanAdapter
+import com.example.gawekerjo.view.adapter.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -122,20 +121,30 @@ class UserprofileActivity : AppCompatActivity() {
         setLayoutManagerkeahlian()
         keahlianAdapter.setOnItemClickListener(object :OnRecyclerViewItemClickListener{
             override fun OnClick(view: View, position: Int) {
-                showDeleteDialog(position)
+                showDeleteDialog(position, "keahlian")
             }
         })
         pendidikanAdapter = PendidikanAdapter(listpendidikan, R.layout.layout_listpendidikan, this@UserprofileActivity){
 
         }
         setLayoutManagerpendidikan()
+        pendidikanAdapter.setOnItemClickListener(object : OnRecyclerViewItemClickListener2 {
+            override fun OnClick(view: View, position: Int) {
+                showDeleteDialog(position, "pendidikan")
+            }
+        })
 
         languageAdapter = BahasaAdapter(listlang, R.layout.layout_list_bahasa, this@UserprofileActivity){
-
+            
         }
         setLayoutManagerLanguage()
+        languageAdapter.setOnItemClickListener(object : OnRecyclerViewItemClickListener3 {
+            override fun OnClick(view: View, position: Int) {
 
-        loadskill(this)
+            }
+        })
+
+        loadskill(this, false)
         loadpendidikan(this)
         loadlang(this)
 
@@ -193,7 +202,7 @@ class UserprofileActivity : AppCompatActivity() {
         }
     }
 
-    fun showDeleteDialog(position: Int){
+    fun showDeleteDialog(position: Int, section: String){
         var dialog : Dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
@@ -202,8 +211,18 @@ class UserprofileActivity : AppCompatActivity() {
         var btnyes: Button = dialog.findViewById(R.id.btnDeleteDialogYes)
         var btnno: Button = dialog.findViewById(R.id.btnDeleteDialogNo)
         btnyes.setOnClickListener {
-            skillrepo.deleteuserskill(this@UserprofileActivity, listskill[position].id)
-            dialog.dismiss()
+            if(section == "keahlian"){
+
+                skillrepo.deleteuserskill(this@UserprofileActivity, listskill[position].id)
+                dialog.dismiss()
+            }else if(section == "bahasa"){
+                langrepo.deleteuserlang(this@UserprofileActivity, listlang[position].id)
+                dialog.dismiss()
+            }
+            else if(section == "pendidikan"){
+                edurepo.deleteeduuser(this@UserprofileActivity, listpendidikan[position].id)
+                dialog.dismiss()
+            }
         }
 
         btnno.setOnClickListener {
@@ -213,12 +232,12 @@ class UserprofileActivity : AppCompatActivity() {
 
     }
 
-    fun loadskill(mc: UserprofileActivity){
+    fun loadskill(mc: UserprofileActivity, sudah: Boolean = false){
         coroutine.launch {
 
             listskill.addAll(db.userskillDao.getAllUserSkill().toList())
             listnama.addAll(db.skillDao.getAllSkill().toList())
-            if (listskill.size <= 0){
+            if (listskill.size <= 0 && sudah == false){
                 skillrepo.getUserSkill(mc, us.id, null)
                 load()
             }
@@ -231,11 +250,11 @@ class UserprofileActivity : AppCompatActivity() {
         }
     }
 
-    fun loadpendidikan(mc: UserprofileActivity){
+    fun loadpendidikan(mc: UserprofileActivity, sudah: Boolean = false){
 
         coroutine.launch {
             listpendidikan.addAll(db.educationDao.getAllEducation().toList())
-            if (listpendidikan.size <= 0){
+            if (listpendidikan.size <= 0 && sudah == false){
                 edurepo.getUserEdu(mc, null, us.id)
                 reloadpendidikan()
             }
@@ -250,10 +269,10 @@ class UserprofileActivity : AppCompatActivity() {
         }
     }
 
-    fun loadlang(mc: UserprofileActivity){
+    fun loadlang(mc: UserprofileActivity, sudah: Boolean = false){
         coroutine.launch {
             listlang.addAll(db.userlanguageDao.getAllUserLanguage().toList())
-            if (listlang.size <= 0){
+            if (listlang.size <= 0 && sudah == false){
                 langrepo.getuserLang(mc, us.id)
                 reloadlang()
             }else{
@@ -275,6 +294,27 @@ class UserprofileActivity : AppCompatActivity() {
             keahlianAdapter.notifyDataSetChanged()
         }
         else{
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun deletelangcallback(result: UserLanguage){
+        if (result.status == 200){
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+            reloadlang()
+            languageAdapter.notifyDataSetChanged()
+        }
+        else{
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun deleteEduCallBack(result: Education){
+        if (result.status == 200){
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+            reloadpendidikan()
+            pendidikanAdapter.notifyDataSetChanged()
+        }else{
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
         }
     }

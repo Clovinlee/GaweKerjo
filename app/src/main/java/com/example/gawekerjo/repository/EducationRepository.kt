@@ -69,13 +69,38 @@ class EducationRepository (var db: AppDatabase){
                                 }
                             }
                         }
-                        mc.loadpendidikan(mc)
+                        mc.loadpendidikan(mc, true)
                     }
 
             }
 
             override fun onFailure(call: Call<Education>, t: Throwable) {
                 Log.d("CCD", "Error getting edu")
+                Log.d("CCD", t.message.toString())
+            }
+
+        })
+    }
+
+    fun deleteeduuser(mc: UserprofileActivity, id: Int){
+        var rc_edu : Call<Education> = rc.create(EducationApi::class.java).deleteedu(id)
+
+        rc_edu.enqueue(object: Callback<Education>{
+            override fun onResponse(call: Call<Education>, response: Response<Education>) {
+                val responseBody = response.body()
+                if (responseBody != null){
+                    if (responseBody.status == 200){
+                        val edu = responseBody.data[0]
+                        coroutine.launch {
+                            db.educationDao.deleteEducation(edu)
+                        }
+                    }
+                    mc.deleteEduCallBack(responseBody)
+                }
+            }
+
+            override fun onFailure(call: Call<Education>, t: Throwable) {
+                Log.d("CCD", "Error delete education")
                 Log.d("CCD", t.message.toString())
             }
 

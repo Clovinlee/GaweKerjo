@@ -17,7 +17,7 @@ class BahasaAdapter (
     private val cb: ()->Unit
 ): RecyclerView.Adapter<BahasaAdapter.CustomViewHolder>(){
 
-    private val onItemClickListener:OnRecyclerViewItemClickListener3?=null
+    private var onItemClickListener:OnRecyclerViewItemClickListener3?=null
     inner class CustomViewHolder(private val view:View):RecyclerView.ViewHolder(view) {
         val bahasa:TextView = itemView.findViewById(R.id.tvLayoutLIstBahasaBahasa)
         val hapus: ImageView = itemView.findViewById(R.id.imageLayoutListBahasaHapus)
@@ -39,6 +39,10 @@ class BahasaAdapter (
 
     override fun getItemCount(): Int {
         return listbahasa.size
+    }
+
+    fun setOnItemClickListener(onItemClickListener: OnRecyclerViewItemClickListener3){
+        this.onItemClickListener = onItemClickListener
     }
 
 }

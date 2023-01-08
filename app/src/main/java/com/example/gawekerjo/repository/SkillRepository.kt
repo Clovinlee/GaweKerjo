@@ -109,7 +109,7 @@ class SkillRepository(var db : AppDatabase){
 
 
                         }
-                        mc.loadskill(mc)
+                        mc.loadskill(mc, true)
                     }
             }
 
