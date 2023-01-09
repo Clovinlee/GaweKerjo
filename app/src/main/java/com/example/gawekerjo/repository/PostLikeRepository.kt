@@ -60,6 +60,7 @@ class PostLikeRepository(var db: AppDatabase) {
 
                         coroutine.launch {
                             db.postlikeDao.insertPostLike(postLikeBaru)
+
                         }
                     }
 

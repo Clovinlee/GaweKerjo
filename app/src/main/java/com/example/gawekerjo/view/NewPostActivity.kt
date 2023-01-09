@@ -44,6 +44,8 @@ class NewPostActivity : AppCompatActivity() {
         }
 
         b.btnPost.setOnClickListener {
+            b.txtName.setText(user.name)
+            b.txtUsername.setText(user.email)
             val user_id = user.id
             var body = b.txtBody.text.toString()
             var title = b.txtTitle.text.toString()

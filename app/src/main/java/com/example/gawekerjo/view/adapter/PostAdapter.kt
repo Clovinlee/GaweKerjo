@@ -30,6 +30,7 @@ class PostAdapter(
     var dataLike: ArrayList<PostLikeItem>,
     var db : AppDatabase,
     var id: Int,
+
 ) : RecyclerView.Adapter<PostAdapter.MyHolder>(){
 
     val coroutine = CoroutineScope(Dispatchers.IO)
@@ -62,38 +63,41 @@ class PostAdapter(
             if(dataLike[i].post_id == itemView.id)
             { flag = 1 }
         }
+//        println("cek flag = " + itemView.id.toString() + " --- " + flag.toString())
 
         if(flag == 0) {
             holder.imglike.setImageResource(R.drawable.ic_outline_thumb_up_24)
-            holder.imglike.setOnClickListener(View.OnClickListener {
-                postlike.addPostLike(mc, id, itemView.id.toString().toInt())
-                holder.imglike.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-                flag = 1
-
-                dataLike.add(PostLikeItem(10, id, itemView.id, "", ""))
-            })
         }
         else {
             holder.imglike.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-            holder.imglike.setOnClickListener(View.OnClickListener {
+        }
+
+        holder.imglike.setOnClickListener(View.OnClickListener {
+            var flagdalam = 0
+            for(i in 0..dataLike.size - 1) {
+                if(dataLike[i].post_id == itemView.id)
+                { flagdalam = 1 }
+            }
+
+            if(flagdalam == 0) {
+                postlike.addPostLike(mc, id, itemView.id.toString().toInt())
+                holder.imglike.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+                dataLike.add(PostLikeItem(10, id, itemView.id, "", ""))
+                holder.ctrlike.setText((holder.ctrlike.text.toString().toInt() + 1).toString())
+            }
+            else {
                 postlike.removeLike(mc, id, itemView.id.toString().toInt())
                 holder.imglike.setImageResource(R.drawable.ic_outline_thumb_up_24)
-                flag = 0
-
                 var hapus = -1
                 for (i in 0..dataLike.size -1){
-                    if(dataLike[i].user_id == id && dataLike[i].post_id == itemView.id){
+                    if(dataLike[i].post_id == itemView.id){
                         hapus = i
                     }
                 }
-
                 dataLike.removeAt(hapus)
-            })
-        }
-
-
-
-
+                holder.ctrlike.setText((holder.ctrlike.text.toString().toInt() - 1).toString())
+            }
+        })
     }
 
     override fun getItemCount(): Int {
