@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityHomeBinding
+import com.example.gawekerjo.model.postlike.postLike
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.CountryRepository
 import com.example.gawekerjo.repository.SkillRepository
@@ -164,14 +165,14 @@ class HomeActivity : AppCompatActivity() {
 
         // END OF DYNAMIC DRAWER HEADER
 
-        fHome = HomeFragment()
+        fHome = HomeFragment(this, db, user)
         fFollow = FollowFragment()
         fOffer = OffersFragment(this, db, user)
 
         launcherNewPost = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             val data = it.data
             if(data != null){
-                //NEW POST
+                fHome.loadDataPost()
             }
         }
 
@@ -180,6 +181,8 @@ class HomeActivity : AppCompatActivity() {
                 swapFragment(fHome)
             }else if(it.itemId == R.id.menupost){
                 val i : Intent = Intent(this, NewPostActivity::class.java)
+                i.putExtra("userlogin", user)
+//                startActivity(i)
                 launcherNewPost.launch(i)
             }else if(it.itemId == R.id.menuoffer){
                 swapFragment(fOffer)
@@ -207,5 +210,18 @@ class HomeActivity : AppCompatActivity() {
         var ft : FragmentTransaction = supportFragmentManager.beginTransaction()
         ft.replace(R.id.frHome, f)
         ft.commit()
+    }
+
+    //UNTUK PROSES LIKE
+    fun addPostLikeCallBack(result : postLike){
+        if(result.status == 200){
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+            val i = Intent()
+            setResult(1, intent)
+            finish()
+        }
+        else{
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

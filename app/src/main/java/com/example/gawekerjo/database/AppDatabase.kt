@@ -10,6 +10,8 @@ import com.example.gawekerjo.model.chat.ChatItem
 import com.example.gawekerjo.model.country.CountryItem
 import com.example.gawekerjo.model.education.EducationItem
 import com.example.gawekerjo.model.follow.FollowItem
+import com.example.gawekerjo.model.post.PostItem
+import com.example.gawekerjo.model.postlike.PostLikeItem
 import com.example.gawekerjo.model.skill.SkillItem
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.model.userchat.UserChatItem

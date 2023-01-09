@@ -1,7 +1,7 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.PostLikeItem
+import com.example.gawekerjo.model.postlike.PostLikeItem
 
 @Dao
 interface PostLikeDao {
@@ -13,4 +13,6 @@ interface PostLikeDao {
     suspend fun updatePostLike(postlike: PostLikeItem)
     @Query("SELECT * FROM post_likes")
     suspend fun getAllPostLike():List<PostLikeItem>
+    @Query("DELETE FROM post_likes")
+    suspend fun clear()
 }
