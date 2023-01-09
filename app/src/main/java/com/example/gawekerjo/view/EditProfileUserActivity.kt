@@ -73,8 +73,8 @@ class EditProfileUserActivity : AppCompatActivity() {
             if (urlgambar!=null){
                 if (askForPermissions()){
                     user.image="/storage/user/${UploadUtility(this).uploadFile(urlgambar!!,this,user.id.toString())}"
-                
-                    EditDataUser()
+                }
+
 
             }
 //            EditDataUser()
@@ -86,9 +86,8 @@ class EditProfileUserActivity : AppCompatActivity() {
 
 
         //kembali
-        b.imgEditProfileUserBack.setOnClickListener {
-            finish()
-        }
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
 
         b.loadModal.visibility = View.VISIBLE
         disableEnableControls(false,b.linearLayoutEditProfile)
@@ -291,5 +290,10 @@ class EditProfileUserActivity : AppCompatActivity() {
         }else{
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

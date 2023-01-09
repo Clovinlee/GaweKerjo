@@ -46,16 +46,11 @@ class AddBahasaActivity : AppCompatActivity() {
         }catch (e:Exception){
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
         }
-
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
 
         // kembali
-        b.imgTambahBahasaBack.setOnClickListener {
-            if(b.loadModal.visibility == View.VISIBLE){
-                return@setOnClickListener
-            }
 
-            finish()
-        }
 
         b.loadModal.visibility = View.VISIBLE
         disableEnableControls(false,b.linearLayout)
@@ -141,6 +136,11 @@ class AddBahasaActivity : AppCompatActivity() {
                 disableEnableControls(enable, child)
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 

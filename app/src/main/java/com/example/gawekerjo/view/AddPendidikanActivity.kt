@@ -104,9 +104,8 @@ class AddPendidikanActivity : AppCompatActivity() {
 
 
         //kembali
-        b.imgTambahPendidikanBack.setOnClickListener {
-            finish()
-        }
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
     }
 
     fun addPendidikanCallBack(result: Education){
@@ -123,6 +122,10 @@ class AddPendidikanActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
 
 }

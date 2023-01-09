@@ -18,12 +18,6 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imgTambahPendidikanBack"
-                android:layout_width="41dp"
-                android:layout_height="35dp"
-                app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
-
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
