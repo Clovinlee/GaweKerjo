@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +38,8 @@ class FriendListActivity : AppCompatActivity() {
     private lateinit var FollowAdapter : FollowAdapter
     lateinit var allUser : ArrayList<UserItem>
 
+    lateinit var launcher : ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend_list)
@@ -51,6 +54,10 @@ class FriendListActivity : AppCompatActivity() {
         accFollow = FollowRepository(db)
 
         user=intent.getParcelableExtra("userlogin")!!
+
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            accFollow.getFriends(this,null,user.id,null)
+        }
 
         rv = findViewById(R.id.rv)
 
@@ -72,7 +79,7 @@ class FriendListActivity : AppCompatActivity() {
                 intent.putParcelableArrayListExtra("followList", followList)
                 intent.putExtra("userlogin", user)
 
-                startActivity(intent)
+                launcher.launch(intent)
                 true
             }
             else->{
