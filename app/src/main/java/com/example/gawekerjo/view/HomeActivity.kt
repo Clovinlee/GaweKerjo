@@ -201,8 +201,6 @@ class HomeActivity : AppCompatActivity() {
         b.btmNav.setOnItemSelectedListener {
             if(it.itemId == R.id.menuhome){
                 swapFragment(fHome)
-            }else if(it.itemId == R.id.menufriend){
-                swapFragment(fFollow)
             }else if(it.itemId == R.id.menupost){
                 val i : Intent = Intent(this, NewPostActivity::class.java)
                 launcherNewPost.launch(i)
