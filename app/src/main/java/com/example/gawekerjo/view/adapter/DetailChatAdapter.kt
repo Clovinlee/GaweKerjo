@@ -30,35 +30,38 @@ class DetailChatAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val c=chat[position]
-        var parser=SimpleDateFormat("yyyy-MM-dd")
+        var parser=SimpleDateFormat("yyyy-MM-dd hh:mm")
         var formatter=SimpleDateFormat("EEEE, dd/MM/yyyy")
-        val tanggal=formatter.format(parser.parse(c.created_at.substring(0,c.created_at.indexOf("T"))))
+        var tanggal_temp=parser.parse(c.created_at.substring(0,c.created_at.indexOf("T")+6).replace("T"," "))
+        tanggal_temp.hours+=7
+        val tanggal=formatter.format(tanggal_temp)
         val yesterday=Date()
         yesterday.date--
+        yesterday.hours+=7
         val tgl=if (formatter.format(Date())==tanggal) "Today" else if(formatter.format(yesterday)==tanggal) "Yesterday" else tanggal
         with(holder){
-            if(c==chat.first()||tanggal!=formatter.format(parser.parse(chat[position-1].created_at.substring(0,c.created_at.indexOf("T"))))){
+            var prev:Date?=null
+            if (c!=chat.first()){
+                prev=parser.parse(chat[position-1].created_at.substring(0,c.created_at.indexOf("T")+6).replace("T"," "))
+                prev.hours+=7
+            }
+            if(prev==null||tanggal!=formatter.format(prev)){
                 tv.visibility=View.VISIBLE
                 tv.text=tgl
             }
-            parser=SimpleDateFormat("HH:mm")
             formatter=SimpleDateFormat("hh:mm aaa")
             if (c.user_id==user_id){
                 llrec.visibility=View.GONE
                 val tvmessage=v.findViewById<TextView>(R.id.tvchatisi)
                 val tvjam=v.findViewById<TextView>(R.id.tvchatjam)
                 tvmessage.text=c.message
-                val jam=parser.parse(c.created_at.substring(c.created_at.indexOf("T")+1,c.created_at.indexOf("T")+6))
-                jam.hours+=7
-                tvjam.text=formatter.format(jam)
+                tvjam.text=formatter.format(tanggal_temp)
             }else{
                 lluser.visibility=View.GONE
                 val tvmessage=v.findViewById<TextView>(R.id.tvchatisirecipient)
                 val tvjam=v.findViewById<TextView>(R.id.tvchatjamrecipient)
                 tvmessage.text=c.message
-                val jam=parser.parse(c.created_at.substring(c.created_at.indexOf("T")+1,c.created_at.indexOf("T")+6))
-                jam.hours+=7
-                tvjam.text=formatter.format(jam)
+                tvjam.text=formatter.format(tanggal_temp)
             }
         }
     }

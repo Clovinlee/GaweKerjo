@@ -1,11 +1,30 @@
 package com.example.gawekerjo.view
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
+import com.example.gawekerjo.database.AppDatabase
+import com.example.gawekerjo.databinding.ActivityFriendListBinding
+import com.example.gawekerjo.databinding.FragmentFollowBinding
+import com.example.gawekerjo.databinding.FragmentOffersBinding
+import com.example.gawekerjo.model.Offer.OfferItem
+import com.example.gawekerjo.model.follow.FollowItem
+import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.repository.FollowRepository
+import com.example.gawekerjo.repository.OfferRepository
+import com.example.gawekerjo.view.adapter.AddFriendAdapter
+import com.example.gawekerjo.view.adapter.FollowAdapter
+import com.example.gawekerjo.view.adapter.FollowAdapter2
+import com.example.gawekerjo.view.adapter.RVAdapterJob
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,17 +36,23 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FollowFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FollowFragment : Fragment() {
+class FollowFragment(var FollowAdapter2:FollowAdapter2) : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
+    private lateinit var FollowAdapter : FollowAdapter
+    private lateinit var b : FragmentFollowBinding
+    private val coroutine = CoroutineScope(Dispatchers.IO)
+    private lateinit var ctx : Context
+    private var listOffer : List<OfferItem> = listOf()
+    lateinit var rvAll: RecyclerView
+
+    private lateinit var offerRepo : OfferRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
+
     }
 
     override fun onCreateView(
@@ -38,23 +63,10 @@ class FollowFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_follow, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FollowFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FollowFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        rvAll = view.findViewById(R.id.rv)
+        val verticalLayoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL,false)
+        rvAll.adapter = FollowAdapter2
+        Log.d("CCD", "Ini nyoba di adapter size e : " + FollowAdapter2.followList.size.toString())
     }
 }

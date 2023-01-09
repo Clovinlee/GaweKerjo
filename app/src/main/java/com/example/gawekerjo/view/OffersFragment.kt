@@ -93,7 +93,7 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             txtTitle.text = offer.title
             txtSkill.text = offer.skills
             txtBody.text = offer.body
-            txtUser.text = user.name
+            txtUser.text = useroffer.name
             txtLocation.text = useroffer.lokasi
 
             if(useroffer.id == user.id){

@@ -1,60 +1,137 @@
 package com.example.gawekerjo.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
+import com.example.gawekerjo.database.AppDatabase
+import com.example.gawekerjo.databinding.FragmentHomeBinding
+import com.example.gawekerjo.model.post.PostItem
+import com.example.gawekerjo.model.postlike.PostLikeItem
+import com.example.gawekerjo.model.postlike.postLike
+import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.repository.PostLikeRepository
+import com.example.gawekerjo.repository.PostRepository
+import com.example.gawekerjo.view.adapter.PostAdapter
+import kotlinx.coroutines.AbstractCoroutine
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class HomeFragment(var mc: HomeActivity, var db : AppDatabase, var user : UserItem) : Fragment() {
+    lateinit var b : FragmentHomeBinding
+    lateinit var postAdapter : PostAdapter
+    private  val coroutine =  CoroutineScope(Dispatchers.IO)
+    private lateinit var postRepo : PostRepository
+    private lateinit var postlikeRepo : PostLikeRepository
+    var arrPost = ArrayList<PostItem>()
+    var arrPostLike = ArrayList<PostLikeItem>()
+
+    private var firstFetch = true
+    private var firstFetchlike = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        b = FragmentHomeBinding.inflate(inflater, container, false)
+        val v = b.root
+        return v
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postRepo = PostRepository(db)
+        postlikeRepo = PostLikeRepository(db)
+        loadDataPost()
+        loadDataLike()
+    }
+
+//    fun refreshview(){
+//        arrPost.clear()
+//        postRepo.getAllPostRelated(mc, mc.user.id)
+//        coroutine.launch {
+//            arrPost = db.postDao.getAllPost() as ArrayList<PostItem>
+//        }
+//        postAdapter = PostAdapter(this, )
+//    }
+
+    fun loadDataPost(fetched : Boolean = false){
+        coroutine.launch {
+            arrPost = db.postDao.getAllPost() as ArrayList<PostItem>
+            Log.d("CCD", arrPost.size.toString())
+            if((arrPost.size == 0 && fetched == false) || firstFetch == true){
+                firstFetch = false
+                postRepo.getAllPostRelated(this@HomeFragment, mc.user.id)
+            }else{
+                mc.runOnUiThread {
+                    loadDataLike()
                 }
             }
+        }
+    }
+
+    fun loadDataLike(fetched: Boolean = false){
+        coroutine.launch {
+            arrPostLike = db.postlikeDao.getAllPostLike() as ArrayList<PostLikeItem>
+            if((arrPostLike.size == 0 && fetched == false) || firstFetchlike == true){
+                firstFetchlike = false
+                postlikeRepo.getPostLikes(this@HomeFragment, mc.user.id)
+            }
+            else{
+                mc.runOnUiThread {
+                    initPost()
+                }
+            }
+        }
+    }
+
+    fun initPost(){
+        postAdapter = PostAdapter(this, arrPost, arrPostLike, db, mc.user.id)
+        b.rvHome.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        b.rvHome.adapter = postAdapter
+    }
+
+    fun addPostLikeCallBack(result : postLike){
+        if(result.status == 200){
+            Toast.makeText((context as HomeActivity), "${result.message}", Toast.LENGTH_SHORT).show()
+            val i = Intent()
+            (context as HomeActivity).setResult(1, i)
+            (context as HomeActivity).finish()
+        }
+        else{
+            Toast.makeText(context, "${result.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    //Belom ditambahkan
+    fun deletecallback(result : postLike){
+        if(result.status == 200){
+            Toast.makeText(context, "${result.message}", Toast.LENGTH_SHORT).show()
+
+            load()
+        }
+        else{
+            Toast.makeText(context, "${result.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun load(){
+        arrPostLike.clear()
+        coroutine.launch {
+            arrPostLike.addAll(db.postlikeDao.getAllPostLike())
+        }
     }
 }
