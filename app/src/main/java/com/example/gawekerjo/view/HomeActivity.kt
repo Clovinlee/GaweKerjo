@@ -185,7 +185,7 @@ class HomeActivity : AppCompatActivity() {
         // END OF DYNAMIC DRAWER HEADER
 
         fHome = HomeFragment(this, db, user)
-        fFollow = FollowFragment()
+//        fFollow = FollowFragment()
         fOffer = OffersFragment(this, db, user)
 
         launcherNewPost = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
