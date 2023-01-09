@@ -23,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#FDFCFC"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -32,7 +33,7 @@
 
                     <ImageView
                         android:id="@+id/imageView16"
-                        android:layout_width="358dp"
+                        android:layout_width="328dp"
                         android:layout_height="149dp"
                         app:srcCompat="@drawable/anon" />
 
@@ -48,7 +49,6 @@
                     android:id="@+id/tvUserProfileNama"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="23dp"
                     android:text="Nama Anda"
                     android:textSize="20sp"
@@ -58,7 +58,6 @@
                     android:id="@+id/tvUserProfileGender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="9dp"
                     android:text="Gender" />
 
@@ -66,7 +65,6 @@
                     android:id="@+id/tvUserProfileDeskripsi"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="9dp"
                     android:text="Deskripsi" />
 
@@ -74,9 +72,7 @@
                     android:id="@+id/tvUserProfileKoneksi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
                     android:text="Koneksi" />
 
             </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.gawekerjo.repository
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.SkillApi
 import com.example.gawekerjo.api.UserApi
@@ -158,10 +159,15 @@ class AccountRepository (var db : AppDatabase) {
         id: Int,
         name: String,
         description: String,
-        notelp: String
+        notelp: String,
+        gender: String,
+        tgllahir: String,
+        negara : String,
+        founded: String,
+        industry: String
 
     ){
-        var rc_user : Call<User> = rc.create(UserApi::class.java).editProfile( id, name, description, notelp )
+        var rc_user : Call<User> = rc.create(UserApi::class.java).editProfile( id, name, description, notelp, gender, tgllahir, negara, founded, industry )
 
         rc_user.enqueue(object : Callback<User>{
             override fun onResponse(call: Call<User>, response: Response<User>) {
@@ -183,6 +189,10 @@ class AccountRepository (var db : AppDatabase) {
 
 
                     }
+                    else{
+                        var mc_edit = mc as EditProfileUserActivity
+                        mc_edit.balek(rbody)
+                    }
 
                 }
             }
@@ -190,6 +200,7 @@ class AccountRepository (var db : AppDatabase) {
             override fun onFailure(call: Call<User>, t: Throwable) {
                 Log.d("CCD","Error Edit Profile")
                 Log.d("CCD",t.message.toString())
+
             }
 
         })

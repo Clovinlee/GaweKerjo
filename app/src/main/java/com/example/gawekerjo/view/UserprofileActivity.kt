@@ -55,6 +55,7 @@ class UserprofileActivity : AppCompatActivity() {
     private lateinit var listnama: MutableList<SkillItem>
     private lateinit var listpendidikan: MutableList<EducationItem>
     private lateinit var listlang: MutableList<UserLanguageItem>
+    lateinit var pendidikan: EducationItem
 
     val REQUEST_CODE = 100
 
@@ -135,6 +136,21 @@ class UserprofileActivity : AppCompatActivity() {
             override fun OnClick(view: View, position: Int) {
                 showDeleteDialog(position, "pendidikan")
             }
+
+            override fun OnClick2(view: View, position: Int) {
+                pendidikan = listpendidikan[position]
+
+                val i : Intent = Intent(this@UserprofileActivity, AddPendidikanActivity::class.java)
+                i.putExtra("userLogin",user)
+                i.putExtra("id", listpendidikan[position].id)
+                i.putExtra("nama", listpendidikan[position].name)
+                i.putExtra("tglmulai", listpendidikan[position].date_start)
+                i.putExtra("tglakhir", listpendidikan[position].date_end)
+                i.putExtra("nilai", listpendidikan[position].score)
+                i.putExtra("action", "Update")
+                launcher.launch(i)
+//                Toast.makeText(this@UserprofileActivity, "edit", Toast.LENGTH_SHORT).show()
+            }
         })
 
         languageAdapter = BahasaAdapter(listlang, R.layout.layout_list_bahasa, this@UserprofileActivity){
@@ -145,6 +161,7 @@ class UserprofileActivity : AppCompatActivity() {
             override fun OnClick(view: View, position: Int) {
                 showDeleteDialog(position, "bahasa")
             }
+
         })
 
         loadskill(this, false)

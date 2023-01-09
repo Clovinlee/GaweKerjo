@@ -41,7 +41,11 @@ interface UserApi {
         @Query("name")name:String,
         @Query("description")description: String,
         @Query("notelp") notelp: String,
-
-
+        @Query("gender")gender: String,
+        @Query("tgllahir") tgllahir: String,
+        @Query("negara")negara: String,
+        @Query("founded")founded: String,
+        @Query("industry")industry: String
     ):Call<User>
+
 }

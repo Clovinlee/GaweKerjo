@@ -124,7 +124,7 @@
                         android:inputType="textPersonName" />
 
                     <TextView
-                        android:id="@+id/textView28"
+                        android:id="@+id/tvjeniskelamin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="28dp"
@@ -157,7 +157,7 @@
                         android:inputType="textPersonName" />
 
                     <TextView
-                        android:id="@+id/textView30"
+                        android:id="@+id/tvtanggallahir"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="28dp"
@@ -200,12 +200,45 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <TextView
+                        android:id="@+id/tvfounded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="28dp"
+                        android:text="Tahun berdiri" />
+
+                    <EditText
+                        android:id="@+id/etEditProfileUserFounded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+
+                    <TextView
+                        android:id="@+id/tvindustri"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="28dp"
+                        android:text="Industri" />
+
+                    <EditText
+                        android:id="@+id/etEditProfileUserIndustri"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+
                     <Button
                         android:id="@+id/btnEditProfileuserSimpan"
                         android:layout_width="302dp"
                         android:layout_height="42dp"
                         android:layout_marginStart="52dp"
                         android:layout_marginTop="36dp"
+                        android:layout_marginBottom="28dp"
                         android:text="Simpan" />
                 </LinearLayout>
             </LinearLayout>

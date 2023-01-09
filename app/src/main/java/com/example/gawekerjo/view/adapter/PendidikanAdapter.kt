@@ -25,9 +25,13 @@ class PendidikanAdapter (
         val tahun:TextView = itemView.findViewById(R.id.tvLayoutListPendidikanTahun)
         val nilai:TextView = itemView.findViewById(R.id.tvLayoutListPendidikanNilai)
         val hapus:ImageView = itemView.findViewById(R.id.imgLayoutListPendidikanHapus)
+        val edit:ImageView = itemView.findViewById(R.id.imgLayoutListPendidikanEdit)
         init{
             hapus.setOnClickListener {
                 onItemClickListener?.OnClick(it, adapterPosition)
+            }
+            edit.setOnClickListener {
+                onItemClickListener?.OnClick2(it, adapterPosition)
             }
         }
     }
@@ -38,9 +42,13 @@ class PendidikanAdapter (
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        var tempdtstart = listpendidikan[position].date_start
+        var dtstart = tempdtstart.substringBeforeLast("T")
+        var tempdtend = listpendidikan[position].date_end
+        var dtend = tempdtend.substringBeforeLast("T")
         holder.nama.text = listpendidikan[position].name
-        holder.tahun.text = "${listpendidikan[position].date_start} sampai ${listpendidikan[position].date_end}"
-        holder.nilai.text = listpendidikan[position].score
+        holder.tahun.text = "${dtstart} sampai ${dtend}"
+        holder.nilai.text = "nilai : ${listpendidikan[position].score}"
     }
 
     override fun getItemCount(): Int {
@@ -54,4 +62,6 @@ class PendidikanAdapter (
 
 interface OnRecyclerViewItemClickListener2 {
     fun OnClick(view:View, position: Int)
+
+    fun OnClick2(view:View, position: Int)
 }

@@ -106,4 +106,32 @@ class EducationRepository (var db: AppDatabase){
 
         })
     }
+
+    fun editpendidikan(mc: AddPendidikanActivity, id: Int, nama: String, tgl_mulai: String, tgl_akhir: String, nilai: String){
+        var rc_edu : Call<Education> = rc.create(EducationApi::class.java).updateedu(id, nama, tgl_mulai, tgl_akhir, nilai)
+
+        rc_edu.enqueue(object : Callback<Education>{
+            override fun onResponse(call: Call<Education>, response: Response<Education>) {
+                val responseBody = response.body()
+                if (responseBody != null){
+                    if (responseBody.status == 200){
+                        val edu = responseBody.data[0]
+
+                        coroutine.launch {
+                            db.educationDao.updateEducation(edu)
+                        }
+
+                        mc.addPendidikanCallBack(responseBody)
+                    }
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<Education>, t: Throwable) {
+                Log.d("CCD", "Error Update edu")
+                Log.d("CCD", t.message.toString())
+            }
+        })
+    }
 }

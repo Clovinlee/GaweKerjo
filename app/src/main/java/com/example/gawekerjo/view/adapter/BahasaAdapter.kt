@@ -20,6 +20,7 @@ class BahasaAdapter (
     private var onItemClickListener:OnRecyclerViewItemClickListener3?=null
     inner class CustomViewHolder(private val view:View):RecyclerView.ViewHolder(view) {
         val bahasa:TextView = itemView.findViewById(R.id.tvLayoutLIstBahasaBahasa)
+        val level : TextView = itemView.findViewById(R.id.tvLayoutListBahasaLevel)
         val hapus: ImageView = itemView.findViewById(R.id.imageLayoutListBahasaHapus)
         init {
             hapus.setOnClickListener {
@@ -35,6 +36,7 @@ class BahasaAdapter (
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.bahasa.text = listbahasa[position].language
+        holder.level.text = "${listbahasa[position].level}"
     }
 
     override fun getItemCount(): Int {

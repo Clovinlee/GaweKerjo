@@ -26,4 +26,13 @@ interface EducationApi {
     fun deleteedu(
         @Query("id")id:Int
     ):Call<Education>
+    @POST("updateedu")
+    fun updateedu(
+        @Query("id")id:Int,
+        @Query("name")name: String,
+        @Query("date_start")date_start: String,
+        @Query("date_end")date_end: String,
+        @Query("score")score: String
+
+    ):Call<Education>
 }

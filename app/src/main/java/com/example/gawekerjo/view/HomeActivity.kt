@@ -100,9 +100,17 @@ class HomeActivity : AppCompatActivity() {
                 // ACTIVITY TO PROFILE
 //                Toast.makeText(this, "${user.id}", Toast.LENGTH_SHORT).show()
                 runOnUiThread {
-                    val i : Intent = Intent(this, UserprofileActivity::class.java)
-                    i.putExtra("userLogin", user)
-                    startActivity(i)
+                    if (user.type == "1"){
+
+                        val i : Intent = Intent(this, UserprofileActivity::class.java)
+                        i.putExtra("userLogin", user)
+                        startActivity(i)
+                    }
+                    else{
+                        val i : Intent = Intent(this, CompanyProfileActivity::class.java)
+                        i.putExtra("userLogin", user)
+                        startActivity(i)
+                    }
                 }
             }else if(it.itemId == R.id.navmenu_messages){
                 // ACTIVITY TO MESSAGES
@@ -161,9 +169,21 @@ class HomeActivity : AppCompatActivity() {
             // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
             // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
             runOnUiThread {
-                val i : Intent = Intent(this, UserprofileActivity::class.java)
-                i.putExtra("userLogin", user)
-                startActivity(i)
+//                val i : Intent = Intent(this, UserprofileActivity::class.java)
+//                i.putExtra("userLogin", user)
+//                startActivity(i)
+
+                if (user.type == "1"){
+
+                    val i : Intent = Intent(this, UserprofileActivity::class.java)
+                    i.putExtra("userLogin", user)
+                    startActivity(i)
+                }
+                else{
+                    val c : Intent = Intent(this, CompanyProfileActivity::class.java)
+                    c.putExtra("userLogin", user)
+                    startActivity(c)
+                }
             }
         }
 

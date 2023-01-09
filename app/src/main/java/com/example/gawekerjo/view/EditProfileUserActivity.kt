@@ -57,6 +57,7 @@ class EditProfileUserActivity : AppCompatActivity() {
         coroutine.launch {
 
             user = db.userDao.getUserByEmail(us.email)!!
+            tipeuser(user)
             loadprofile(user)
         }
         b.btneditprofilegambar.setOnClickListener { openGalleryForImage() }
@@ -64,7 +65,8 @@ class EditProfileUserActivity : AppCompatActivity() {
             if (urlgambar!=null){
                 user.image="/storage/user/${UploadUtility(this).uploadFile(urlgambar!!,this,user.id.toString())}"
             }
-            Toast.makeText(this, "simpan", Toast.LENGTH_SHORT).show()
+            EditDataUser()
+//            Toast.makeText(this, "simpan", Toast.LENGTH_SHORT).show()
 //            finish()
         }
 
@@ -82,13 +84,40 @@ class EditProfileUserActivity : AppCompatActivity() {
         loadCountry(this)
     }
 
+    fun tipeuser(usr: UserItem){
+        if (usr.type == "1"){
+            b.tvfounded.setVisibility(View.GONE)
+            b.etEditProfileUserFounded.setVisibility(View.GONE)
+            b.tvindustri.setVisibility(View.GONE)
+            b.etEditProfileUserIndustri.setVisibility(View.GONE)
+        }
+        else{
+            b.tvtanggallahir.setVisibility(View.GONE)
+            b.etdEditProfileUserTanggalLahir.setVisibility(View.GONE)
+            b.tvjeniskelamin.setVisibility(View.GONE)
+            b.spinnerEditProfileUserKelamin.setVisibility(View.GONE)
+        }
+    }
+
     fun EditDataUser(){
         val accountRepo= AccountRepository(db)
         val name = b.etEditProfileUserNama.text.toString()
         val des = b.etEditProfileUserDeskripsi.text.toString()
         val notelp = b.etEditProfileUserNoTelp.text.toString()
+        var gender = ""
+        if (b.spinnerEditProfileUserKelamin.selectedItem == "Pria"){
+            gender = "L"
+        }else{
+            gender = "P"
+        }
+        var negara = b.autoCompleteTextView.text.toString()
+        var tgl = b.etdEditProfileUserTanggalLahir.text.toString()
+        var founded = b.etEditProfileUserFounded.text.toString()
+        var indistry = b.etEditProfileUserIndustri.text.toString()
+
+//        Toast.makeText(this, "${b.spinnerEditProfileUserKelamin.selectedItem}", Toast.LENGTH_SHORT).show()
         val id = user.id
-        accountRepo.editprofile(this,id, name, des, notelp )
+        accountRepo.editprofile(this,id, name, des, notelp, gender, tgl, negara, founded, indistry )
     }
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
@@ -151,6 +180,8 @@ class EditProfileUserActivity : AppCompatActivity() {
 
     fun loadprofile(usr:UserItem){
 
+
+
         b.etEditProfileUserNama.setText("${usr.name}")
         if (usr.description != null){
             b.etEditProfileUserDeskripsi.setText("${usr.description}")
@@ -159,7 +190,14 @@ class EditProfileUserActivity : AppCompatActivity() {
             b.etEditProfileUserNoTelp.setText("${usr.notelp}")
         }
         if (usr.birthdate != null){
-            b.etdEditProfileUserTanggalLahir.setText("${usr.birthdate}")
+            var temp = usr.birthdate
+            var dt = temp?.substringBeforeLast("T")
+
+
+            b.etdEditProfileUserTanggalLahir.setText("${dt}")
+        }
+        if(usr.lokasi!=null){
+            b.autoCompleteTextView.setText("${usr.lokasi}")
         }
         if (usr.image!=null){
             val i= URL(env.API_URL.substringBefore("/api/")+usr.image).openStream()
@@ -167,17 +205,31 @@ class EditProfileUserActivity : AppCompatActivity() {
             runOnUiThread { b.ivEditProfilePicture.setImageBitmap(image) }
         }
 
+
+
     }
+
+
 
     fun balek(result:User){
 
         if(result.status == 200){
-            var i : Intent = Intent(this, UserprofileActivity::class.java)
-            i.putExtra("userLogin",result.data[0])
-            startActivity(i)
-            this.finish()
+            if (result.data[0].type == "1"){
+                var i : Intent = Intent(this, UserprofileActivity::class.java)
+                i.putExtra("userLogin",result.data[0])
+                startActivity(i)
+                this.finish()
+            }
+            else{
+                var i : Intent = Intent(this, CompanyProfileActivity::class.java)
+                i.putExtra("userLogin",result.data[0])
+                startActivity(i)
+                this.finish()
+            }
+
+
         }else{
-            Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
         }
     }
 }
