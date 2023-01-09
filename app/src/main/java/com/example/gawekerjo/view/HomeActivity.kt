@@ -28,6 +28,7 @@ import com.example.gawekerjo.model.follow.FollowItem
 import com.example.gawekerjo.model.postlike.postLike
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.CountryRepository
+import com.example.gawekerjo.repository.EducationRepository
 import com.example.gawekerjo.repository.FollowRepository
 import com.example.gawekerjo.repository.SkillRepository
 import com.example.gawekerjo.view.adapter.FollowAdapter
@@ -55,6 +56,7 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var user : UserItem
     private lateinit var skillrepo : SkillRepository
+    private lateinit var edurepo: EducationRepository
 
 //    INI PUNYA ESTHER YG MASIH BLM BISA JALAN
     private lateinit var FollowAdapter2 : FollowAdapter2
@@ -87,8 +89,11 @@ class HomeActivity : AppCompatActivity() {
         Log.d("CCD", "Ini nyoba di homeactivity size e : " + followList.size.toString())
         //untuk profil
         skillrepo = SkillRepository(db)
+        edurepo = EducationRepository(db)
         skillrepo.getAllSkill(this)
-        skillrepo.getUserSkill(this, user.id, null)
+//        skillrepo.getUserSkill(this, user.id, null)
+//        edurepo.getUserEdu(this, null, user.id)
+
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
@@ -115,9 +120,17 @@ class HomeActivity : AppCompatActivity() {
                 // ACTIVITY TO PROFILE
 //                Toast.makeText(this, "${user.id}", Toast.LENGTH_SHORT).show()
                 runOnUiThread {
-                    val i : Intent = Intent(this, UserprofileActivity::class.java)
-                    i.putExtra("userLogin", user)
-                    startActivity(i)
+                    if (user.type == "1"){
+
+                        val i : Intent = Intent(this, UserprofileActivity::class.java)
+                        i.putExtra("userLogin", user)
+                        startActivity(i)
+                    }
+                    else{
+                        val i : Intent = Intent(this, CompanyProfileActivity::class.java)
+                        i.putExtra("userLogin", user)
+                        startActivity(i)
+                    }
                 }
             }else if(it.itemId == R.id.navmenu_messages){
                 // ACTIVITY TO MESSAGES
@@ -176,9 +189,21 @@ class HomeActivity : AppCompatActivity() {
             // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
             // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
             runOnUiThread {
-                val i : Intent = Intent(this, UserprofileActivity::class.java)
-                i.putExtra("userLogin", user)
-                startActivity(i)
+//                val i : Intent = Intent(this, UserprofileActivity::class.java)
+//                i.putExtra("userLogin", user)
+//                startActivity(i)
+
+                if (user.type == "1"){
+
+                    val i : Intent = Intent(this, UserprofileActivity::class.java)
+                    i.putExtra("userLogin", user)
+                    startActivity(i)
+                }
+                else{
+                    val c : Intent = Intent(this, CompanyProfileActivity::class.java)
+                    c.putExtra("userLogin", user)
+                    startActivity(c)
+                }
             }
         }
 

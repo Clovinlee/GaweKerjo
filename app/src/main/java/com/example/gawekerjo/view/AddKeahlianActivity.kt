@@ -82,16 +82,11 @@ class AddKeahlianActivity : AppCompatActivity() {
 
         }
 
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
+
         //kembali
-        b.imgTambahKeahlianBack.setOnClickListener {
-            finish()
-//            try {
-//
-//                Toast.makeText(this, "${listnama.size}", Toast.LENGTH_SHORT).show()
-//            }catch (e:Exception){
-//                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
-//            }
-        }
+
     }
 
     fun addKeahlianCallBack(result: UserSkill){
@@ -115,6 +110,11 @@ class AddKeahlianActivity : AppCompatActivity() {
         val arrayAdapter = ArrayAdapter(this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, listnama)
         b.autoCompleteTextView.setAdapter(arrayAdapter)
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 

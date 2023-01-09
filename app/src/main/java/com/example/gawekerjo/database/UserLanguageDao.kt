@@ -1,7 +1,7 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.UserLanguageItem
+import com.example.gawekerjo.model.userlanguage.UserLanguageItem
 
 @Dao
 interface UserLanguageDao {
@@ -13,4 +13,6 @@ interface UserLanguageDao {
     suspend fun updateUserLanguage(userlanguage: UserLanguageItem)
     @Query("SELECT * FROM user_languages")
     suspend fun getAllUserLanguage():List<UserLanguageItem>
+    @Query("DELETE FROM user_languages")
+    suspend fun clear()
 }

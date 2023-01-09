@@ -5,7 +5,10 @@ import com.example.gawekerjo.api.EducationApi
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.model.education.Education
+import com.example.gawekerjo.model.education.EducationItem
 import com.example.gawekerjo.view.AddPendidikanActivity
+import com.example.gawekerjo.view.HomeActivity
+import com.example.gawekerjo.view.UserprofileActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,6 +47,91 @@ class EducationRepository (var db: AppDatabase){
                 Log.d("CCD",t.message.toString())
             }
 
+        })
+    }
+
+    fun getUserEdu(mc:UserprofileActivity, id:Int?, user_id: Int? ){
+        var rc_edu : Call<Education> = rc.create(EducationApi::class.java).geteducation(null, user_id)
+
+        rc_edu.enqueue(object :Callback<Education>{
+            override fun onResponse(call: Call<Education>, response: Response<Education>) {
+
+                    val responseBody = response.body()
+
+                    if (responseBody != null){
+                        if (responseBody.status == 200 && responseBody.data.size > 0){
+                            coroutine.launch {
+                                var edu: EducationItem? = null
+                                db.educationDao.clear()
+                                for (i in 0 until responseBody.data.size) {
+                                    edu = responseBody.data[i]
+                                    db.educationDao.insertEducation(edu)
+                                }
+                            }
+                        }
+                        mc.loadpendidikan(mc, true)
+                    }
+
+            }
+
+            override fun onFailure(call: Call<Education>, t: Throwable) {
+                Log.d("CCD", "Error getting edu")
+                Log.d("CCD", t.message.toString())
+            }
+
+        })
+    }
+
+    fun deleteeduuser(mc: UserprofileActivity, id: Int){
+        var rc_edu : Call<Education> = rc.create(EducationApi::class.java).deleteedu(id)
+
+        rc_edu.enqueue(object: Callback<Education>{
+            override fun onResponse(call: Call<Education>, response: Response<Education>) {
+                val responseBody = response.body()
+                if (responseBody != null){
+                    if (responseBody.status == 200){
+                        val edu = responseBody.data[0]
+                        coroutine.launch {
+                            db.educationDao.deleteEducation(edu)
+                        }
+                    }
+                    mc.deleteEduCallBack(responseBody)
+                }
+            }
+
+            override fun onFailure(call: Call<Education>, t: Throwable) {
+                Log.d("CCD", "Error delete education")
+                Log.d("CCD", t.message.toString())
+            }
+
+        })
+    }
+
+    fun editpendidikan(mc: AddPendidikanActivity, id: Int, nama: String, tgl_mulai: String, tgl_akhir: String, nilai: String){
+        var rc_edu : Call<Education> = rc.create(EducationApi::class.java).updateedu(id, nama, tgl_mulai, tgl_akhir, nilai)
+
+        rc_edu.enqueue(object : Callback<Education>{
+            override fun onResponse(call: Call<Education>, response: Response<Education>) {
+                val responseBody = response.body()
+                if (responseBody != null){
+                    if (responseBody.status == 200){
+                        val edu = responseBody.data[0]
+
+                        coroutine.launch {
+                            db.educationDao.updateEducation(edu)
+                        }
+
+                        mc.addPendidikanCallBack(responseBody)
+                    }
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<Education>, t: Throwable) {
+                Log.d("CCD", "Error Update edu")
+                Log.d("CCD", t.message.toString())
+            }
         })
     }
 }
