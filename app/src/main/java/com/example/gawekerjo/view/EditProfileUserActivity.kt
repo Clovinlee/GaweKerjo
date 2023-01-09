@@ -77,7 +77,7 @@ class EditProfileUserActivity : AppCompatActivity() {
                     EditDataUser()
                 }
             }
-            EditDataUser()
+//            EditDataUser()
 //            Toast.makeText(this, "simpan", Toast.LENGTH_SHORT).show()
 //            finish()
         }
