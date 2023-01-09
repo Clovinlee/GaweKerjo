@@ -122,7 +122,10 @@ class UserprofileActivity : AppCompatActivity() {
         keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity){
 
         }
-        setLayoutManagerkeahlian()
+        runOnUiThread{
+
+            setLayoutManagerkeahlian()
+        }
         keahlianAdapter.setOnItemClickListener(object :OnRecyclerViewItemClickListener{
             override fun OnClick(view: View, position: Int) {
                 showDeleteDialog(position, "keahlian")
@@ -131,7 +134,10 @@ class UserprofileActivity : AppCompatActivity() {
         pendidikanAdapter = PendidikanAdapter(listpendidikan, R.layout.layout_listpendidikan, this@UserprofileActivity){
 
         }
-        setLayoutManagerpendidikan()
+        runOnUiThread {
+
+            setLayoutManagerpendidikan()
+        }
         pendidikanAdapter.setOnItemClickListener(object : OnRecyclerViewItemClickListener2 {
             override fun OnClick(view: View, position: Int) {
                 showDeleteDialog(position, "pendidikan")
@@ -156,7 +162,10 @@ class UserprofileActivity : AppCompatActivity() {
         languageAdapter = BahasaAdapter(listlang, R.layout.layout_list_bahasa, this@UserprofileActivity){
             
         }
-        setLayoutManagerLanguage()
+        runOnUiThread{
+
+            setLayoutManagerLanguage()
+        }
         languageAdapter.setOnItemClickListener(object : OnRecyclerViewItemClickListener3 {
             override fun OnClick(view: View, position: Int) {
                 showDeleteDialog(position, "bahasa")
