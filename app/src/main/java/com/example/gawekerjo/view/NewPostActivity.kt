@@ -43,9 +43,11 @@ class NewPostActivity : AppCompatActivity() {
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
         }
 
+        b.txtName.text = user.name
+        b.txtUsername.text = user.email
+
         b.btnPost.setOnClickListener {
-            b.txtName.setText(user.name)
-            b.txtUsername.setText(user.email)
+
             val user_id = user.id
             var body = b.txtBody.text.toString()
             var title = b.txtTitle.text.toString()
