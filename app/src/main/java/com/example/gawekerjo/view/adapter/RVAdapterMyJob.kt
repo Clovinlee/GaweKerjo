@@ -1,5 +1,6 @@
 package com.example.gawekerjo.view.adapter
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,21 +13,28 @@ import com.example.gawekerjo.R
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.Offer.OfferItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.view.MyOfferActivity
 import com.example.gawekerjo.view.OffersFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.net.URL
 
 class RVAdapterMyJob(private val mc : MyOfferActivity,
                      private val layout : Int,
                      private val listOffer : List<OfferItem>,
                      private val user : UserItem,
                      private val db : AppDatabase) : RecyclerView.Adapter<RVAdapterMyJob.CustomViewHolder>(){
+
+    private val coroutine = CoroutineScope(Dispatchers.IO)
 
     class CustomViewHolder(var view: View) : RecyclerView.ViewHolder(view)
     {
@@ -60,7 +68,15 @@ class RVAdapterMyJob(private val mc : MyOfferActivity,
 
         //holder.imgOffer
 
-        var rc : Retrofit = RetrofitClient.getRetrofit()
+        coroutine.launch {
+            if (user.image!=null){
+                val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                val image= BitmapFactory.decodeStream(i)
+                mc.runOnUiThread {
+                    holder.imgOffer.setImageBitmap(image)
+                }
+            }
+        }
 
         holder.lin.setOnClickListener {
             mc.dialog(item, user)

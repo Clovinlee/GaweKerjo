@@ -2,6 +2,7 @@ package com.example.gawekerjo.view
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityHomeBinding
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.follow.Follow
 import com.example.gawekerjo.model.follow.FollowItem
 import com.example.gawekerjo.model.postlike.postLike
@@ -38,6 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URL
 
 
 class HomeActivity : AppCompatActivity() {
@@ -106,8 +109,8 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // CHANGE ICON
-        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_home_24, this.getTheme())
-        supportActionBar?.setHomeAsUpIndicator(resize(resources.getDrawable(R.drawable.anon),90,90))
+//        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_home_24, this.getTheme())
+//        supportActionBar?.setHomeAsUpIndicator(resize(resources.getDrawable(R.drawable.anon),90,90))
         // CHANGE ICON
 
         navView.setNavigationItemSelectedListener {
@@ -181,6 +184,14 @@ class HomeActivity : AppCompatActivity() {
         var circleAvatar : CircleImageView = headerview.findViewById(R.id.circleAvatar)
         var txtName : TextView = headerview.findViewById(R.id.txtUserDrawerName)
         var txtEmail : TextView = headerview.findViewById(R.id.txtUserDrawerEmail)
+
+        coroutine.launch {
+            if (user.image!=null){
+                val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                val image= BitmapFactory.decodeStream(i)
+                runOnUiThread { circleAvatar.setImageBitmap(image) }
+            }
+        }
 
         txtName.text = user!!.name
         txtEmail.text = user!!.email

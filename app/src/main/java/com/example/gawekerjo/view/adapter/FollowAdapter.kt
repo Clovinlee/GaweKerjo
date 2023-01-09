@@ -1,5 +1,6 @@
 package com.example.gawekerjo.view.adapter
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +11,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.follow.FollowItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.FollowRepository
 import com.example.gawekerjo.view.AddFriendActivity
 import com.example.gawekerjo.view.FriendListActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.net.URL
 
 class FollowAdapter (
     val followList :List<FollowItem>,
@@ -28,6 +34,7 @@ class FollowAdapter (
 ): RecyclerView.Adapter<FollowAdapter.CustomViewHolder>() {
 
     private val rc : Retrofit = RetrofitClient.getRetrofit()
+    private val coroutine = CoroutineScope(Dispatchers.IO)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         var itemView = LayoutInflater.from(parent.context)
@@ -55,6 +62,16 @@ class FollowAdapter (
                 if(rbody.status == 200){
                     holder.txtNameFriendList.text = rbody.data[0].name
                     holder.txtDescFriendList.text = rbody.data[0].description
+
+                    coroutine.launch {
+                        if (rbody.data[0].image!=null){
+                            val i= URL(env.API_URL.substringBefore("/api/")+rbody.data[0].image).openStream()
+                            val image= BitmapFactory.decodeStream(i)
+                            AddFriendActivity.runOnUiThread{
+                                holder.imgFriend.setImageBitmap(image)
+                            }
+                        }
+                    }
                 }
             }
 
@@ -93,5 +110,6 @@ class FollowAdapter (
         val txtDescFriendList: TextView = itemView.findViewById(R.id.txtDescAddFriend)
         val btnMessageFriendList: ImageView = itemView.findViewById(R.id.btnMessage)
         val btnAddFriend: ImageView = itemView.findViewById(R.id.btnAddFriend)
+        val imgFriend : ImageView = itemView.findViewById(R.id.imgProfileFriendList)
     }
 }

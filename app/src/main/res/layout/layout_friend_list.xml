@@ -8,15 +8,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="10dp">
 
-        <ImageView
-            android:id="@+id/imgProfile"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfileFriendList"
             android:layout_width="100dp"
             android:layout_height="75dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="2"
-            app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+            android:src="@drawable/anon" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,6 +31,8 @@
                 android:id="@+id/txtNameAddFriend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="Nama "
                 android:textSize="24sp" />
 
@@ -37,6 +40,8 @@
                 android:id="@+id/txtDescAddFriend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="Username"
                 android:textSize="16sp" />
         </LinearLayout>
