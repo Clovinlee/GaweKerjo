@@ -103,8 +103,7 @@ class FollowRepository(var db : AppDatabase) {
 
                 if(responseBody != null){
                     if(responseBody.status == 200 && responseBody.data.size > 0){
-                        // MC Callback
-
+                        mc.callbackUnfriend(responseBody)
                     }
                 }
             }
@@ -200,7 +199,7 @@ class FollowRepository(var db : AppDatabase) {
         })
     }
 
-    fun removefollows(mc: FriendListActivity,id:Int?){
+    fun removefollows(mc: FriendListActivity,id:Int?,user_id: Int?){
         var rc_follow : Call<Follow> = rc.create(FollowApi::class.java).removefollows(id)
 
         rc_follow.enqueue(object: Callback<Follow> {
@@ -215,6 +214,7 @@ class FollowRepository(var db : AppDatabase) {
                     if(responseBody.status == 200 && responseBody.data.size > 0){
                         flw = responseBody.data[0]
                         Log.d("CCD","berhasil hapus data " + responseBody.data.size.toString())
+                        getFriends(mc,null,user_id,null)
                     }
 //                    mc.refresh(responseBody)
                 }

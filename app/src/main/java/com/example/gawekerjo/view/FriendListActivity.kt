@@ -90,8 +90,8 @@ class FriendListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     fun removeFollow(itemid:Int?){
-        accFollow.removefollows(this,itemid)
-        accFollow.getFriends(this,null,user.id,null)
+        accFollow.removefollows(this,itemid,user.id)
+//        accFollow.getFriends(this,null,user.id,null)
     }
 
 

@@ -65,7 +65,13 @@ class AddFriendActivity : AppCompatActivity() {
         {
             initRV()
             var txtSearch = findViewById<EditText>(R.id.searchfriend)
-            accFollow.searchuser(this,txtSearch.text.toString(),txtSearch.text.toString())
+            if (txtSearch.text.toString()=="")
+            {
+                accFollow.getUnfriendUser(this, user)
+            }else
+            {
+                accFollow.searchuser(this,txtSearch.text.toString(),null)
+            }
 //            Toast.makeText(this, "ini kok gamau kepencet hadeh", Toast.LENGTH_SHORT).show()
             initRV()
         }
