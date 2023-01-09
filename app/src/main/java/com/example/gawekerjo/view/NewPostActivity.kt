@@ -64,6 +64,7 @@ class NewPostActivity : AppCompatActivity() {
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
             val i = Intent()
             setResult(1, intent)
+            setResult(1, i)
             finish()
             this.finish()
         }

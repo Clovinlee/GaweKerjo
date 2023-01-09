@@ -11,16 +11,29 @@ import com.example.gawekerjo.R
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.model.post.PostItem
+import com.example.gawekerjo.model.postlike.PostLikeItem
+import com.example.gawekerjo.model.postlike.postLike
+import com.example.gawekerjo.repository.PostLikeRepository
 import com.example.gawekerjo.view.HomeActivity
 import com.example.gawekerjo.view.HomeFragment
+import kotlinx.coroutines.AbstractCoroutine
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.internal.userAgent
 import org.w3c.dom.Text
 import retrofit2.Retrofit
 
 class PostAdapter(
     var mc : HomeFragment,
     var data: ArrayList<PostItem>,
-    var db : AppDatabase
+    var dataLike: ArrayList<PostLikeItem>,
+    var db : AppDatabase,
+    var id: Int,
 ) : RecyclerView.Adapter<PostAdapter.MyHolder>(){
+
+    val coroutine = CoroutineScope(Dispatchers.IO)
+    lateinit var postlike : PostLikeRepository
 
     class MyHolder(it: View) : RecyclerView.ViewHolder(it){
         var title: TextView = it.findViewById(R.id.txtTitle)
@@ -32,6 +45,7 @@ class PostAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
+        postlike = PostLikeRepository(db)
         var itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_post, parent, false)
         return MyHolder(itemView)
     }
@@ -42,6 +56,42 @@ class PostAdapter(
         holder.title.text = itemView.title
         holder.content.text = itemView.body
         holder.ctrlike.text = itemView.like_count.toString()
+
+        var flag = 0
+        for(i in 0..dataLike.size - 1) {
+            if(dataLike[i].post_id == itemView.id)
+            { flag = 1 }
+        }
+
+        if(flag == 0) {
+            holder.imglike.setImageResource(R.drawable.ic_outline_thumb_up_24)
+            holder.imglike.setOnClickListener(View.OnClickListener {
+                postlike.addPostLike(mc, id, itemView.id.toString().toInt())
+                holder.imglike.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+                flag = 1
+
+                dataLike.add(PostLikeItem(10, id, itemView.id, "", ""))
+            })
+        }
+        else {
+            holder.imglike.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+            holder.imglike.setOnClickListener(View.OnClickListener {
+                postlike.removeLike(mc, id, itemView.id.toString().toInt())
+                holder.imglike.setImageResource(R.drawable.ic_outline_thumb_up_24)
+                flag = 0
+
+                var hapus = -1
+                for (i in 0..dataLike.size -1){
+                    if(dataLike[i].user_id == id && dataLike[i].post_id == itemView.id){
+                        hapus = i
+                    }
+                }
+
+                dataLike.removeAt(hapus)
+            })
+        }
+
+
 
 
     }
