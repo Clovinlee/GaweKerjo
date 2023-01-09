@@ -73,9 +73,9 @@ class EditProfileUserActivity : AppCompatActivity() {
             if (urlgambar!=null){
                 if (askForPermissions()){
                     user.image="/storage/user/${UploadUtility(this).uploadFile(urlgambar!!,this,user.id.toString())}"
-                }else{
+                
                     EditDataUser()
-                }
+
             }
 //            EditDataUser()
 //            Toast.makeText(this, "simpan", Toast.LENGTH_SHORT).show()
