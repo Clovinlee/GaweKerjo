@@ -97,6 +97,12 @@ class HomeActivity : AppCompatActivity() {
 //        skillrepo.getUserSkill(this, user.id, null)
 //        edurepo.getUserEdu(this, null, user.id)
 
+    coroutine.launch {
+        db.userskillDao.clear()
+        db.userlanguageDao.clear()
+        db.educationDao.clear()
+    }
+
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)

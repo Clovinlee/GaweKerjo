@@ -174,8 +174,8 @@ class UserprofileActivity : AppCompatActivity() {
         })
 
         loadskill(this, false)
-        loadpendidikan(this)
-        loadlang(this)
+//        loadpendidikan(this, false)
+//        loadlang(this, false)
 
 
 
@@ -261,6 +261,7 @@ class UserprofileActivity : AppCompatActivity() {
                 runOnUiThread {
                     load()
                     keahlianAdapter.notifyDataSetChanged()
+                    loadpendidikan(mc, false)
                 }
             }
         }
@@ -280,6 +281,7 @@ class UserprofileActivity : AppCompatActivity() {
 //                    b.loadModal.visibility = View.GONE
 //                    disableEnableControls(true, b.linearlayout)
                     pendidikanAdapter.notifyDataSetChanged()
+                    loadlang(mc, false)
                 }
             }
         }
