@@ -15,4 +15,7 @@ interface PostDao {
     suspend fun getAllPost():List<PostItem>
     @Query("DELETE FROM posts")
     suspend fun clear()
+
+    @Query("SELECT * FROM posts WHERE id=:post_id")
+    suspend fun getPostById(post_id: Int): PostItem?
 }

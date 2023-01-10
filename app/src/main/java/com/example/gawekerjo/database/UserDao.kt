@@ -24,4 +24,7 @@ interface UserDao {
 
     @Query("SELECT * FROM users ORDER BY id DESC LIMIT 1")
     suspend fun getLastUser(): UserItem?
+
+    @Query("SELECT * FROM users WHERE id=:user_id")
+    suspend fun getUserById(user_id:Int): UserItem?
 }
