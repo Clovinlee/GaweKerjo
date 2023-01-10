@@ -28,9 +28,9 @@
                     <ImageView
                         android:id="@+id/imgCompanyProfileProfile"
                         android:layout_width="303dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="149dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/profile" />
+                        app:srcCompat="@drawable/anon" />
 
                     <ImageView
                         android:id="@+id/imgCompanyProfileEditProfile"

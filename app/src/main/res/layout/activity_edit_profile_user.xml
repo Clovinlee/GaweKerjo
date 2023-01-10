@@ -156,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="28dp"
-                        android:text="Tanggal lahir" />
+                        android:text="Tanggal lahir (Y-m-d)" />
 
                     <EditText
                         android:id="@+id/etdEditProfileUserTanggalLahir"
@@ -165,6 +165,7 @@
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="1dp"
                         android:ems="10"
+                        android:hint="contoh: 2020-5-5"
                         android:inputType="date" />
 
                     <TextView
@@ -200,14 +201,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="28dp"
-                        android:text="Tahun berdiri" />
+                        android:text="Tahun berdiri (Y-m-d)" />
 
                     <EditText
                         android:id="@+id/etEditProfileUserFounded"
-                        android:layout_width="match_parent"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="28dp"
                         android:ems="10"
+                        android:hint="contoh: 2020-5-5"
                         android:inputType="textPersonName" />
 
                     <TextView
@@ -220,7 +222,7 @@
 
                     <EditText
                         android:id="@+id/etEditProfileUserIndustri"
-                        android:layout_width="match_parent"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="28dp"
                         android:ems="10"
