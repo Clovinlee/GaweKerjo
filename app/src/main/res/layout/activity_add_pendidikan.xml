@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/tvAddPendidikanJudul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="49dp"

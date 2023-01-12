@@ -55,6 +55,7 @@ class AddPendidikanActivity : AppCompatActivity() {
             id = intent.getIntExtra("id", -1)
 
             if (action == "Update"){
+                b.tvAddPendidikanJudul.text = "Edit Pendidikan"
                 b.etTambahPendiidkanNama.setText(nama)
                 b.etTambahPendidikanNilai.setText(nilai)
                 b.etdTambahPendidikanTanggalMulai.setText(tglmulai.substringBeforeLast("T"))
