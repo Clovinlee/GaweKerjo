@@ -14,13 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nama User"
-        android:textSize="24sp"
+        android:textColor="#3A3737"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvchatlistbody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="Body" />
+        android:text="Body"
+        android:textColor="#3A3737"
+        android:textSize="16sp" />
 </LinearLayout>

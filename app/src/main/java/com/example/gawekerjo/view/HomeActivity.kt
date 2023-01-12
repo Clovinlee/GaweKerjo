@@ -2,6 +2,7 @@ package com.example.gawekerjo.view
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -23,11 +24,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityHomeBinding
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.follow.Follow
 import com.example.gawekerjo.model.follow.FollowItem
 import com.example.gawekerjo.model.postlike.postLike
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.CountryRepository
+import com.example.gawekerjo.repository.EducationRepository
 import com.example.gawekerjo.repository.FollowRepository
 import com.example.gawekerjo.repository.SkillRepository
 import com.example.gawekerjo.view.adapter.FollowAdapter
@@ -37,6 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URL
 
 
 class HomeActivity : AppCompatActivity() {
@@ -55,6 +59,7 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var user : UserItem
     private lateinit var skillrepo : SkillRepository
+    private lateinit var edurepo: EducationRepository
 
 //    INI PUNYA ESTHER YG MASIH BLM BISA JALAN
     private lateinit var FollowAdapter2 : FollowAdapter2
@@ -87,8 +92,17 @@ class HomeActivity : AppCompatActivity() {
         Log.d("CCD", "Ini nyoba di homeactivity size e : " + followList.size.toString())
         //untuk profil
         skillrepo = SkillRepository(db)
+        edurepo = EducationRepository(db)
         skillrepo.getAllSkill(this)
-        skillrepo.getUserSkill(this, user.id, null)
+//        skillrepo.getUserSkill(this, user.id, null)
+//        edurepo.getUserEdu(this, null, user.id)
+
+    coroutine.launch {
+        db.userskillDao.clear()
+        db.userlanguageDao.clear()
+        db.educationDao.clear()
+    }
+
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
@@ -101,8 +115,8 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // CHANGE ICON
-        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_home_24, this.getTheme())
-        supportActionBar?.setHomeAsUpIndicator(resize(resources.getDrawable(R.drawable.anon),90,90))
+//        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_home_24, this.getTheme())
+//        supportActionBar?.setHomeAsUpIndicator(resize(resources.getDrawable(R.drawable.anon),90,90))
         // CHANGE ICON
 
         navView.setNavigationItemSelectedListener {
@@ -115,9 +129,17 @@ class HomeActivity : AppCompatActivity() {
                 // ACTIVITY TO PROFILE
 //                Toast.makeText(this, "${user.id}", Toast.LENGTH_SHORT).show()
                 runOnUiThread {
-                    val i : Intent = Intent(this, UserprofileActivity::class.java)
-                    i.putExtra("userLogin", user)
-                    startActivity(i)
+                    if (user.type == "1"){
+
+                        val i : Intent = Intent(this, UserprofileActivity::class.java)
+                        i.putExtra("userLogin", user)
+                        startActivity(i)
+                    }
+                    else{
+                        val i : Intent = Intent(this, CompanyProfileActivity::class.java)
+                        i.putExtra("userLogin", user)
+                        startActivity(i)
+                    }
                 }
             }else if(it.itemId == R.id.navmenu_messages){
                 // ACTIVITY TO MESSAGES
@@ -169,6 +191,14 @@ class HomeActivity : AppCompatActivity() {
         var txtName : TextView = headerview.findViewById(R.id.txtUserDrawerName)
         var txtEmail : TextView = headerview.findViewById(R.id.txtUserDrawerEmail)
 
+        coroutine.launch {
+            if (user.image!=null){
+                val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                val image= BitmapFactory.decodeStream(i)
+                runOnUiThread { circleAvatar.setImageBitmap(image) }
+            }
+        }
+
         txtName.text = user!!.name
         txtEmail.text = user!!.email
         circleAvatar.setOnClickListener {
@@ -176,9 +206,21 @@ class HomeActivity : AppCompatActivity() {
             // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
             // Gausah di finish(), jadi kalo user mencet back, kembali ke menu ini
             runOnUiThread {
-                val i : Intent = Intent(this, UserprofileActivity::class.java)
-                i.putExtra("userLogin", user)
-                startActivity(i)
+//                val i : Intent = Intent(this, UserprofileActivity::class.java)
+//                i.putExtra("userLogin", user)
+//                startActivity(i)
+
+                if (user.type == "1"){
+
+                    val i : Intent = Intent(this, UserprofileActivity::class.java)
+                    i.putExtra("userLogin", user)
+                    startActivity(i)
+                }
+                else{
+                    val c : Intent = Intent(this, CompanyProfileActivity::class.java)
+                    c.putExtra("userLogin", user)
+                    startActivity(c)
+                }
             }
         }
 

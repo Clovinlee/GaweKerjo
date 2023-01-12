@@ -46,7 +46,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imgOfferDialog"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:srcCompat="@drawable/anon" />

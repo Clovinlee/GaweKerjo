@@ -3,6 +3,7 @@ package com.example.gawekerjo.view
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.FragmentOffersBinding
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.Offer.OfferItem
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.OfferRepository
@@ -26,6 +29,7 @@ import com.example.gawekerjo.view.adapter.RVAdapterJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URL
 
 class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : UserItem) : Fragment() {
 
@@ -85,6 +89,8 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             val btnEdit = b.findViewById<Button>(R.id.btnofferDetailEdit)
             val btnDelete = b.findViewById<Button>(R.id.btnOfferDetailDelete)
 
+            val imgOfferDialog = b.findViewById<ImageView>(R.id.imgOfferDialog)
+
             btnEdit.visibility = View.GONE
             btnDelete.visibility = View.GONE
 
@@ -95,6 +101,16 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             txtBody.text = offer.body
             txtUser.text = useroffer.name
             txtLocation.text = useroffer.lokasi
+
+            coroutine.launch {
+                if (user.image!=null){
+                    val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                    val image= BitmapFactory.decodeStream(i)
+                     mc.runOnUiThread{
+                        imgOfferDialog.setImageBitmap(image)
+                    }
+                }
+            }
 
             if(useroffer.id == user.id){
                 btnApply.visibility = View.GONE

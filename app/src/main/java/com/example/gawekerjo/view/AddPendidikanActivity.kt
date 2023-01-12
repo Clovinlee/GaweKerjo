@@ -40,14 +40,62 @@ class AddPendidikanActivity : AppCompatActivity() {
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
         }
 
-        b.btnTambahPendidikanSimpan.setOnClickListener {
-            val user_id = us.id
-            var nama = b.etTambahPendiidkanNama.text.toString()
-            var tgl_mulai = b.etdTambahPendidikanTanggalMulai.text.toString()
-            var tgl_akhir = b.etdTambahPendidikanTanggalBerakhir.text.toString()
-            val nilai = b.etTambahPendidikanNilai.text.toString()
+        var action = ""
+        var nama = ""
+        var tglmulai = ""
+        var tglakhir = ""
+        var nilai = ""
+        var id = 0
+        try {
+            action = intent.getStringExtra("action").toString()
+            nama = intent.getStringExtra("nama").toString()
+            tglakhir = intent.getStringExtra("tglakhir").toString()
+            tglmulai = intent.getStringExtra("tglmulai").toString()
+            nilai = intent.getStringExtra("nilai").toString()
+            id = intent.getIntExtra("id", -1)
 
-            edurepo.addEducation(this, user_id, nama, tgl_mulai, tgl_akhir, nilai)
+            if (action == "Update"){
+                b.etTambahPendiidkanNama.setText(nama)
+                b.etTambahPendidikanNilai.setText(nilai)
+                b.etdTambahPendidikanTanggalMulai.setText(tglmulai.substringBeforeLast("T"))
+                b.etdTambahPendidikanTanggalBerakhir.setText(tglakhir.substringBeforeLast("T"))
+            }
+
+
+        }catch (e:Exception){
+
+        }
+
+
+
+
+        b.btnTambahPendidikanSimpan.setOnClickListener {
+
+            if (action == "Update"){
+                var nama = b.etTambahPendiidkanNama.text.toString()
+                var tgl_mulai = b.etdTambahPendidikanTanggalMulai.text.toString()
+                var tgl_akhir = b.etdTambahPendidikanTanggalBerakhir.text.toString()
+                val nilai = b.etTambahPendidikanNilai.text.toString()
+//                Toast.makeText(this, "edit pendidikan", Toast.LENGTH_SHORT).show()
+                edurepo.editpendidikan(this, id, nama , tgl_mulai, tgl_akhir, nilai)
+            }else{
+                val user_id = us.id
+                var nama = b.etTambahPendiidkanNama.text.toString()
+                var tgl_mulai = b.etdTambahPendidikanTanggalMulai.text.toString()
+                var tgl_akhir = b.etdTambahPendidikanTanggalBerakhir.text.toString()
+                val nilai = b.etTambahPendidikanNilai.text.toString()
+
+                if(nama!= "" && tgl_mulai != "" && tgl_akhir !="" && nilai != ""){
+
+                    edurepo.addEducation(this, user_id, nama, tgl_mulai, tgl_akhir, nilai)
+
+                }else {
+                    Toast.makeText(this, "Semua field harus di isi", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+
 
 //            Toast.makeText(this, "${tgl_mulai}", Toast.LENGTH_SHORT).show()
         }
@@ -56,20 +104,28 @@ class AddPendidikanActivity : AppCompatActivity() {
 
 
         //kembali
-        b.imgTambahPendidikanBack.setOnClickListener {
-            finish()
-        }
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
     }
 
     fun addPendidikanCallBack(result: Education){
         if (result.status == 200){
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
             val i = Intent()
-            setResult(2, intent)
+            setResult(2, i)
             finish()
+
+            this.finish()
         }
         else{
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+
 }

@@ -1,16 +1,19 @@
 package com.example.gawekerjo.view
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityAddBahasaBinding
-import com.example.gawekerjo.model.LanguageItem
+import com.example.gawekerjo.model.language.LanguageItem
+import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userlanguage.UserLanguage
 import com.example.gawekerjo.repository.CountryRepository
+import com.example.gawekerjo.repository.LanguageRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +26,8 @@ class AddBahasaActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
 
     private lateinit var countryRepo : CountryRepository
+    private lateinit var us : UserItem
+    private lateinit var langrepo : LanguageRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,16 +38,19 @@ class AddBahasaActivity : AppCompatActivity() {
 
         db = AppDatabase.Build(this)
 //        setContentView(R.layout.activity_add_bahasa)
+        langrepo = LanguageRepository(db)
 
+        try {
+
+            us = intent.getParcelableExtra<UserItem>("userLogin")!!
+        }catch (e:Exception){
+            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+        }
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
 
         // kembali
-        b.imgTambahBahasaBack.setOnClickListener {
-            if(b.loadModal.visibility == View.VISIBLE){
-                return@setOnClickListener
-            }
 
-            finish()
-        }
 
         b.loadModal.visibility = View.VISIBLE
         disableEnableControls(false,b.linearLayout)
@@ -51,9 +59,31 @@ class AddBahasaActivity : AppCompatActivity() {
         loadLanguage(this)
 
         b.btnTambahBahasaSimpan.setOnClickListener {
-            if(b.loadModal.visibility == View.VISIBLE){
-                return@setOnClickListener
+//            if(b.loadModal.visibility == View.VISIBLE){
+//                return@setOnClickListener
+//            }
+            try {
+                var user_id = us.id
+                var bahasa = b.autoCompleteTextView.text.toString()
+                var level = ""
+                if (b.rbDasar.isChecked){
+                    level = b.rbDasar.text.toString()
+                }else if (b.rbMenengah.isChecked){
+                    level = b.rbMenengah.text.toString()
+                }else if(b.rbProfessional.isChecked){
+                    level = b.rbProfessional.text.toString()
+                }else if(b.rbFasih.isChecked){
+                    level = b.rbFasih.text.toString()
+                }
+
+                langrepo.tambahbahasa(this, user_id, bahasa, level)
+
+            }catch (e:Exception){
+                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
             }
+
+
+
 
         }
     }
@@ -84,6 +114,20 @@ class AddBahasaActivity : AppCompatActivity() {
         }
     }
 
+    fun addBahasaCallBack(result: UserLanguage){
+        if (result.status == 200){
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+            val i = Intent()
+            setResult(3, intent)
+            finish()
+
+            this.finish()
+        }
+        else{
+            Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun disableEnableControls(enable: Boolean, vg: ViewGroup) {
         for (i in 0 until vg.childCount) {
             val child = vg.getChildAt(i)
@@ -94,10 +138,10 @@ class AddBahasaActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        val kemahiran = resources.getStringArray(R.array.kemahiran)
-        val arrayAdapter = ArrayAdapter(this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, kemahiran)
-        b.autoCompleteTextView.setAdapter(arrayAdapter)
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
+
+
 }

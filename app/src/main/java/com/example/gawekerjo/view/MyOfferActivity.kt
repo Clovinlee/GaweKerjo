@@ -2,11 +2,13 @@ package com.example.gawekerjo.view
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,6 +18,7 @@ import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityHomeBinding
 import com.example.gawekerjo.databinding.ActivityMyOfferBinding
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.Offer.OfferItem
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.OfferRepository
@@ -25,6 +28,7 @@ import com.example.gawekerjo.view.adapter.RVAdapterMyJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URL
 
 class MyOfferActivity : AppCompatActivity() {
 
@@ -103,6 +107,18 @@ class MyOfferActivity : AppCompatActivity() {
             val btnApply = b.findViewById<Button>(R.id.btnOfferDetailApply)
             val btnDelete = b.findViewById<Button>(R.id.btnOfferDetailDelete)
             val btnEdit = b.findViewById<Button>(R.id.btnofferDetailEdit)
+
+            val imgOfferDialog = b.findViewById<ImageView>(R.id.imgOfferDialog)
+
+            coroutine.launch {
+                if (user.image!=null){
+                    val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                    val image= BitmapFactory.decodeStream(i)
+                    runOnUiThread{
+                        imgOfferDialog.setImageBitmap(image)
+                    }
+                }
+            }
 
             btnApply.visibility = View.GONE
 

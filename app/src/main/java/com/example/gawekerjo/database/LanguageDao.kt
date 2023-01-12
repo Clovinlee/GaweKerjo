@@ -1,7 +1,7 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.LanguageItem
+import com.example.gawekerjo.model.language.LanguageItem
 
 @Dao
 interface LanguageDao {

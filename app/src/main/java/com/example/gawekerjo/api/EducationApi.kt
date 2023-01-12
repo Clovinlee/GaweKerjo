@@ -19,7 +19,20 @@ interface EducationApi {
     ): Call<Education>
     @GET("educations")
     fun geteducation(
-        @Query("id")id: Int,
-        @Query("user_id")user_id:Int
+        @Query("id")id: Int?,
+        @Query("user_id")user_id:Int?
+    ):Call<Education>
+    @POST("deleteedu")
+    fun deleteedu(
+        @Query("id")id:Int
+    ):Call<Education>
+    @POST("updateedu")
+    fun updateedu(
+        @Query("id")id:Int,
+        @Query("name")name: String,
+        @Query("date_start")date_start: String,
+        @Query("date_end")date_end: String,
+        @Query("score")score: String
+
     ):Call<Education>
 }

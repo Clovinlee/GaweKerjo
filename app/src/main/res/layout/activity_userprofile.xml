@@ -13,6 +13,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#CCCACA"
@@ -22,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#FDFCFC"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -31,7 +33,7 @@
 
                     <ImageView
                         android:id="@+id/imageView16"
-                        android:layout_width="358dp"
+                        android:layout_width="328dp"
                         android:layout_height="149dp"
                         app:srcCompat="@drawable/anon" />
 
@@ -47,7 +49,6 @@
                     android:id="@+id/tvUserProfileNama"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="23dp"
                     android:text="Nama Anda"
                     android:textSize="20sp"
@@ -57,7 +58,6 @@
                     android:id="@+id/tvUserProfileGender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="9dp"
                     android:text="Gender" />
 
@@ -65,7 +65,6 @@
                     android:id="@+id/tvUserProfileDeskripsi"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="9dp"
                     android:text="Deskripsi" />
 
@@ -73,9 +72,7 @@
                     android:id="@+id/tvUserProfileKoneksi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
                     android:text="Koneksi" />
 
             </LinearLayout>
@@ -109,12 +106,6 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
-                    <ImageView
-                        android:id="@+id/imgUserProfileEditPendidikan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@android:drawable/ic_menu_edit" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -203,6 +194,37 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loadModal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#A8988888"
+        android:elevation="2dp"
+        android:visibility="invisible">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="213dp"
+            android:layout_height="121dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Wait..."
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/progressBar"
+            app:layout_constraintStart_toStartOf="@+id/progressBar"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
