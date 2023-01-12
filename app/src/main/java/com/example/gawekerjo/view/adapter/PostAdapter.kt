@@ -1,6 +1,7 @@
 package com.example.gawekerjo.view.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -98,6 +99,10 @@ class PostAdapter(
                 holder.ctrlike.setText((holder.ctrlike.text.toString().toInt() - 1).toString())
             }
         })
+
+        holder.imgcomment.setOnClickListener {
+            mc.viewDetail(itemView.id, id)
+        }
     }
 
     override fun getItemCount(): Int {

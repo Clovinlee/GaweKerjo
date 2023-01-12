@@ -1,7 +1,6 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.CommentItem
 import com.example.gawekerjo.model.country.CountryItem
 
 @Dao

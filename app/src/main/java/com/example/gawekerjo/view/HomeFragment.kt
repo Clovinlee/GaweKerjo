@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
@@ -37,6 +39,8 @@ class HomeFragment(var mc: HomeActivity, var db : AppDatabase, var user : UserIt
     private var firstFetch = true
     private var firstFetchlike = true
 
+    lateinit var launcherDetail : ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -57,6 +61,13 @@ class HomeFragment(var mc: HomeActivity, var db : AppDatabase, var user : UserIt
         postlikeRepo = PostLikeRepository(db)
         loadDataPost()
         loadDataLike()
+
+        launcherDetail = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            val data = it.data
+            if(data != null){
+
+            }
+        }
     }
 
 //    fun refreshview(){
@@ -133,5 +144,14 @@ class HomeFragment(var mc: HomeActivity, var db : AppDatabase, var user : UserIt
         coroutine.launch {
             arrPostLike.addAll(db.postlikeDao.getAllPostLike())
         }
+    }
+
+
+
+    fun viewDetail(post_id: Int, user_id: Int){
+        val intent = Intent(mc, DetailpostActivity::class.java)
+        intent.putExtra("post_id", post_id)
+        intent.putExtra("user_id", user_id)
+        startActivity(intent)
     }
 }

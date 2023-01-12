@@ -1,7 +1,7 @@
 package com.example.gawekerjo.database
 
 import androidx.room.*
-import com.example.gawekerjo.model.CommentItem
+import com.example.gawekerjo.model.comment.CommentItem
 
 @Dao
 interface CommentDao {
@@ -13,4 +13,6 @@ interface CommentDao {
     suspend fun updateComment(comment: CommentItem)
     @Query("SELECT * FROM comments")
     suspend fun getAllComment():List<CommentItem>
+    @Query("DELETE FROM comments")
+    suspend fun clear()
 }

@@ -1,4 +1,4 @@
-package com.example.gawekerjo.model
+package com.example.gawekerjo.model.postcomment
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
