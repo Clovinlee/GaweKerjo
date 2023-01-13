@@ -7,7 +7,6 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface UserApi {
-
     @GET("users")
     fun getUser(
         @Query("id") id : Int?,
