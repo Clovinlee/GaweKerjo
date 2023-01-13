@@ -79,6 +79,10 @@ class FollowAdapter (
                                 holder.imgFriend.setImageBitmap(image)
                             }
                         }
+
+                    }
+                    holder.imgFriend.setOnClickListener(){
+                        AddFriendActivity.masukprofil(rbody.data.first())
                     }
                 }
             }
@@ -100,6 +104,8 @@ class FollowAdapter (
             // 2. teliti
             AddFriendActivity.removeFollow(item.id)
         }
+
+
 
     }
 

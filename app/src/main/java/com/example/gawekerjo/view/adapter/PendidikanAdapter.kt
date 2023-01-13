@@ -15,6 +15,7 @@ class PendidikanAdapter (
     private val listpendidikan : MutableList<EducationItem>,
     private val layout: Int,
     private val context: Context,
+    private val Action: Int,
     private val cb: ()->Unit
 ): RecyclerView.Adapter<PendidikanAdapter.CustomViewHolder>(){
 
@@ -49,6 +50,11 @@ class PendidikanAdapter (
         holder.nama.text = listpendidikan[position].name
         holder.tahun.text = "${dtstart} sampai ${dtend}"
         holder.nilai.text = "nilai : ${listpendidikan[position].score}"
+
+        if (Action == 1){
+            holder.hapus.setVisibility(View.GONE)
+            holder.edit.setVisibility(View.GONE)
+        }
     }
 
     override fun getItemCount(): Int {

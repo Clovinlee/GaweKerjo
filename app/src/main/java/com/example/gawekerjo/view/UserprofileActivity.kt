@@ -110,6 +110,14 @@ class UserprofileActivity : AppCompatActivity() {
 //        b.loadModal.visibility = View.VISIBLE
 //        disableEnableControls(false, b.linearlayout)
 
+        b.tvUserProfileKoneksi.setVisibility(View.GONE)
+
+        coroutine.launch {
+            db.userskillDao.clear()
+            db.userlanguageDao.clear()
+            db.educationDao.clear()
+        }
+
         var cek = -1
 
         try {
@@ -172,7 +180,7 @@ class UserprofileActivity : AppCompatActivity() {
                 showDeleteDialog(position, "keahlian")
             }
         })
-        pendidikanAdapter = PendidikanAdapter(listpendidikan, R.layout.layout_listpendidikan, this@UserprofileActivity){
+        pendidikanAdapter = PendidikanAdapter(listpendidikan, R.layout.layout_listpendidikan, this@UserprofileActivity, cek){
 
         }
         runOnUiThread {
@@ -200,7 +208,7 @@ class UserprofileActivity : AppCompatActivity() {
             }
         })
 
-        languageAdapter = BahasaAdapter(listlang, R.layout.layout_list_bahasa, this@UserprofileActivity){
+        languageAdapter = BahasaAdapter(listlang, R.layout.layout_list_bahasa, this@UserprofileActivity, cek){
             
         }
         runOnUiThread{

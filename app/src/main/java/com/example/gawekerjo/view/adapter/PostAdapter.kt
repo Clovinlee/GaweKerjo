@@ -95,6 +95,10 @@ class PostAdapter(
                         }
                     }
 
+                    holder.imgUser.setOnClickListener(){
+                        mc.masukprofil(user)
+                    }
+
                 }
             }
 

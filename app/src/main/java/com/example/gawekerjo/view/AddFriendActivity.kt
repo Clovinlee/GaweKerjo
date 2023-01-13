@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
@@ -119,6 +120,22 @@ class AddFriendActivity : AppCompatActivity() {
 //            this.finish()
         }else{
             Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    fun masukprofil(item: UserItem){
+        if (item.type == "1"){
+            var i = Intent(this, UserprofileActivity::class.java)
+            i.putExtra("userLogin", item)
+            i.putExtra("Action", 1)
+            startActivity(i)
+        }
+        else{
+            var i = Intent(this, CompanyProfileActivity::class.java)
+            i.putExtra("userLogin", item)
+            i.putExtra("Action", 1)
+            startActivity(i)
         }
     }
 }

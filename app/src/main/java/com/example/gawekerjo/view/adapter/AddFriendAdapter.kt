@@ -1,5 +1,6 @@
 package com.example.gawekerjo.view.adapter
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
 import com.example.gawekerjo.env
@@ -14,6 +16,8 @@ import com.example.gawekerjo.model.follow.FollowItem
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.FollowRepository
 import com.example.gawekerjo.view.AddFriendActivity
+import com.example.gawekerjo.view.CompanyProfileActivity
+import com.example.gawekerjo.view.UserprofileActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,6 +59,10 @@ class AddFriendAdapter(
             holder.btnAddFriend.setTag(R.drawable.ic_baseline_done_24)
 
             AddFriendActivity.addUser(item.id)
+        }
+
+        holder.imgFriend.setOnClickListener(){
+            AddFriendActivity.masukprofil(item)
         }
 
     }

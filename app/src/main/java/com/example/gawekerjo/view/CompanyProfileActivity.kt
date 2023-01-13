@@ -57,7 +57,7 @@ class CompanyProfileActivity : AppCompatActivity() {
                     }
 
                     loadprofile(user)
-                    Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
                 }
                 else{
                     user = intent.getParcelableExtra<UserItem>("userLogin")!!
@@ -65,7 +65,7 @@ class CompanyProfileActivity : AppCompatActivity() {
 //
                     loadprofile(user)
                     b.imgCompanyProfileEditProfile.setVisibility(View.GONE)
-                    Toast.makeText(this, "false", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "false", Toast.LENGTH_SHORT).show()
                 }
 
             }catch (e:Exception){
