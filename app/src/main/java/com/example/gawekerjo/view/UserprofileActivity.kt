@@ -117,20 +117,23 @@ class UserprofileActivity : AppCompatActivity() {
         }catch (e:Exception){
 
         }
-        coroutine.launch {
+
             try {
 
                 if (cek == -1){
-                    us = intent.getParcelableExtra<UserItem>("userLogin")!!
+                    coroutine.launch {
+                        us = intent.getParcelableExtra<UserItem>("userLogin")!!
 
 
 
-                    user = db.userDao.getUserByEmail(us.email)!!
-                    loadprofile(user)
+                        user = db.userDao.getUserByEmail(us.email)!!
+                        loadprofile(user)
+                    }
                 }
                 else{
-                    var id = intent.getIntExtra("userLogin", -1)!!
-                    user = db.userDao.getUserById(id)!!
+
+                    user = intent.getParcelableExtra<UserItem>("userLogin")!!
+
                     loadprofile(user)
                 }
 
@@ -142,19 +145,22 @@ class UserprofileActivity : AppCompatActivity() {
 
             }
 
-        }
+
 
 
 
         if (cek == 1){
             b.imgUserProfileEditProfile.setVisibility(View.GONE)
+            b.imgUserProfileTambahPendidikan.setVisibility(View.GONE)
+            b.imgUserProfileTambahKeahlian.setVisibility(View.GONE)
+            b.imgUserProfileTambahBahasa.setVisibility(View.GONE)
         }
         else{
 
         }
 
 
-        keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity){
+        keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity, cek){
 
         }
         runOnUiThread{

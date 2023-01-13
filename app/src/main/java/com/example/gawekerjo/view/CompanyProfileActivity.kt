@@ -26,8 +26,6 @@ class CompanyProfileActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     lateinit var us: UserItem
     lateinit var user: UserItem
-    
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,10 +47,6 @@ class CompanyProfileActivity : AppCompatActivity() {
         }catch (e:Exception){
 
         }
-
-
-
-
 
 
             try {

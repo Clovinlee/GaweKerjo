@@ -18,6 +18,7 @@ class KeahlianListAdapter (
     private val listnama: MutableList<SkillItem>,
     private val layout: Int,
     private val context: Context,
+    private val Action: Int,
     private val cb: ()->Unit
 ) : RecyclerView.Adapter<KeahlianListAdapter.CustomViewHolder>(){
 
@@ -45,6 +46,10 @@ class KeahlianListAdapter (
                     holder.keahlian.text = listnama[k].name.toString()
                 }
             }
+
+        if (Action == 1){
+            holder.edit.setVisibility(View.GONE)
+        }
 
 
     }
