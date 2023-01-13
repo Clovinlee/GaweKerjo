@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -109,13 +110,47 @@ class UserprofileActivity : AppCompatActivity() {
 //        b.loadModal.visibility = View.VISIBLE
 //        disableEnableControls(false, b.linearlayout)
 
-
+        var cek = -1
 
         try {
-
-            us = intent.getParcelableExtra<UserItem>("userLogin")!!
+            cek = intent.getIntExtra("Action", -1)
         }catch (e:Exception){
-            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+
+        }
+        coroutine.launch {
+            try {
+
+                if (cek == -1){
+                    us = intent.getParcelableExtra<UserItem>("userLogin")!!
+
+
+
+                    user = db.userDao.getUserByEmail(us.email)!!
+                    loadprofile(user)
+                }
+                else{
+                    var id = intent.getIntExtra("userLogin", -1)!!
+                    user = db.userDao.getUserById(id)!!
+                    loadprofile(user)
+                }
+
+                listskill.clear()
+
+
+            } catch (e: Exception) {
+//                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+
+            }
+
+        }
+
+
+
+        if (cek == 1){
+            b.imgUserProfileEditProfile.setVisibility(View.GONE)
+        }
+        else{
+
         }
 
 
@@ -173,16 +208,19 @@ class UserprofileActivity : AppCompatActivity() {
 
         })
 
-        loadskill(this, false)
+        try {
+            loadskill(this, false)
+        }catch (e:Exception){
+
+        }
+
 //        loadpendidikan(this, false)
 //        loadlang(this, false)
 
 
 
         coroutine.launch {
-            user = db.userDao.getUserByEmail(us.email)!!
-            loadprofile(user)
-            listskill.clear()
+
 //            listskill.addAll(db.userskillDao.getAllUserSkill().toList())
 
         }
@@ -254,7 +292,7 @@ class UserprofileActivity : AppCompatActivity() {
             listskill.addAll(db.userskillDao.getAllUserSkill().toList())
             listnama.addAll(db.skillDao.getAllSkill().toList())
             if (listskill.size <= 0 && sudah == false){
-                skillrepo.getUserSkill(mc, us.id, null)
+                skillrepo.getUserSkill(mc, user.id, null)
                 load()
             }
             else{
@@ -272,7 +310,7 @@ class UserprofileActivity : AppCompatActivity() {
         coroutine.launch {
             listpendidikan.addAll(db.educationDao.getAllEducation().toList())
             if (listpendidikan.size <= 0 && sudah == false){
-                edurepo.getUserEdu(mc, null, us.id)
+                edurepo.getUserEdu(mc, null, user.id)
                 reloadpendidikan()
             }
             else{
@@ -291,7 +329,7 @@ class UserprofileActivity : AppCompatActivity() {
         coroutine.launch {
             listlang.addAll(db.userlanguageDao.getAllUserLanguage().toList())
             if (listlang.size <= 0 && sudah == false){
-                langrepo.getuserLang(mc, us.id)
+                langrepo.getuserLang(mc, user.id)
                 reloadlang()
             }else{
                 runOnUiThread {

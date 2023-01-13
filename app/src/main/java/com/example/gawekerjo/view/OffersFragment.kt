@@ -11,10 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -137,6 +134,20 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
 
             imgOfferDialog.setOnClickListener {
                 // KE HALAMAN ORANG E. pake variabel user
+
+                if (useroffer.type == "1"){
+                    var i = Intent(requireContext(), UserprofileActivity::class.java)
+                    i.putExtra("userLogin", useroffer)
+                    i.putExtra("Action", 1)
+                    startActivity(i)
+                }
+                else{
+                    var i = Intent(requireContext(), CompanyProfileActivity::class.java)
+                    i.putExtra("userLogin", useroffer)
+                    i.putExtra("Action", 1)
+                    startActivity(i)
+                }
+
             }
 
             show()
