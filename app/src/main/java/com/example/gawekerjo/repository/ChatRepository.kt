@@ -13,6 +13,7 @@ import com.example.gawekerjo.model.userchat.UserChatItem
 import com.example.gawekerjo.view.ChatActivity
 import com.example.gawekerjo.view.DetailChatActivity
 import com.example.gawekerjo.view.FriendListActivity
+import com.example.gawekerjo.view.OffersFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -149,6 +150,52 @@ class ChatRepository(var db:AppDatabase) {
                     if(responseBody != null){
                         if(responseBody.status == 200){
                             fa.gotoChat(hchat,responseBody.data,recipient)
+                        }
+
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<UserChat>, t: Throwable) {
+                Log.d("CCD", "Error getting user chat ")
+                Log.d("CCD", t.message.toString())
+            }
+
+        })
+    }
+    fun offertoChat(of:OffersFragment, user_id:Int, recipient: UserItem){
+        var rc_chat=rc.create(ChatApi::class.java).friendtoChat(user_id, recipient.id)
+        rc_chat.enqueue(object :Callback<Chat>{
+            override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
+                c.launch {
+                    val responseBody = response.body()
+                    if(responseBody != null){
+                        if(responseBody.status == 200 && responseBody.data.isNotEmpty()){
+                            //val ar=AccountRepository(db)
+                            this@ChatRepository.offertoDchat(of,responseBody.data[0],recipient)
+                        }
+
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Chat>, t: Throwable) {
+                Log.d("CCD", "Error getting chat")
+                Log.d("CCD", t.message.toString())
+            }
+
+        })
+    }
+
+    private fun offertoDchat(of: OffersFragment, hchat: ChatItem, recipient: UserItem) {
+        var rc_dchat=rc.create(UserChatApi::class.java).friendtoDchat(hchat.id)
+        rc_dchat.enqueue(object :Callback<UserChat>{
+            override fun onResponse(call: Call<UserChat>, response: Response<UserChat>) {
+                c.launch {
+                    val responseBody = response.body()
+                    if(responseBody != null){
+                        if(responseBody.status == 200){
+                            of.gotoChat(hchat,responseBody.data,recipient)
                         }
 
                     }
