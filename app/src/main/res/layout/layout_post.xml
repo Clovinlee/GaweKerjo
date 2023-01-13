@@ -13,6 +13,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfileFriendList"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0"
+            android:src="@drawable/anon" />
+
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"

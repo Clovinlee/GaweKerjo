@@ -86,6 +86,9 @@ class DetailpostActivity : AppCompatActivity() {
             withEditText(view)
         }
 
+        //inisialisasi imageview user
+        b.imgProfileFriendList
+
         loadComment()
     }
 
