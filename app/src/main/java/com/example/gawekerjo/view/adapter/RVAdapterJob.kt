@@ -99,6 +99,17 @@ class RVAdapterJob(private val mc : OffersFragment,
 
         })
 
+        holder.imgOffer.setOnClickListener {
+            if(!loadDone){
+                return@setOnClickListener
+            }
+
+            //JOJO KERJA DISINI
+            // REDIRECT KE USER pake variabel user yg di atas
+            // private lateinit var user
+            // User di deklarasi di dalam coroutine
+        }
+
         holder.lin.setOnClickListener {
             if(!loadDone){
                 return@setOnClickListener
