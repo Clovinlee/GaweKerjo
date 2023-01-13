@@ -33,7 +33,7 @@ class DetailChatAdapter(
         var parser=SimpleDateFormat("yyyy-MM-dd hh:mm")
         var formatter=SimpleDateFormat("EEEE, dd/MM/yyyy")
         var tanggal_temp=parser.parse(c.created_at.substring(0,c.created_at.indexOf("T")+6).replace("T"," "))
-        tanggal_temp.hours+=7
+        tanggal_temp.hours+=19
         val tanggal=formatter.format(tanggal_temp)
         val yesterday=Date()
         yesterday.date--

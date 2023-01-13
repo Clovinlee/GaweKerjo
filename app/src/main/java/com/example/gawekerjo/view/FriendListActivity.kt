@@ -2,10 +2,10 @@ package com.example.gawekerjo.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -14,15 +14,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityFriendListBinding
+import com.example.gawekerjo.model.chat.ChatItem
 import com.example.gawekerjo.model.follow.Follow
 import com.example.gawekerjo.model.follow.FollowItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userchat.UserChatItem
+import com.example.gawekerjo.repository.ChatRepository
 import com.example.gawekerjo.repository.FollowRepository
 import com.example.gawekerjo.view.adapter.FollowAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class FriendListActivity : AppCompatActivity() {
 
@@ -31,6 +33,7 @@ class FriendListActivity : AppCompatActivity() {
     private lateinit var db: AppDatabase
 
     private lateinit var accFollow : FollowRepository
+    private lateinit var accChat:ChatRepository
 
     private lateinit var followList :ArrayList<FollowItem>
     lateinit var user: UserItem
@@ -52,6 +55,7 @@ class FriendListActivity : AppCompatActivity() {
         followList = ArrayList()
         allUser = ArrayList()
         accFollow = FollowRepository(db)
+        accChat= ChatRepository(db)
 
         user=intent.getParcelableExtra("userlogin")!!
 
@@ -98,7 +102,9 @@ class FriendListActivity : AppCompatActivity() {
     fun refresh(result : Follow){
         followList = result.data as ArrayList<FollowItem>
 
-        FollowAdapter = FollowAdapter(followList,this,user)
+        FollowAdapter = FollowAdapter(followList,this,user){
+            accChat.friendtoChat(this,user.id,it)
+        }
         rv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
         rv.adapter = FollowAdapter
 
@@ -122,5 +128,15 @@ class FriendListActivity : AppCompatActivity() {
                 Toast.makeText(this, "Gagal dapatkan followers", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun gotoChat(hchat: ChatItem, chat: List<UserChatItem>, recipient: UserItem) {
+        val i=Intent(this,DetailChatActivity::class.java)
+        i.putExtra("user",user)
+        i.putExtra("rec",recipient)
+        i.putExtra("hchat",hchat)
+        i.putParcelableArrayListExtra("chat",chat as ArrayList)
+        Log.d("pindah","bisa")
+        startActivity(i)
     }
 }
