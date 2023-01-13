@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout1"
+    android:id="@+id/LayoutPostComment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <LinearLayout
         android:id="@+id/layout2"
@@ -15,21 +16,38 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgProfileFriendList"
-            android:layout_width="100dp"
-            android:layout_height="75dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="0"
             android:src="@drawable/anon" />
 
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLines="5"
-            android:text="TextView"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingRight="5dp">
+
+            <TextView
+                android:id="@+id/txtUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textColor="#131313"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDeskripsiUserComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -37,15 +55,10 @@
         android:id="@+id/txtContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:maxLines="5"
         android:text="TextView"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
-    <LinearLayout
-        android:id="@+id/layout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="200dp"
-        android:orientation="horizontal"/>
 </LinearLayout>

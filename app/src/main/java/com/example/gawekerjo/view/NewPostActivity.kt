@@ -44,13 +44,13 @@ class NewPostActivity : AppCompatActivity() {
         }
 
         b.txtName.text = user.name
-        b.txtUsername.text = user.email
+        b.txtUser.text = user.description
 
         b.btnPost.setOnClickListener {
 
             val user_id = user.id
             var body = b.txtBody.text.toString()
-            var title = b.txtTitle.text.toString()
+            var title = b.txtJudulPost.text.toString()
 
             if(body == "" || title == ""){
                 Toast.makeText(this, "Input field tidak boleh ada yang kosong", Toast.LENGTH_SHORT).show()

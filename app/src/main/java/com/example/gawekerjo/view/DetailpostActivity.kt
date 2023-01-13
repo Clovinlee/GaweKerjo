@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gawekerjo.R
+import com.example.gawekerjo.api.RetrofitClient
+import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityDetailpostBinding
 import com.example.gawekerjo.model.comment.Comment
@@ -18,6 +20,7 @@ import com.example.gawekerjo.model.post.Post
 import com.example.gawekerjo.model.post.PostItem
 import com.example.gawekerjo.model.postcomment.PostCommentItem
 import com.example.gawekerjo.model.postlike.PostLikeItem
+import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
 import com.example.gawekerjo.repository.CommentRepository
 import com.example.gawekerjo.repository.PostCommentRepository
@@ -27,6 +30,10 @@ import com.example.gawekerjo.view.adapter.CommentAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 
 class DetailpostActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
@@ -50,6 +57,7 @@ class DetailpostActivity : AppCompatActivity() {
 
     private var arrComment = ArrayList<CommentItem>()
     private var firstFetch = true
+    private lateinit var user : UserItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailpost)
@@ -64,6 +72,11 @@ class DetailpostActivity : AppCompatActivity() {
         postCmntRepo = PostCommentRepository(db)
         commentRepo = CommentRepository(db)
 
+        arrComment.clear()
+        coroutine.launch {
+            db.commentDao.clear()
+        }
+
         try{
             user_id = intent.getIntExtra("user_id", 0)
             post_id = intent.getIntExtra("post_id", 0)
@@ -74,12 +87,46 @@ class DetailpostActivity : AppCompatActivity() {
 
         coroutine.launch {
             var arrPost = db.postDao.getPostById(post_id) as PostItem
-            var arrUser = db.userDao.getUserById(user_id) as UserItem
+
             b.txtTitle.setText(arrPost.title)
             b.txtKeterangan.setText(arrPost.body)
-            b.txtUsername.setText(arrUser.name)
-            tampungUser = arrUser.name
+
+
+            var rc : Retrofit = RetrofitClient.getRetrofit()
+            var rc_user : Call<User> = rc.create(UserApi::class.java).getUser(arrPost.user_id, null, null)
+
+            rc_user.enqueue(object  : Callback<User>{
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    var rbody = response.body()!!
+                    if(rbody.status == 200){
+                        b.txtUser.text = rbody.data[0].name
+                        b.txtDeskripsi.text = rbody.data[0].description
+                        tampungUser = rbody.data[0].name
+                        user = rbody.data[0]
+
+
+//                    coroutine.launch {
+//                        if (user.image!=null){
+//                            val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+//                            val image= BitmapFactory.decodeStream(i)
+//                            mc.mc.runOnUiThread {
+//                                holder.imgOffer.setImageBitmap(image)
+//                            }
+//                        }
+//                    }
+
+                    }
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Log.d("CCD", "Error getting user getUser UserRepo")
+                    Log.d("CCD", t.message.toString())
+                    Log.d("CCD", "===============================")
+                }
+
+            })
         }
+
 
         b.btnAnswer.setText("Comment")
         b.btnAnswer.setOnClickListener {
