@@ -1,8 +1,10 @@
 package com.example.gawekerjo.view.adapter
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
@@ -29,6 +31,7 @@ class CommentAdapter(
     class MyHolder(it: View) : RecyclerView.ViewHolder(it){
         var title : TextView = it.findViewById(R.id.txtTitle)
         var body : TextView = it.findViewById(R.id.txtContent)
+        var imgUser : ImageView = it.findViewById(R.id.imgProfileFriendList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {

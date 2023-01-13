@@ -44,6 +44,7 @@ class PostAdapter(
         var ctrcomment: TextView = it.findViewById(R.id.txtComment)
         var imglike : ImageView = it.findViewById(R.id.imgLike)
         var imgcomment: ImageView = it.findViewById(R.id.imgComment)
+        var imgUser : ImageView = it.findViewById(R.id.imgProfileFriendList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
