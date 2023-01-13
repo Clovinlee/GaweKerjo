@@ -17,4 +17,8 @@ interface UserChatApi {
         @Query("chat_id")chat_id:Int,
         @Query("message")message:String
     ): Call<UserChat>
+    @GET("friendtodchat")
+    fun friendtoDchat(
+        @Query("chat_id")chat_id:Int
+    ): Call<UserChat>
 }
