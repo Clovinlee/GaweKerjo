@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout1"
+    android:id="@+id/LayoutPost"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/txtUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:ellipsize="start"
+        android:maxLines="5"
+        android:singleLine="false"
+        android:text="TextView"
+        android:textColor="#151515"
+        android:textSize="25sp" />
 
     <LinearLayout
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -21,15 +35,34 @@
             android:layout_weight="0"
             android:src="@drawable/anon" />
 
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:maxLines="5"
-            android:text="TextView"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:orientation="vertical"
+            android:paddingRight="5dp">
+
+            <TextView
+                android:id="@+id/txtNama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:ellipsize="start"
+                android:maxLines="1"
+                android:singleLine="false"
+                android:text="TextView"
+                android:textColor="#070707"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtDeskripsiUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="TextView" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -45,6 +78,7 @@
         android:id="@+id/layout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="200dp"
         android:orientation="horizontal">
 
@@ -78,4 +112,5 @@
             android:text="Comment"
             android:textSize="18sp" />
     </LinearLayout>
+
 </LinearLayout>
