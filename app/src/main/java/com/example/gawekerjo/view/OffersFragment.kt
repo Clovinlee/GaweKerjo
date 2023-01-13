@@ -94,6 +94,10 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             btnEdit.visibility = View.GONE
             btnDelete.visibility = View.GONE
 
+            if(user.id == useroffer.id){
+                btnApply.visibility = View.GONE
+            }
+
             txtDivider.visibility = View.INVISIBLE
 
             txtTitle.text = offer.title
@@ -103,7 +107,7 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             txtLocation.text = useroffer.lokasi
 
             coroutine.launch {
-                if (user.image!=null){
+                if (useroffer.image!=null){
                     val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
                     val image= BitmapFactory.decodeStream(i)
                      mc.runOnUiThread{
