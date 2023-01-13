@@ -28,7 +28,7 @@ abstract class RetrofitClient {
                 val client : OkHttpClient = OkHttpClient.Builder().apply {
                     addInterceptor(interceptor).addInterceptor {
                         chain -> val request = chain.request().newBuilder()
-                        .addHeader("api_token", env.API_TOKEN)
+                        .addHeader("apitoken", env.API_TOKEN)
                         chain.proceed(request.build())
                     }
                 }.build()
