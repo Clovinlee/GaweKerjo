@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gawekerjo.R
 import com.example.gawekerjo.api.RetrofitClient
@@ -31,6 +32,7 @@ class FollowAdapter (
     val followList :List<FollowItem>,
     var AddFriendActivity : FriendListActivity,
     var user: UserItem,
+    val chat: (recipient:UserItem)->Unit
 ): RecyclerView.Adapter<FollowAdapter.CustomViewHolder>() {
 
     private val rc : Retrofit = RetrofitClient.getRetrofit()
@@ -60,9 +62,15 @@ class FollowAdapter (
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 var rbody = response.body()!!
                 if(rbody.status == 200){
+                    //val recipient=rbody.data.first()
                     holder.txtNameFriendList.text = rbody.data[0].name
                     holder.txtDescFriendList.text = rbody.data[0].description
-
+                    holder.btnMessageFriendList.setOnClickListener()
+                    {
+                        //BAGIAN KWAN
+                        Log.d("tes","bisa")
+                        chat.invoke(rbody.data.first())
+                    }
                     coroutine.launch {
                         if (rbody.data[0].image!=null){
                             val i= URL(env.API_URL.substringBefore("/api/")+rbody.data[0].image).openStream()
@@ -91,11 +99,6 @@ class FollowAdapter (
             // 1. LIST E SAMA MBE SENG DI PASS DI RV
             // 2. teliti
             AddFriendActivity.removeFollow(item.id)
-        }
-
-        holder.btnMessageFriendList.setOnClickListener()
-        {
-//            BAGIAN KWAN
         }
 
     }

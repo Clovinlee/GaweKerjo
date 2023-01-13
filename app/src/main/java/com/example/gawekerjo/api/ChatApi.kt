@@ -16,4 +16,9 @@ interface ChatApi {
         @Query("user_id")user_id:Int,
         @Query("recipient_id")recipient_id:Int
     ): Call<Chat>
+    @GET("friendtochat")
+    fun friendtoChat(
+        @Query("user_id")user_id:Int,
+        @Query("recipient_id")recipient_id:Int
+    ):Call<Chat>
 }
