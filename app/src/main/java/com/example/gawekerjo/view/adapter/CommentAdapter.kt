@@ -1,5 +1,6 @@
 package com.example.gawekerjo.view.adapter
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.gawekerjo.R
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.comment.CommentItem
 import com.example.gawekerjo.model.user.User
 import com.example.gawekerjo.model.user.UserItem
@@ -18,11 +20,13 @@ import com.example.gawekerjo.repository.CommentRepository
 import com.example.gawekerjo.view.DetailpostActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.net.URL
 
 class CommentAdapter(
     var mc: DetailpostActivity,
@@ -62,6 +66,16 @@ class CommentAdapter(
                 if(rbody.status == 200){
                     holder.title.text = rbody.data[0].name
                     holder.deskripsiusercomment.text = rbody.data[0].description
+
+                    coroutine.launch {
+                        if (rbody.data[0].image!=null){
+                            val i= URL(env.API_URL.substringBefore("/api/")+rbody.data[0].image).openStream()
+                            val image= BitmapFactory.decodeStream(i)
+                            mc.runOnUiThread {
+                                holder.imgUser.setImageBitmap(image)
+                            }
+                        }
+                    }
                 }
             }
 

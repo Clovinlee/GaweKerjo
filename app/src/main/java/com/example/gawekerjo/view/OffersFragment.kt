@@ -124,6 +124,10 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
                 // CHAT KE ORANG E
             }
 
+            imgOfferDialog.setOnClickListener {
+                // KE HALAMAN ORANG E. pake variabel user
+            }
+
             show()
         }
     }

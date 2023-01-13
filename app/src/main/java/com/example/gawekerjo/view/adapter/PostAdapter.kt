@@ -1,5 +1,6 @@
 package com.example.gawekerjo.view.adapter
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.gawekerjo.R
 import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.post.PostItem
 import com.example.gawekerjo.model.postlike.PostLikeItem
 import com.example.gawekerjo.model.user.User
@@ -20,10 +22,12 @@ import com.example.gawekerjo.repository.PostLikeRepository
 import com.example.gawekerjo.view.HomeFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.net.URL
 
 class PostAdapter(
     var mc : HomeFragment,
@@ -81,15 +85,15 @@ class PostAdapter(
                     user = rbody.data[0]
                     loadDone = true
 
-//                    coroutine.launch {
-//                        if (user.image!=null){
-//                            val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
-//                            val image= BitmapFactory.decodeStream(i)
-//                            mc.mc.runOnUiThread {
-//                                holder.imgOffer.setImageBitmap(image)
-//                            }
-//                        }
-//                    }
+                    coroutine.launch {
+                        if (user.image!=null){
+                            val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                            val image= BitmapFactory.decodeStream(i)
+                            mc.mc.runOnUiThread {
+                                holder.imgUser.setImageBitmap(image)
+                            }
+                        }
+                    }
 
                 }
             }

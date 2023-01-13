@@ -88,6 +88,30 @@ class MyOfferActivity : AppCompatActivity() {
         }
     }
 
+    fun dialogDelete(offer: OfferItem, dialogParent : Dialog){
+        val b=layoutInflater.inflate(R.layout.delete_dialog,null)
+        val d = Dialog(this)
+        with(d){
+            setContentView(b)
+            setCancelable(true)
+
+            val btnYes = b.findViewById<Button>(R.id.btnDeleteDialogYes)
+            val btnNo = b.findViewById<Button>(R.id.btnDeleteDialogNo)
+
+            btnNo.setOnClickListener {
+                dismiss()
+            }
+
+            btnYes.setOnClickListener {
+                offerRepo.deleteOffer(this@MyOfferActivity, offer.id)
+                dialogParent.dismiss()
+                dismiss()
+            }
+
+            show()
+        }
+    }
+
     fun dialog(offer : OfferItem, user : UserItem) {
         val b=layoutInflater.inflate(R.layout.dialog_layout_detailoffer,null)
         val d= Dialog(this)
@@ -131,8 +155,7 @@ class MyOfferActivity : AppCompatActivity() {
             txtLocation.text = user.lokasi
 
             btnDelete.setOnClickListener {
-                offerRepo.deleteOffer(this@MyOfferActivity, offer.id)
-                dismiss()
+                dialogDelete(offer, this)
             }
 
             btnEdit.setOnClickListener {

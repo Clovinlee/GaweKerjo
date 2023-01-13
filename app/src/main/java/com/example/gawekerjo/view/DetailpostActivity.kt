@@ -1,6 +1,7 @@
 package com.example.gawekerjo.view
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import com.example.gawekerjo.api.RetrofitClient
 import com.example.gawekerjo.api.UserApi
 import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityDetailpostBinding
+import com.example.gawekerjo.env
 import com.example.gawekerjo.model.comment.Comment
 import com.example.gawekerjo.model.comment.CommentItem
 import com.example.gawekerjo.model.post.Post
@@ -34,6 +36,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.net.URL
 
 class DetailpostActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
@@ -66,6 +69,9 @@ class DetailpostActivity : AppCompatActivity() {
         val view  = b.root
         setContentView(view)
 
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
+        
         db = AppDatabase.Build(this)
         postRepo = PostRepository(db)
         postlikeRepo = PostLikeRepository(db)
@@ -105,15 +111,15 @@ class DetailpostActivity : AppCompatActivity() {
                         user = rbody.data[0]
 
 
-//                    coroutine.launch {
-//                        if (user.image!=null){
-//                            val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
-//                            val image= BitmapFactory.decodeStream(i)
-//                            mc.mc.runOnUiThread {
-//                                holder.imgOffer.setImageBitmap(image)
-//                            }
-//                        }
-//                    }
+                    coroutine.launch {
+                        if (user.image!=null){
+                            val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                            val image= BitmapFactory.decodeStream(i)
+                            runOnUiThread {
+                                b.imgProfileFriendList.setImageBitmap(image)
+                            }
+                        }
+                    }
 
                     }
                 }
@@ -128,7 +134,7 @@ class DetailpostActivity : AppCompatActivity() {
         }
 
 
-        b.btnAnswer.setText("Comment")
+        b.btnAnswer.setText("Add Comment")
         b.btnAnswer.setOnClickListener {
             withEditText(view)
         }
@@ -139,6 +145,10 @@ class DetailpostActivity : AppCompatActivity() {
         loadComment()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
     fun withEditText(view: View) {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
