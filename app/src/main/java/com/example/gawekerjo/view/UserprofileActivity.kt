@@ -85,6 +85,19 @@ class UserprofileActivity : AppCompatActivity() {
             languageAdapter.notifyDataSetChanged()
 
         }
+        else if(result.resultCode == 4){
+            var data = result.data
+            if (data != null) {
+                user = data.getParcelableExtra<UserItem>("dataBaru")!!
+
+                loadprofile(user)
+
+//                Toast.makeText(this, "load profil baru", Toast.LENGTH_SHORT).show()
+
+            }
+
+
+        }
     }
 
 
@@ -243,7 +256,8 @@ class UserprofileActivity : AppCompatActivity() {
         b.imgUserProfileEditProfile.setOnClickListener {
             val i : Intent = Intent(this, EditProfileUserActivity::class.java)
             i.putExtra("userLogin",user)
-            startActivity(i)
+//            startActivity(i)
+            launcher.launch(i)
         }
 
         // masuk tambah pendidikan
@@ -461,9 +475,14 @@ class UserprofileActivity : AppCompatActivity() {
         }
         if(usr.image!=null){
             //runOnUiThread { Toast.makeText(this, "ambil gambar", Toast.LENGTH_SHORT).show() }
-            val i=URL(env.API_URL.substringBefore("/api/")+usr.image).openStream()
-            val image=BitmapFactory.decodeStream(i)
-            runOnUiThread { b.imageView16.setImageBitmap(image) }
+            try {
+                val i=URL(env.API_URL.substringBefore("/api/")+usr.image).openStream()
+                val image=BitmapFactory.decodeStream(i)
+                runOnUiThread { b.imageView16.setImageBitmap(image) }
+            }catch (e:Exception){
+                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 

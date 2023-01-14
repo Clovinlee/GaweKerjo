@@ -276,18 +276,20 @@ class EditProfileUserActivity : AppCompatActivity() {
 
         if(result.status == 200){
             if (result.data[0].type == "1"){
-                var i : Intent = Intent(this, UserprofileActivity::class.java)
-                i.putExtra("userLogin",result.data[0])
-                startActivity(i)
+                var i = Intent()
+                i.putExtra("dataBaru",result.data[0])
+//                startActivity(i)
+                setResult(4, i)
                 finish()
-                this.finish()
+
             }
             else{
-                var i : Intent = Intent(this, CompanyProfileActivity::class.java)
-                i.putExtra("userLogin",result.data[0])
-                startActivity(i)
+                var i = Intent()
+                i.putExtra("dataBaru",result.data[0])
+//                startActivity(i)
+                setResult(4, i)
                 finish()
-                this.finish()
+
             }
 
 
