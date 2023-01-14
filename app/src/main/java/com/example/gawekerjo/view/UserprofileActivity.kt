@@ -160,7 +160,7 @@ class UserprofileActivity : AppCompatActivity() {
                 else{
 
                     user = intent.getParcelableExtra<UserItem>("userLogin")!!
-                    type = us.type.toString()
+                    type = user.type.toString()
                     loadprofile(user)
                 }
 
@@ -513,10 +513,13 @@ class UserprofileActivity : AppCompatActivity() {
         }
         if(usr.image!=null){
             //runOnUiThread { Toast.makeText(this, "ambil gambar", Toast.LENGTH_SHORT).show() }
-            try {
+            coroutine.launch {
                 val i=URL(env.API_URL.substringBefore("/api/")+usr.image).openStream()
                 val image=BitmapFactory.decodeStream(i)
                 runOnUiThread { b.imageView16.setImageBitmap(image) }
+            }
+            try {
+
             }catch (e:Exception){
                 Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
             }
