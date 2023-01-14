@@ -150,7 +150,7 @@ class HomeActivity : AppCompatActivity() {
 //                    }
                     val i : Intent = Intent(this, UserprofileActivity::class.java)
                     i.putExtra("userLogin", user)
-                    startActivity(i)
+                    launcherUserProfile.launch(i)
                 }
             }else if(it.itemId == R.id.navmenu_messages){
                 // ACTIVITY TO MESSAGES

@@ -107,10 +107,15 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             txtBody.text = offer.body
             txtUser.text = useroffer.name
             txtLocation.text = useroffer.lokasi
+            if(useroffer.lokasi != null){
+                if(useroffer.lokasi!!.lowercase() == "choose"){
+                    txtLocation.text = "-"
+                }
+            }
 
             coroutine.launch {
                 if (useroffer.image!=null){
-                    val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                    val i= URL(env.API_URL.substringBefore("/api/")+useroffer.image).openStream()
                     val image= BitmapFactory.decodeStream(i)
                      mc.runOnUiThread{
                         imgOfferDialog.setImageBitmap(image)
