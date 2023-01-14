@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearuserprofileterluar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D3D1D1"
@@ -75,9 +76,31 @@
                     android:layout_marginTop="9dp"
                     android:text="Koneksi" />
 
+                <TextView
+                    android:id="@+id/tvUserProfileLokasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/tvUserProfileFounded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/tvUserProfileIndustry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="TextView" />
+
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearpendidikan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="9dp"
@@ -116,6 +139,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearkeahlian"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="9dp"
@@ -154,6 +178,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearbahasa"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="9dp"
