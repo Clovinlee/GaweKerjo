@@ -33,7 +33,6 @@ class RVAdapterJob(private val mc : OffersFragment,
                    private val db : AppDatabase) : RecyclerView.Adapter<RVAdapterJob.CustomViewHolder>(){
 
     private var loadDone : Boolean = false
-    private lateinit var user : UserItem
     private val coroutine = CoroutineScope(Dispatchers.IO)
 
     class CustomViewHolder(var view: View) : RecyclerView.ViewHolder(view)
@@ -65,6 +64,8 @@ class RVAdapterJob(private val mc : OffersFragment,
         holder.txtDescription.text = item.body
         holder.txtSkill.text = item.skills
 
+        var userNow : UserItem? = null
+
         //holder.imgOffer
 
         var rc : Retrofit = RetrofitClient.getRetrofit()
@@ -75,12 +76,12 @@ class RVAdapterJob(private val mc : OffersFragment,
                 var rbody = response.body()!!
                 if(rbody.status == 200){
                     holder.txtPostUser.text = rbody.data[0].name
-                    user = rbody.data[0]
+                    userNow = rbody.data[0]
                     loadDone = true
 
                     coroutine.launch {
-                        if (user.image!=null){
-                            val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                        if (userNow!!.image!=null){
+                            val i= URL(env.API_URL.substringBefore("/api/")+userNow!!.image).openStream()
                             val image= BitmapFactory.decodeStream(i)
                             mc.mc.runOnUiThread {
                                 holder.imgOffer.setImageBitmap(image)
@@ -103,7 +104,7 @@ class RVAdapterJob(private val mc : OffersFragment,
             if(!loadDone){
                 return@setOnClickListener
             }
-            mc.dialog(item,user)
+            mc.dialog(item,userNow!!)
         }
     }
 

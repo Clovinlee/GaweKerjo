@@ -11,10 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +20,10 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.FragmentOffersBinding
 import com.example.gawekerjo.env
 import com.example.gawekerjo.model.Offer.OfferItem
+import com.example.gawekerjo.model.chat.ChatItem
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.model.userchat.UserChatItem
+import com.example.gawekerjo.repository.ChatRepository
 import com.example.gawekerjo.repository.OfferRepository
 import com.example.gawekerjo.view.adapter.RVAdapterJob
 import kotlinx.coroutines.CoroutineScope
@@ -38,6 +38,7 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var ctx : Context
     private var listOffer : List<OfferItem> = listOf()
+    private lateinit var chatRepo:ChatRepository
 
     private lateinit var offerRepo : OfferRepository
 
@@ -51,6 +52,7 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
         super.onViewCreated(view, savedInstanceState)
         ctx = view.context
         offerRepo = OfferRepository(db)
+        chatRepo= ChatRepository(db)
         adapterJob = RVAdapterJob(this, R.layout.layout_rv_offer, listOffer, db)
 
         b.btnOfferSearch.setOnClickListener {
@@ -94,6 +96,10 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             btnEdit.visibility = View.GONE
             btnDelete.visibility = View.GONE
 
+            if(user.id == useroffer.id){
+                btnApply.visibility = View.GONE
+            }
+
             txtDivider.visibility = View.INVISIBLE
 
             txtTitle.text = offer.title
@@ -103,7 +109,7 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
             txtLocation.text = useroffer.lokasi
 
             coroutine.launch {
-                if (user.image!=null){
+                if (useroffer.image!=null){
                     val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
                     val image= BitmapFactory.decodeStream(i)
                      mc.runOnUiThread{
@@ -122,10 +128,26 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
 
             btnApply.setOnClickListener {
                 // CHAT KE ORANG E
+                chatRepo.offertoChat(this@OffersFragment,user.id,useroffer)
+
             }
 
             imgOfferDialog.setOnClickListener {
                 // KE HALAMAN ORANG E. pake variabel user
+
+                if (useroffer.type == "1"){
+                    var i = Intent(requireContext(), UserprofileActivity::class.java)
+                    i.putExtra("userLogin", useroffer)
+                    i.putExtra("Action", 1)
+                    startActivity(i)
+                }
+                else{
+                    var i = Intent(requireContext(), CompanyProfileActivity::class.java)
+                    i.putExtra("userLogin", useroffer)
+                    i.putExtra("Action", 1)
+                    startActivity(i)
+                }
+
             }
 
             show()
@@ -159,6 +181,16 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
     ): View? {
         b = FragmentOffersBinding.inflate(inflater, container, false)
         return b.root
+    }
+
+    fun gotoChat(hchat: ChatItem, chat: List<UserChatItem>, recipient: UserItem) {
+        val i=Intent(this.context,DetailChatActivity::class.java)
+        i.putExtra("user",user)
+        i.putExtra("rec",recipient)
+        i.putExtra("hchat",hchat)
+        i.putParcelableArrayListExtra("chat",chat as ArrayList)
+        Log.d("pindah","bisa")
+        startActivity(i)
     }
 
 }

@@ -12,6 +12,8 @@ import com.example.gawekerjo.database.AppDatabase
 import com.example.gawekerjo.databinding.ActivityCompanyProfileBinding
 import com.example.gawekerjo.env
 import com.example.gawekerjo.model.user.UserItem
+import com.example.gawekerjo.repository.AccountRepository
+import com.example.gawekerjo.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,20 +38,41 @@ class CompanyProfileActivity : AppCompatActivity() {
 
         db= AppDatabase.Build(this)
 
+
         b.tvCompanyProfileKoneksi.setVisibility(View.GONE)
+        var cek = -1
 
         try {
-
-            us = intent.getParcelableExtra<UserItem>("userLogin")!!
+            cek = intent.getIntExtra("Action", -1)
         }catch (e:Exception){
-            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+
         }
 
 
-        coroutine.launch {
-            user = db.userDao.getUserByEmail(us.email)!!
-            loadprofile(user)
-        }
+            try {
+                if (cek == -1){
+                    us = intent.getParcelableExtra<UserItem>("userLogin")!!
+                    coroutine.launch {
+                        user = db.userDao.getUserByEmail(us.email)!!
+                    }
+
+                    loadprofile(user)
+//                    Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    user = intent.getParcelableExtra<UserItem>("userLogin")!!
+
+//
+                    loadprofile(user)
+                    b.imgCompanyProfileEditProfile.setVisibility(View.GONE)
+//                    Toast.makeText(this, "false", Toast.LENGTH_SHORT).show()
+                }
+
+            }catch (e:Exception){
+//            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+            }
+
+
 
         b.imgCompanyProfileEditProfile.setOnClickListener {
             val i : Intent = Intent(this, EditProfileUserActivity::class.java)

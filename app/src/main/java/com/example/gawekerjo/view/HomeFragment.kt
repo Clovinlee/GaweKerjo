@@ -154,4 +154,19 @@ class HomeFragment(var mc: HomeActivity, var db : AppDatabase, var user : UserIt
         intent.putExtra("user_id", user_id)
         startActivity(intent)
     }
+
+    fun masukprofil(item: UserItem){
+        if (item.type == "1"){
+            var i = Intent(requireContext(), UserprofileActivity::class.java)
+            i.putExtra("userLogin", item)
+            i.putExtra("Action", 1)
+            startActivity(i)
+        }
+        else{
+            var i = Intent(requireContext(), CompanyProfileActivity::class.java)
+            i.putExtra("userLogin", item)
+            i.putExtra("Action", 1)
+            startActivity(i)
+        }
+    }
 }

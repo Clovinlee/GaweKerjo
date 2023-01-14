@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -109,17 +110,65 @@ class UserprofileActivity : AppCompatActivity() {
 //        b.loadModal.visibility = View.VISIBLE
 //        disableEnableControls(false, b.linearlayout)
 
+        b.tvUserProfileKoneksi.setVisibility(View.GONE)
 
+        coroutine.launch {
+            db.userskillDao.clear()
+            db.userlanguageDao.clear()
+            db.educationDao.clear()
+        }
+
+        var cek = -1
 
         try {
-
-            us = intent.getParcelableExtra<UserItem>("userLogin")!!
+            cek = intent.getIntExtra("Action", -1)
         }catch (e:Exception){
-            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+
+        }
+
+            try {
+
+                if (cek == -1){
+                    coroutine.launch {
+                        us = intent.getParcelableExtra<UserItem>("userLogin")!!
+
+
+
+                        user = db.userDao.getUserByEmail(us.email)!!
+                        loadprofile(user)
+                    }
+                }
+                else{
+
+                    user = intent.getParcelableExtra<UserItem>("userLogin")!!
+
+                    loadprofile(user)
+                }
+
+                listskill.clear()
+
+
+            } catch (e: Exception) {
+//                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+
+            }
+
+
+
+
+
+        if (cek == 1){
+            b.imgUserProfileEditProfile.setVisibility(View.GONE)
+            b.imgUserProfileTambahPendidikan.setVisibility(View.GONE)
+            b.imgUserProfileTambahKeahlian.setVisibility(View.GONE)
+            b.imgUserProfileTambahBahasa.setVisibility(View.GONE)
+        }
+        else{
+
         }
 
 
-        keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity){
+        keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity, cek){
 
         }
         runOnUiThread{
@@ -131,7 +180,7 @@ class UserprofileActivity : AppCompatActivity() {
                 showDeleteDialog(position, "keahlian")
             }
         })
-        pendidikanAdapter = PendidikanAdapter(listpendidikan, R.layout.layout_listpendidikan, this@UserprofileActivity){
+        pendidikanAdapter = PendidikanAdapter(listpendidikan, R.layout.layout_listpendidikan, this@UserprofileActivity, cek){
 
         }
         runOnUiThread {
@@ -159,7 +208,7 @@ class UserprofileActivity : AppCompatActivity() {
             }
         })
 
-        languageAdapter = BahasaAdapter(listlang, R.layout.layout_list_bahasa, this@UserprofileActivity){
+        languageAdapter = BahasaAdapter(listlang, R.layout.layout_list_bahasa, this@UserprofileActivity, cek){
             
         }
         runOnUiThread{
@@ -173,16 +222,19 @@ class UserprofileActivity : AppCompatActivity() {
 
         })
 
-        loadskill(this, false)
+        try {
+            loadskill(this, false)
+        }catch (e:Exception){
+
+        }
+
 //        loadpendidikan(this, false)
 //        loadlang(this, false)
 
 
 
         coroutine.launch {
-            user = db.userDao.getUserByEmail(us.email)!!
-            loadprofile(user)
-            listskill.clear()
+
 //            listskill.addAll(db.userskillDao.getAllUserSkill().toList())
 
         }
@@ -254,8 +306,10 @@ class UserprofileActivity : AppCompatActivity() {
             listskill.addAll(db.userskillDao.getAllUserSkill().toList())
             listnama.addAll(db.skillDao.getAllSkill().toList())
             if (listskill.size <= 0 && sudah == false){
-                skillrepo.getUserSkill(mc, us.id, null)
-                load()
+                skillrepo.getUserSkill(mc, user.id, null)
+                runOnUiThread {
+                    load()
+                }
             }
             else{
                 runOnUiThread {
@@ -272,7 +326,7 @@ class UserprofileActivity : AppCompatActivity() {
         coroutine.launch {
             listpendidikan.addAll(db.educationDao.getAllEducation().toList())
             if (listpendidikan.size <= 0 && sudah == false){
-                edurepo.getUserEdu(mc, null, us.id)
+                edurepo.getUserEdu(mc, null, user.id)
                 reloadpendidikan()
             }
             else{
@@ -291,7 +345,7 @@ class UserprofileActivity : AppCompatActivity() {
         coroutine.launch {
             listlang.addAll(db.userlanguageDao.getAllUserLanguage().toList())
             if (listlang.size <= 0 && sudah == false){
-                langrepo.getuserLang(mc, us.id)
+                langrepo.getuserLang(mc, user.id)
                 reloadlang()
             }else{
                 runOnUiThread {

@@ -117,26 +117,26 @@ class ChatActivity : AppCompatActivity() {
             detailChat(f!!,c)
         }
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_add_chat,menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.tambah_chat->{
-                if (loaded){
-                    new_friend_dataset.clear()
-                    new_friend_dataset.addAll(new_friend)
-                    adaptersearch.notifyDataSetChanged()
-                    Dialog()
-                }else{
-                    Toast.makeText(this, "Please wait until all messages has been loaded", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.menu_add_chat,menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId){
+//            R.id.tambah_chat->{
+//                if (loaded){
+//                    new_friend_dataset.clear()
+//                    new_friend_dataset.addAll(new_friend)
+//                    adaptersearch.notifyDataSetChanged()
+//                    Dialog()
+//                }else{
+//                    Toast.makeText(this, "Please wait until all messages has been loaded", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
     fun detailChat(recipient:UserItem,hchat:ChatItem){
         val chat=chatlist.filter { c->c.chat_id==hchat.id } as ArrayList
         val i=Intent(this,DetailChatActivity::class.java)

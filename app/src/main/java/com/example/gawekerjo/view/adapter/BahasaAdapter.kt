@@ -14,6 +14,7 @@ class BahasaAdapter (
     private val listbahasa: MutableList<UserLanguageItem>,
     private val layout: Int,
     private val context: Context,
+    private val Action: Int,
     private val cb: ()->Unit
 ): RecyclerView.Adapter<BahasaAdapter.CustomViewHolder>(){
 
@@ -37,6 +38,10 @@ class BahasaAdapter (
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.bahasa.text = listbahasa[position].language
         holder.level.text = "${listbahasa[position].level}"
+
+        if (Action == 1){
+            holder.hapus.setVisibility(View.GONE)
+        }
     }
 
     override fun getItemCount(): Int {

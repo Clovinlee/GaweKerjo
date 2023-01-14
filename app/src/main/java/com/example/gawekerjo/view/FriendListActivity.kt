@@ -139,4 +139,19 @@ class FriendListActivity : AppCompatActivity() {
         Log.d("pindah","bisa")
         startActivity(i)
     }
+
+    fun masukprofil(item: UserItem){
+        if (item.type == "1"){
+            var i = Intent(this, UserprofileActivity::class.java)
+            i.putExtra("userLogin", item)
+            i.putExtra("Action", 1)
+            startActivity(i)
+        }
+        else{
+            var i = Intent(this, CompanyProfileActivity::class.java)
+            i.putExtra("userLogin", item)
+            i.putExtra("Action", 1)
+            startActivity(i)
+        }
+    }
 }

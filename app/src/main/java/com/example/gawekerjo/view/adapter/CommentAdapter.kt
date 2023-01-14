@@ -76,6 +76,9 @@ class CommentAdapter(
                             }
                         }
                     }
+                    holder.imgUser.setOnClickListener(){
+                        mc.masukprofil(rbody.data.first())
+                    }
                 }
             }
 
@@ -86,6 +89,8 @@ class CommentAdapter(
             }
 
         })
+
+
     }
 
     override fun getItemCount(): Int {
