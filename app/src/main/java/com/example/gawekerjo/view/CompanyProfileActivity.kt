@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.gawekerjo.R
 import com.example.gawekerjo.database.AppDatabase
@@ -26,6 +27,25 @@ class CompanyProfileActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     lateinit var us: UserItem
     lateinit var user: UserItem
+
+
+    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result: ActivityResult ->
+
+        if(result.resultCode == 4){
+            var data = result.data
+            if (data != null) {
+                user = data.getParcelableExtra<UserItem>("dataBaru")!!
+
+                loadprofile(user)
+
+//                Toast.makeText(this, "load profil baru", Toast.LENGTH_SHORT).show()
+
+            }
+
+
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,9 +74,10 @@ class CompanyProfileActivity : AppCompatActivity() {
                     us = intent.getParcelableExtra<UserItem>("userLogin")!!
                     coroutine.launch {
                         user = db.userDao.getUserByEmail(us.email)!!
+                        loadprofile(user)
                     }
 
-                    loadprofile(user)
+
 //                    Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
                 }
                 else{

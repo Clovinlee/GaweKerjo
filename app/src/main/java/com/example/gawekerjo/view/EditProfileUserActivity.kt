@@ -204,6 +204,7 @@ class EditProfileUserActivity : AppCompatActivity() {
             REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission is granted, you can perform your operation here
+                    user.image="/storage/user/${UploadUtility(this).uploadFile(urlgambar!!,this,user.id.toString())}"
                 } else {
                     // permission is denied, you can ask for permission again, if you want
                       askForPermissions()
@@ -275,18 +276,20 @@ class EditProfileUserActivity : AppCompatActivity() {
 
         if(result.status == 200){
             if (result.data[0].type == "1"){
-                var i : Intent = Intent(this, UserprofileActivity::class.java)
-                i.putExtra("userLogin",result.data[0])
-                startActivity(i)
+                var i = Intent()
+                i.putExtra("dataBaru",result.data[0])
+//                startActivity(i)
+                setResult(4, i)
                 finish()
-                this.finish()
+
             }
             else{
-                var i : Intent = Intent(this, CompanyProfileActivity::class.java)
-                i.putExtra("userLogin",result.data[0])
-                startActivity(i)
+                var i = Intent()
+                i.putExtra("dataBaru",result.data[0])
+//                startActivity(i)
+                setResult(4, i)
                 finish()
-                this.finish()
+
             }
 
 
