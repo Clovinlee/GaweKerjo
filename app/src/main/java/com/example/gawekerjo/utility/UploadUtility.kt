@@ -49,7 +49,8 @@ class UploadUtility(activity:Activity) {
                         .addFormDataPart("uploaded_file", fileName,sourceFile.asRequestBody(mimeType.toMediaTypeOrNull()))
                         .build()
 
-                val request: Request = Request.Builder().url(serverURL).post(requestBody).build()
+                val request: Request = Request.Builder().url(serverURL).post(requestBody)
+                    .header("apitoken",env.API_TOKEN).build()
 
                 val response: Response = client.newCall(request).execute()
 
