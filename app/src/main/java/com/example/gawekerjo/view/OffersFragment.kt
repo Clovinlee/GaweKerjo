@@ -110,7 +110,7 @@ class OffersFragment(var mc : HomeActivity, var db : AppDatabase, var user : Use
 
             coroutine.launch {
                 if (useroffer.image!=null){
-                    val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                    val i= URL(env.API_URL.substringBefore("/api/")+useroffer.image).openStream()
                     val image= BitmapFactory.decodeStream(i)
                      mc.runOnUiThread{
                         imgOfferDialog.setImageBitmap(image)

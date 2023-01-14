@@ -160,7 +160,7 @@ class UserprofileActivity : AppCompatActivity() {
                 else{
 
                     user = intent.getParcelableExtra<UserItem>("userLogin")!!
-
+                    type = us.type.toString()
                     loadprofile(user)
                 }
 
