@@ -54,6 +54,7 @@ class HomeActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
 
     lateinit var launcherNewPost : ActivityResultLauncher<Intent>
+    lateinit var launcherUserProfile : ActivityResultLauncher<Intent>
 
     lateinit var toggle : ActionBarDrawerToggle
 
@@ -67,6 +68,13 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var followList :ArrayList<FollowItem>
 // SAMPE SINI PNY ESTHER
+
+    private lateinit var navigationView : NavigationView
+
+    private lateinit var circleAvatar : CircleImageView
+    private lateinit var txtName : TextView
+    private lateinit var txtEmail : TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityHomeBinding.inflate(layoutInflater)
@@ -133,12 +141,12 @@ class HomeActivity : AppCompatActivity() {
 
                         val i : Intent = Intent(this, UserprofileActivity::class.java)
                         i.putExtra("userLogin", user)
-                        startActivity(i)
+                        launcherUserProfile.launch(i)
                     }
                     else{
                         val i : Intent = Intent(this, CompanyProfileActivity::class.java)
                         i.putExtra("userLogin", user)
-                        startActivity(i)
+                        launcherUserProfile.launch(i)
                     }
                 }
             }else if(it.itemId == R.id.navmenu_messages){
@@ -184,23 +192,15 @@ class HomeActivity : AppCompatActivity() {
 
         // DYNAMIC DRAWER HEADER
 
-        var navigationView : NavigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         var headerview = navigationView.getHeaderView(0)
 
-        var circleAvatar : CircleImageView = headerview.findViewById(R.id.circleAvatar)
-        var txtName : TextView = headerview.findViewById(R.id.txtUserDrawerName)
-        var txtEmail : TextView = headerview.findViewById(R.id.txtUserDrawerEmail)
+        circleAvatar = headerview.findViewById(R.id.circleAvatar)
+        txtName  = headerview.findViewById(R.id.txtUserDrawerName)
+        txtEmail = headerview.findViewById(R.id.txtUserDrawerEmail)
 
-        coroutine.launch {
-            if (user.image!=null){
-                val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
-                val image= BitmapFactory.decodeStream(i)
-                runOnUiThread { circleAvatar.setImageBitmap(image) }
-            }
-        }
+        updateHeader()
 
-        txtName.text = user!!.name
-        txtEmail.text = user!!.email
         circleAvatar.setOnClickListener {
             // ACTIVITY TO PROFILE
             // JANGAN LUPA PASSING PARCELABLE USER KE ACTIVITY (opsional buat ambil user)
@@ -212,12 +212,12 @@ class HomeActivity : AppCompatActivity() {
 
                 if (user.type == "1"){
 
-                    val i : Intent = Intent(this, UserprofileActivity::class.java)
+                    val i : Intent = Intent(this@HomeActivity, UserprofileActivity::class.java)
                     i.putExtra("userLogin", user)
                     startActivity(i)
                 }
                 else{
-                    val c : Intent = Intent(this, CompanyProfileActivity::class.java)
+                    val c : Intent = Intent(this@HomeActivity, CompanyProfileActivity::class.java)
                     c.putExtra("userLogin", user)
                     startActivity(c)
                 }
@@ -237,6 +237,10 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        launcherUserProfile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            updateHeader()
+        }
+
         b.btmNav.setOnItemSelectedListener {
             if(it.itemId == R.id.menuhome){
                 swapFragment(fHome)
@@ -252,6 +256,22 @@ class HomeActivity : AppCompatActivity() {
             return@setOnItemSelectedListener true
         }
         swapFragment(fHome)
+    }
+
+    fun updateHeader(){
+        coroutine.launch {
+            user = db.userDao.getLastUser()!!
+            if (user.image!=null){
+                val i= URL(env.API_URL.substringBefore("/api/")+user.image).openStream()
+                val image= BitmapFactory.decodeStream(i)
+                runOnUiThread { circleAvatar.setImageBitmap(image) }
+            }
+
+            runOnUiThread {
+                txtName.text = user.name
+                txtEmail.text = user.email
+            }
+        }
     }
 
 //  INI JUGA ESTHER PUNYA
