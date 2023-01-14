@@ -204,6 +204,7 @@ class EditProfileUserActivity : AppCompatActivity() {
             REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission is granted, you can perform your operation here
+                    user.image="/storage/user/${UploadUtility(this).uploadFile(urlgambar!!,this,user.id.toString())}"
                 } else {
                     // permission is denied, you can ask for permission again, if you want
                       askForPermissions()
