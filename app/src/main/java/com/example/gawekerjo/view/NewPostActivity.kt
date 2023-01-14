@@ -43,8 +43,7 @@ class NewPostActivity : AppCompatActivity() {
             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
         }
 
-        b.txtName.text = user.name
-        b.txtUser.text = user.description
+
 
         b.btnPost.setOnClickListener {
 
@@ -60,7 +59,8 @@ class NewPostActivity : AppCompatActivity() {
             }
         }
 
-
+        val actionbar = supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(true)
     }
 
     fun addPostCallback(result: Post){
@@ -75,5 +75,10 @@ class NewPostActivity : AppCompatActivity() {
         else{
             Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
