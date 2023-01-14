@@ -137,17 +137,20 @@ class HomeActivity : AppCompatActivity() {
                 // ACTIVITY TO PROFILE
 //                Toast.makeText(this, "${user.id}", Toast.LENGTH_SHORT).show()
                 runOnUiThread {
-                    if (user.type == "1"){
-
-                        val i : Intent = Intent(this, UserprofileActivity::class.java)
-                        i.putExtra("userLogin", user)
-                        launcherUserProfile.launch(i)
-                    }
-                    else{
-                        val i : Intent = Intent(this, CompanyProfileActivity::class.java)
-                        i.putExtra("userLogin", user)
-                        launcherUserProfile.launch(i)
-                    }
+//                    if (user.type == "1"){
+//
+//                        val i : Intent = Intent(this, UserprofileActivity::class.java)
+//                        i.putExtra("userLogin", user)
+//                        launcherUserProfile.launch(i)
+//                    }
+//                    else{
+//                        val i : Intent = Intent(this, CompanyProfileActivity::class.java)
+//                        i.putExtra("userLogin", user)
+//                        launcherUserProfile.launch(i)
+//                    }
+                    val i : Intent = Intent(this, UserprofileActivity::class.java)
+                    i.putExtra("userLogin", user)
+                    startActivity(i)
                 }
             }else if(it.itemId == R.id.navmenu_messages){
                 // ACTIVITY TO MESSAGES
@@ -210,17 +213,21 @@ class HomeActivity : AppCompatActivity() {
 //                i.putExtra("userLogin", user)
 //                startActivity(i)
 
-                if (user.type == "1"){
+//                if (user.type == "1"){
+//
+//                    val i : Intent = Intent(this@HomeActivity, UserprofileActivity::class.java)
+//                    i.putExtra("userLogin", user)
+//                    startActivity(i)
+//                }
+//                else{
+//                    val c : Intent = Intent(this@HomeActivity, CompanyProfileActivity::class.java)
+//                    c.putExtra("userLogin", user)
+//                    startActivity(c)
+//                }
 
-                    val i : Intent = Intent(this@HomeActivity, UserprofileActivity::class.java)
-                    i.putExtra("userLogin", user)
-                    startActivity(i)
-                }
-                else{
-                    val c : Intent = Intent(this@HomeActivity, CompanyProfileActivity::class.java)
-                    c.putExtra("userLogin", user)
-                    startActivity(c)
-                }
+                val i : Intent = Intent(this@HomeActivity, UserprofileActivity::class.java)
+                i.putExtra("userLogin", user)
+                startActivity(i)
             }
         }
 

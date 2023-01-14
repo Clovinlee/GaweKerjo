@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -60,6 +61,8 @@ class UserprofileActivity : AppCompatActivity() {
 
     val REQUEST_CODE = 100
 
+    var type =""
+
 
     val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result: ActivityResult ->
@@ -98,6 +101,7 @@ class UserprofileActivity : AppCompatActivity() {
 
 
         }
+
     }
 
 
@@ -142,10 +146,12 @@ class UserprofileActivity : AppCompatActivity() {
             try {
 
                 if (cek == -1){
+
+                    us = intent.getParcelableExtra<UserItem>("userLogin")!!
+
+                    type = us.type.toString()
+
                     coroutine.launch {
-                        us = intent.getParcelableExtra<UserItem>("userLogin")!!
-
-
 
                         user = db.userDao.getUserByEmail(us.email)!!
                         loadprofile(user)
@@ -179,6 +185,22 @@ class UserprofileActivity : AppCompatActivity() {
         else{
 
         }
+
+        if (type == "1"){
+            b.tvUserProfileFounded.setVisibility(View.GONE)
+            b.tvUserProfileIndustry.setVisibility(View.GONE)
+            b.tvUserProfileLokasi.setVisibility(View.GONE)
+
+        }
+        else{
+            b.tvUserProfileGender.setVisibility(View.GONE)
+            b.linearbahasa.setVisibility(View.GONE)
+            b.linearkeahlian.setVisibility(View.GONE)
+            b.linearpendidikan.setVisibility(View.GONE)
+            b.linearuserprofileterluar.setBackgroundColor(Color.WHITE)
+        }
+
+
 
 
         keahlianAdapter = KeahlianListAdapter(listskill,listnama, R.layout.layout_list_keahlian, this@UserprofileActivity, cek){
@@ -472,6 +494,22 @@ class UserprofileActivity : AppCompatActivity() {
         }
         else{
             b.tvUserProfileDeskripsi.text = "${usr.description}"
+        }
+
+        if (usr.lokasi == null){
+            b.tvUserProfileLokasi.text = "Lokasi : Belum diatur"
+        }else{
+            b.tvUserProfileLokasi.text = "Lokasi : ${usr.lokasi}"
+        }
+        if (usr.founded == null){
+            b.tvUserProfileFounded.text = "Founded : Belum diatur"
+        }else{
+            b.tvUserProfileFounded.text = "Founded: ${usr.founded}"
+        }
+        if (usr.industry == null){
+            b.tvUserProfileIndustry.text = "Industry : Belum diatur"
+        }else{
+            b.tvUserProfileIndustry.text = "Industry : ${usr.industry}"
         }
         if(usr.image!=null){
             //runOnUiThread { Toast.makeText(this, "ambil gambar", Toast.LENGTH_SHORT).show() }
