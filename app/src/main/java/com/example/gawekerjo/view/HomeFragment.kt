@@ -57,10 +57,16 @@ class HomeFragment(var mc: HomeActivity, var db : AppDatabase, var user : UserIt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        coroutine.launch {
+            db.postDao.clear()
+        }
         postRepo = PostRepository(db)
         postlikeRepo = PostLikeRepository(db)
         loadDataPost()
         loadDataLike()
+
+
 
         launcherDetail = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             val data = it.data
@@ -86,8 +92,14 @@ class HomeFragment(var mc: HomeActivity, var db : AppDatabase, var user : UserIt
             if((arrPost.size == 0 && fetched == false) || firstFetch == true){
                 firstFetch = false
                 postRepo.getAllPostRelated(this@HomeFragment, mc.user.id)
+                b.txtEmpty.visibility = View.INVISIBLE
+                b.rvHome.visibility = View.VISIBLE
             }else{
                 mc.runOnUiThread {
+                    if(arrPost.size == 0 && fetched == true){
+                        b.rvHome.visibility = View.INVISIBLE
+                        b.txtEmpty.visibility = View.VISIBLE
+                    }
                     loadDataLike()
                 }
             }
