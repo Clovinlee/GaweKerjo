@@ -307,7 +307,9 @@ class UserprofileActivity : AppCompatActivity() {
             listnama.addAll(db.skillDao.getAllSkill().toList())
             if (listskill.size <= 0 && sudah == false){
                 skillrepo.getUserSkill(mc, user.id, null)
-                load()
+                runOnUiThread {
+                    load()
+                }
             }
             else{
                 runOnUiThread {

@@ -76,8 +76,9 @@ class EditProfileUserActivity : AppCompatActivity() {
                 }
 
 
+            }else{
+                EditDataUser()
             }
-//            EditDataUser()
 //            Toast.makeText(this, "simpan", Toast.LENGTH_SHORT).show()
 //            finish()
         }
@@ -277,12 +278,14 @@ class EditProfileUserActivity : AppCompatActivity() {
                 var i : Intent = Intent(this, UserprofileActivity::class.java)
                 i.putExtra("userLogin",result.data[0])
                 startActivity(i)
+                finish()
                 this.finish()
             }
             else{
                 var i : Intent = Intent(this, CompanyProfileActivity::class.java)
                 i.putExtra("userLogin",result.data[0])
                 startActivity(i)
+                finish()
                 this.finish()
             }
 
